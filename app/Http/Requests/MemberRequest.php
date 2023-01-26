@@ -13,7 +13,7 @@ class MemberRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,34 @@ class MemberRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name_sei' => 'required|string|max:20',
+            'name_mei' => 'required|string|max:20',
+            'nickname' => 'required|string|max:10',
+            'gender' => 'required|in:1,2',
+            // 'password' => 'required|string|not_regex:/^[a-zA-Z0-9]+$/|min:8|max:20',
+            'password' => 'required|string|regex:/^[a-zA-Z0-9]+$/|min:8|max:20',
+            'password_conf' => 'same:password',
+            'email' => 'required|string|max:200|email|unique:members'
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'name_sei' => '氏名（姓）',
+            'name_mei' => '氏名（名）',
+            'nickname' => 'ニックネーム',
+            'gender' => '性別',
+            'password' => 'パスワード',
+            'password_confirmation' => 'パスワードの確認',
+            'email' => 'メールアドレス'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'password.regex' => 'パスワードは半角英数字のみでお願いします。',
         ];
     }
 }

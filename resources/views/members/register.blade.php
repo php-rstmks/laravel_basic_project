@@ -7,35 +7,29 @@
     <title>Document</title>
 </head>
 <body>
-
-
 <main>
     <div class="container">
         <h2>会員情報登録フォーム</h2>
-        <form method="post" action="{{ route('RegistrationConfirmation') }}">
+        <form method="post" action="{{ route('registerConf') }}">
             @csrf
-            <div class="err-msg">
-                @if ($errors->any())
-                    <div>
-                        <ul>
-                            @foreach($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-            </div>
             <div>
                 <span>氏名</span>
                 <div>
-                    <lavel for="name_sei">姓</lavel>
-                    <input type="text" name="name_sei" required value="{{ old('name_sei') }}">
+                    <label for="name_sei">姓</label>
+                    <input type="text" name="name_sei" value="{{ old('name_sei') }}">
                 </div>
                 <div>
-                    <lavel for="name_mei">名</lavel>
-                    <input type="text" name="name_mei" required value="{{ old('name_mei') }}">
+                    <label for="name_mei">名</label>
+                    <input type="text" name="name_mei" value="{{ old('name_mei') }}">
                 </div>
+            </div>
 
+            @if ($errors->any())
+
+                @foreach($errors->all() as $error)
+                    <div style="color: red">{{ $error }}</div>
+                @endforeach
+            @endif
 
             <div>
                 <label for="">ニックネーム</label>

@@ -13,8 +13,16 @@
 
 Route::get('/', function () {
     return view('members.register');
+    // return view('members.register_comp');
 });
 
-Route::post('/register-confirm', 'MemberController@registrationConf')
-    ->name('registrationConf');
+Route::post('/register-confirm', 'MemberController@registerConf')
+    ->name('registerConf');
+
+Route::post('/register-complete', 'MemberController@registerMember')
+    ->name('registerComp');
+
+Route::get('/register-complete-page', function() {
+    return view('members.register_comp');
+})->name('registerCompPage');
 
