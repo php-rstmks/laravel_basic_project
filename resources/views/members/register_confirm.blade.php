@@ -19,11 +19,13 @@
 
         <div>
             <span>性別</span>
-                @if ($registerMember['gender'] == "1")
+            <span>{{ $gender }}</span>
+                {{-- @if ($registerMember['gender'] == "1")
                     <span>男性</span>
                 @else
                     <span>女性</span>
-                @endif
+
+                @endif --}}
         </div>
 
         <div>
