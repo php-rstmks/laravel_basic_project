@@ -46,4 +46,12 @@ class MemberController extends Controller
         return redirect()
             ->route('registerCompPage');
     }
+
+    public function login(Request $request)
+    {
+        
+    }
+
+
+
 }

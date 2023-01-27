@@ -66,6 +66,10 @@
             <div>
                 <button>確認画面へ</button>
             </div>
+
+            <div>
+                <button><a href="{{ route('topPage')}}">トップへ戻る</a></button>
+            </div>
         </form>
     </div>
 </main>
