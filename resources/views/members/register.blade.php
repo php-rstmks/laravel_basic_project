@@ -9,7 +9,7 @@
 <body>
 <main>
     <div class="container">
-        <h2>会員情報登録フォーム</h2>
+        <h2>会員情報登録フォーム（へんこう</h2>
         <form method="post" action="{{ route('registerConf') }}">
             @csrf
             <div>
