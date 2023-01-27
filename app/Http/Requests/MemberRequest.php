@@ -42,7 +42,7 @@ class MemberRequest extends FormRequest
             'nickname' => 'ニックネーム',
             'gender' => '性別',
             'password' => 'パスワード',
-            'password_confirmation' => 'パスワードの確認',
+            'password_conf' => 'パスワードの確認',
             'email' => 'メールアドレス'
         ];
     }

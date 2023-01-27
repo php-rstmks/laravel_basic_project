@@ -39,9 +39,7 @@ class LoginController extends Controller
      * @return void
      */
     public function __construct()
-    // public function __construct(Member $member)
     {
-        // $this->member = $member;
         $this->middleware('guest')->except('logout');
     }
 
@@ -51,17 +49,23 @@ class LoginController extends Controller
 
         $credentials = $request->only('email', 'password');
 
+        $err_msgs = [];
+
         if (empty($request->email))
         {
-            return back()->withErrors([
-                'empty_err' => 'メールアドレスの入力は必須です。',
-            ]);
+            $err_msgs[] = 'メールアドレスの入力は必須です。';
+
         }
 
         if (empty($request->password))
         {
+            $err_msgs[] = 'パスワードの入力は必須です。';
+        }
+
+        if (count($err_msgs) > 0)
+        {
             return back()->withErrors([
-                'empty_err' => 'パスワードの入力は必須です。',
+                'err_msgs' => $err_msgs,
             ]);
         }
 

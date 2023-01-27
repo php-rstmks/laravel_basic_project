@@ -8,4 +8,4 @@
 </div>
 <h2>パスワード再発行</h2>
 <div>以下のURLをクリックしてパスワードを再発行してください</div>
-<a href=""></a>
+<a href="http://localhost:8000/password-reset-page">http://localhost:8000/password-reset-page</a>

@@ -50,6 +50,13 @@ Route::group(['middleware' => ['guest']], function() {
         return view('email_send_complete');
     })->name('sendEmailCompPage');
 
+    Route::get('/password-reset-page', function() {
+        return view('password_reset');
+    })->name('passwordResetPage');
+
+    Route::post('/password-reset', 'Auth\ResetPasswordController@resetPassword')
+        ->name('passwordReset');
+
 });
 
 Route::group(['middleware' => ['auth']], function() {
