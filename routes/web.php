@@ -17,7 +17,7 @@ Route::get('/top', function() {
 
 
 Route::group(['middleware' => ['guest']], function() {
-    
+
     Route::get('/', function () {
         return view('members.register');
     });
@@ -34,8 +34,13 @@ Route::group(['middleware' => ['guest']], function() {
 
     Route::get('/login-page', function() {
         return view('Auth.login');
-    });
+    })->name('loginPage');
 
     Route::post('/login', 'Auth\LoginController@login')
         ->name('login');
+});
+
+Route::group(['middleware' => ['auth']], function() {
+    Route::post('logout', 'Auth\LoginController@logout')
+        ->name('logout');
 });

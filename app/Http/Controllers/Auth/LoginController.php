@@ -51,8 +51,19 @@ class LoginController extends Controller
             $request->session()->regenerate();
         }
 
-        
+        return redirect()->route('topPage');
+    }
+
+    public function logout(Request $request)
+    {
+
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
 
         return redirect()->route('topPage');
+        // ->with('logout_msg', 'logout is done.');
     }
 }
