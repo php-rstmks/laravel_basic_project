@@ -20,7 +20,7 @@ Route::group(['middleware' => ['guest']], function() {
 
     Route::get('/', function () {
         return view('members.register');
-    });
+    })->name('registerPage');
 
     Route::post('/register-confirm', 'MemberController@registerConf')
         ->name('registerConf');

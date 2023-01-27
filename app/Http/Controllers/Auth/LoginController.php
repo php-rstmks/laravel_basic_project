@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Member;
 
 
 
@@ -38,17 +39,40 @@ class LoginController extends Controller
      * @return void
      */
     public function __construct()
+    // public function __construct(Member $member)
     {
+        // $this->member = $member;
         $this->middleware('guest')->except('logout');
     }
 
     public function login(Request $request)
     {
+        $request->session()->put('login_email', $request->email);
+
         $credentials = $request->only('email', 'password');
+
+        if (empty($request->email))
+        {
+            return back()->withErrors([
+                'empty_err' => 'メールアドレスの入力は必須です。',
+            ]);
+        }
+
+        if (empty($request->password))
+        {
+            return back()->withErrors([
+                'empty_err' => 'パスワードの入力は必須です。',
+            ]);
+        }
 
         if (Auth::attempt($credentials))
         {
             $request->session()->regenerate();
+        } else {
+            // 認証に失敗したら
+            return back()->withErrors([
+                'login_err' => 'メールアドレスかパスワードが間違っています。',
+            ]);
         }
 
         return redirect()->route('topPage');

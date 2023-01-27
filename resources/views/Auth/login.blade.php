@@ -1,3 +1,13 @@
+<?php
+
+use Illuminate\Support\Facades\Session;
+
+$email = Session::get('login_email');
+Session::forget('login_email');
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,9 +21,25 @@
 
     <form action="{{ route('login') }}" method="POST">
         @csrf
+        {{-- ↓表示されない。なぜ --}}
+        @if (session('login_err'))
+            {{ session('login_err') }}
+        @endif
+
+        @if ($errors->any())
+            <div class="alert alert-danger" style="color: red;">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <div>{{ $error }}</div>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <div>
             <span>メールアドレス（ID）</span>
-            <input type="email" name="email" id="" value="{{ old('email') }}">
+            {{-- <input type="email" name="email" id="" value="{{ old('email') }}"> --}}
+            <input type="email" name="email" id="" value="<?= $email; ?>">
         </div>
 
         <div>
