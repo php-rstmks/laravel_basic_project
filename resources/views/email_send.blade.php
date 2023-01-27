@@ -1,3 +1,12 @@
+<?php
+
+use Illuminate\Support\Facades\Session;
+
+$email = Session::get('send_email');
+Session::forget('send_email');
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +21,7 @@
 
     <form action="{{ route('sendEmail') }}" method="POST">
         @csrf
-        <input type="email" name="email" id="">
+        <input type="email" name="email" value="<?= $email; ?>">
         <button>送信する</button>
     </form>
 

@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\ResetsPasswords;
 use App\Member;
 use Log;
 use Illuminate\Http\Request;
+use Mail;
+use App\Mail\PasswordReset;
 
 
 class ResetPasswordController extends Controller
@@ -34,12 +36,19 @@ class ResetPasswordController extends Controller
 
     public function sendEmail(Request $request)
     {
-        $flg = Member::where('email', '=', $request->email)->exists();
 
-        if (empty($flg))
+        $to_mail_address = $request->input('email');
+
+        $email = Member::where('email', '=', $request->email)->exists();
+
+        if (empty($email))
         {
+            $request->session()->put('send_email', $request->email);
             return redirect()->back()->withErrors(['err_msg' => '入力されたメールアドレスは存在しません']);
         }
+
+        Mail::to($to_mail_address)
+            ->send(new PasswordReset($to_mail_address));
 
         return redirect()->route('sendEmailCompPage');
 
