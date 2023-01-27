@@ -47,7 +47,7 @@ Session::forget('login_email');
             <input type="password" name="password" id="">
         </div>
 
-        <a href="">パスワードを忘れた方はこちら</a>
+        <a href="{{ route('sendEmailPage')}}">パスワードを忘れた方はこちら</a>
 
         <button>ログイン</button>
 

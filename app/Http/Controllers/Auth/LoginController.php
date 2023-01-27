@@ -88,6 +88,5 @@ class LoginController extends Controller
         $request->session()->regenerateToken();
 
         return redirect()->route('topPage');
-        // ->with('logout_msg', 'logout is done.');
     }
 }

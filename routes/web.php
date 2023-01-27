@@ -38,6 +38,18 @@ Route::group(['middleware' => ['guest']], function() {
 
     Route::post('/login', 'Auth\LoginController@login')
         ->name('login');
+
+    Route::get('/send-email-page', function() {
+        return view('email_send');
+    })->name('sendEmailPage');
+
+    Route::post('/send-email', 'Auth\ResetPasswordController@sendEmail')
+        ->name('sendEmail');
+
+    Route::get('/send-email-comp-page', function() {
+        return view('email_send_complete');
+    })->name('sendEmailCompPage');
+
 });
 
 Route::group(['middleware' => ['auth']], function() {
