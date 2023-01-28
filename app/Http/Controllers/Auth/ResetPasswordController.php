@@ -10,6 +10,7 @@ use Log;
 use Illuminate\Http\Request;
 use Mail;
 use App\Mail\PasswordReset;
+use Hash;
 
 
 class ResetPasswordController extends Controller
