@@ -7,6 +7,9 @@ use Log;
 
 class ProductController extends Controller
 {
+    /**
+     *
+     */
     public function registerImage(Request $request)
     {
         $request->validate([
@@ -40,5 +43,10 @@ class ProductController extends Controller
         //     $file1->move($target_path1, $fileName1);
         //     return ['returnFileName1' => $fileName1];
         // }
+    }
+
+    public function registerProduct(Request $request)
+    {
+
     }
 }

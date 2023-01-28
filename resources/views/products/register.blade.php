@@ -58,6 +58,8 @@
                 <input class="js-image-uploader1" id="image_1" style="display: none;" type="file">
                 <input class="js-image-path-hidden1" type="hidden" name="image_1" value="">
             </label>
+
+        {{-- バリデーションで弾かれたとき --}}
         @else
             <div class="preview-image-wrapper">
                 @if(!empty($image_1))
@@ -133,8 +135,8 @@
                 // コントローラから受け取ったデータ(検索結果)をdataに代入し以下の処理を実行します
             }).done((data) => {
                 console.log(data);
-                // $('.js-preview1').attr('src', '/uploads/'+data['returnFileName1']);
-                // $('.js-image-path-hidden1').attr('value', data['returnFileName1']);
+                $('.js-preview1').attr('src', '/storage/' + data['returnFileName1']);
+                $('.js-image-path-hidden1').attr('value', data['returnFileName1']);
             }).fail((error) => {
                 console.log(error.statusText)
                 if(error.statusText == 'Payload Too Large') {
