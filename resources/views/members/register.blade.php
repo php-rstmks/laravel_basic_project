@@ -60,7 +60,7 @@
 
             <div>
                 <label for="">メールアドレス</label>
-                <input type="text" name="email" value="{{ old('email')}}">
+                <input type="email" name="email" value="{{ old('email')}}">
             </div>
 
             <div>

@@ -7,7 +7,6 @@ Session::forget('login_email');
 
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 <head>

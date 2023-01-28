@@ -76,7 +76,7 @@ class ResetPasswordController extends Controller
         $email = $request->session()->get('update_password_for_email');
         $request->session()->forget('update_password_for_email');
 
-        Member::where('email', $email)->update(['password' => $request->password]);
+        Member::where('email', $email)->update(['password' => Hash::make($request->password)]);
 
         return redirect()->route('topPage');
     }

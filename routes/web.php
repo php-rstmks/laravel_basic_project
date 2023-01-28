@@ -22,7 +22,7 @@ Route::group(['middleware' => ['guest']], function() {
         return view('members.register');
     })->name('registerPage');
 
-    Route::post('/register-confirm', 'MemberController@registerConf')
+    Route::post('/register-member-confirm', 'MemberController@registerConf')
         ->name('registerConf');
 
     Route::post('/register-complete', 'MemberController@registerMember')
@@ -62,4 +62,16 @@ Route::group(['middleware' => ['guest']], function() {
 Route::group(['middleware' => ['auth']], function() {
     Route::post('logout', 'Auth\LoginController@logout')
         ->name('logout');
+
+    // 商品の登録
+
+    Route::get('register-product-page', function() {
+        return view('products.register');
+    })->name('registerProductPage');
+
+    Route::post('register-product-confirm', 'ProductController@registerProduct')
+        ->name('registerProduct');
+
+    Route::post('register-product-image', 'ProductController@registerImage')
+        ->name('registerImage');
 });
