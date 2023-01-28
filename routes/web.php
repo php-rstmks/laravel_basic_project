@@ -63,15 +63,21 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('logout', 'Auth\LoginController@logout')
         ->name('logout');
 
-    // 商品の登録
+    // 商品の登録ページ
 
-    Route::get('register-product-page', function() {
-        return view('products.register');
-    })->name('registerProductPage');
+    Route::get('register-product-page', 'ProductController@showProductPage')
+        ->name('registerProductPage');
+
+    // 商品の登録
 
     Route::post('register-product-confirm', 'ProductController@registerProduct')
         ->name('registerProduct');
 
+    // 画像のアップロード
     Route::post('register-product-image', 'ProductController@registerImage')
         ->name('registerImage');
+
+    // 小カテゴリを出現させる。
+    Route::get('set-subcategory/{categoryId}', 'ProductController@setSubCategory')
+        ->name('setSubCategory');
 });
