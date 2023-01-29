@@ -36,8 +36,7 @@ class ProductController extends Controller
     public function showList()
     {
 
-        // $products = Product::latest()->paginate(10);
-        $products = Product::latest();
+        $products = Product::latest()->paginate(10);
         $product_categories = DB::table('product_categories')->get();
         $product_subcategories = DB::table('product_subcategories')->get();
 

@@ -1,36 +1,98 @@
 <link rel="stylesheet" href="{{ url('css/style.css') }}">
 
-{{-- pagerが二ページ分あるときに表示させる。 --}}
-@if ($paginator->lastPage() > 1)
 <ul class="pagination">
 
-    {{-- 現在のページ番号が1のときこのli tagは表示させない --}}
-    <li class="page-item {{ ($paginator->currentPage() == 1) ? ' disabled' : '' }}">
-        <a class="page-link page-click-button" href="{{ $paginator->url(1) }}">First Page</a>
-     </li>
-
-    {{-- 現在のページ番号が1のときこのli tagは表示させない --}}
+    {{-- 現在のページ番号が1のとき＜前へ＞のボタンは表示させない --}}
+    {{-- 非表示はblade templateのif文ではなく、cssで非表示にする --}}
     <li class="page-item {{ ($paginator->currentPage() == 1) ? ' disabled' : '' }}">
         <a class="page-link" href="{{ $paginator->url(1) }}">
-            <span aria-hidden="true" class="page-click-button">«</span>
+            <span aria-hidden="true" class="page-click-button">«前へ</span>
             {{-- Previous --}}
         </a>
     </li>
 
-    @for ($i = 1; $i <= $paginator->lastPage(); $i++)
-        <li class="page-item {{ ($paginator->currentPage() == $i) ? ' active' : '' }}">
-            <a class="page-link page-click-button" href="{{ $paginator->url($i) }}">{{ $i }}</a>
-        </li>
-    @endfor
+    {{-- 商品の数が1 or ページ分しかないとき --}}
+    @if ($paginator->lastPage() <= 2)
 
+        @for ($i = 1; $i <= $paginator->lastPage(); $i++)
+            <li class="page-item {{ ($paginator->currentPage() == $i) ? ' active' : '' }}">
+                <a class="ipage-link page-click-button" href="{{ $paginator->url($i) }}">{{ $i }}</a>
+            </li>
+        @endfor
+
+    {{-- 商品の数が3ページ分存在するとき --}}
+    @elseif ($paginator->lastPage() >= 3)
+
+        {{-- 現在ページが1ページのとき --}}
+        @if ($paginator->currentPage() == 1)
+
+            {{-- 1ページ目 --}}
+            <li class="page-item active">
+                <a class="page-link page-click-button" href="{{ $paginator->url($paginator->currentPage()) }}">
+                    {{ $paginator->currentPage() }}
+                </a>
+            </li>
+
+            {{-- ２ページ目 --}}
+
+            <li class="page-item active">
+                <a class="page-link page-click-button" href="{{ $paginator->url($paginator->currentPage() + 1)}}">
+                    {{$paginator->currentPage() + 1}}
+                </a>
+            </li>
+
+            {{-- 3ページ目 --}}
+            <li class="page-item active">
+
+                <a class="page-link page-click-button" href="{{ $paginator->url($paginator->currentPage() + 2)}}">
+                    {{$paginator->currentPage() + 2}}
+                </a>
+            </li>
+
+        {{-- 現在ページが2ページ以上のとき --}}
+        @elseif ($paginator->currentPage() >= 2)
+
+            {{-- 現在ページの一つ前のページ --}}
+            <a class="page-link page-click-button df" href="{{ $paginator->url($paginator->currentPage() - 1)}}">
+                {{$paginator->currentPage() - 1}}
+            </a>
+
+            {{-- 現在ページ --}}
+            <li class="page-item active">
+                <a class="page-link page-click-button" href="{{ $paginator->url($paginator->currentPage()) }}">
+                    {{ $paginator->currentPage() }}
+                </a>
+            </li>
+
+            {{$paginator->currentPage()}}
+            <br>
+            {{$paginator->lastPage()}}
+
+            @php
+            $current_page =$paginator->currentPage();
+            $last_page = $paginator->lastPage();
+            @endphp
+
+            {{-- 現在ページの一つ後のページ（ただし、現在のページが最後のページであるときは表示しない --}}
+            @if ($paginator->currentPage() != $paginator->lastPage())
+                <li class="page-item active">
+                    <a class="page-link page-click-button" href="{{ $paginator->url($paginator->currentPage() + 1)}}">
+                        {{$paginator->currentPage() + 1}}
+                    </a>
+                </li>
+            @endif
+
+        @endif
+
+    @endif
+
+
+    {{-- 現在のページ番号が最後のページのときこのli tagは表示させない --}}
     <li class="page-item {{ ($paginator->currentPage() == $paginator->lastPage()) ? ' disabled' : '' }}">
         <a class="page-link" href="{{ $paginator->url($paginator->currentPage()+1) }}" >
-            <span ackria-hidden="true" class="page-click-button">»</span>
+            <span ackria-hidden="true" class="page-click-button">»次へ</span>
             {{-- Next --}}
         </a>
     </li>
-    <li class="page-item {{ ($paginator->currentPage() == $paginator->lastPage()) ? ' disabled' : '' }}">
-        <a class="page-link  page-click-button" href="{{ $paginator->url($paginator->lastPage()) }}">Last Page</a>
-    </li>
+
 </ul>
-@endif

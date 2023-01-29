@@ -11,14 +11,17 @@ class Product extends Seeder
      */
     public function run()
     {
-        for($i = 1; $i <= 20; $i++)
+        for($i = 1; $i <= 3; $i++)
         {
+            $random_int = random_int(16,20);
+
+            $a_int = $i + 28;
             DB::table('products')->insert([
                 'member_id' => 1,
-                'product_category_id' => 1,
-                'product_subcategory_id' => 4,
-                'name' => 'ベッド' . $i,
-                'product_content' => 'コンテンツ' . $i,
+                'product_category_id' => 4,
+                'product_subcategory_id' => $random_int,
+                'name' => 'アイテム' . $a_int,
+                'product_content' => 'コンテンツ' . $a_int,
             ]);
         }
     }
