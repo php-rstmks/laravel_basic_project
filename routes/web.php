@@ -22,6 +22,7 @@ Route::group(['middleware' => ['guest']], function() {
         return view('members.register');
     })->name('registerPage');
 
+    // メンバ登録確認ページへ移動
     Route::post('/register-member-confirm', 'MemberController@registerConf')
         ->name('registerConf');
 
@@ -68,9 +69,12 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('register-product-page', 'ProductController@showProductPage')
         ->name('registerProductPage');
 
-    // 商品の登録
+    // 商品登録確認ページへの移動
+    Route::post('register-product-confirm-page', 'ProductController@registerConf')
+        ->name('registerProductConfPage');
 
-    Route::post('register-product-confirm', 'ProductController@registerProduct')
+    // 商品の登録
+    Route::post('register-product', 'ProductController@registerProduct')
         ->name('registerProduct');
 
     // 画像のアップロード
@@ -80,4 +84,5 @@ Route::group(['middleware' => ['auth']], function() {
     // 小カテゴリを出現させる。
     Route::get('set-subcategory/{categoryId}', 'ProductController@setSubCategory')
         ->name('setSubCategory');
+
 });

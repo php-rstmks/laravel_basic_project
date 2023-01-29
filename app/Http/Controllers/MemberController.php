@@ -21,8 +21,6 @@ class MemberController extends Controller
             $gender = "女性";
         }
 
-        Log::debug($gender);
-
         return view('members.register_confirm')
             ->with(['registerMember' => $request->all(), 'gender' => $gender]);
     }
@@ -49,7 +47,7 @@ class MemberController extends Controller
 
     public function login(Request $request)
     {
-        
+
     }
 
 
