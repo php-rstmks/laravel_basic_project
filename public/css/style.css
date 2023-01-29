@@ -1,0 +1,16 @@
+.pagination {
+    display: flex;
+}
+
+.page-item {
+    list-style-type: none;
+    /* border: 1px black solid; */
+}
+
+.page-link {
+    margin: 0 10px;
+}
+
+.page-click-button {
+    color: gray;
+}

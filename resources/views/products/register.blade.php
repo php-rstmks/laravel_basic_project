@@ -157,9 +157,13 @@
     </div>
 
     <button>確認画面へ</button>
-    <button><a href="{{route('topPage')}}">トップ画面へ</a></button>
-
 </form>
+
+@if (url()->previous() == route('topPage'))
+<button><a href="{{route('topPage')}}">トップ画面へ</a></button>
+@else
+<button><a href="{{route('productListPage')}}">商品一覧へ</a></button>
+@endif
 
 <script src="{{url('js/products/register.js')}}"></script>
 </body>

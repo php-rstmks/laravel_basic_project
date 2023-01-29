@@ -23,5 +23,10 @@ class Product extends Model
         return $this->belongsTo(Member::class);
     }
 
+    public function product_category()
+    {
+        return $this->hasOne(Product_category::class);
+    }
+
 
 }

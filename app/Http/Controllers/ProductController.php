@@ -14,9 +14,11 @@ use Auth;
 class ProductController extends Controller
 {
 
+    /**
+     * 商品登録ページ
+     */
     public function showProductPage()
     {
-        // $product_categories = Product::latest()->get();
         $product_categories = DB::table('product_categories')->get();
         $product_subcategories = DB::table('product_subcategories')->get();
 
@@ -26,6 +28,25 @@ class ProductController extends Controller
                 'product_subcategories' => $product_subcategories
             ]);
 
+    }
+
+    /**
+     * 商品一覧ページ
+     */
+    public function showList()
+    {
+
+        // $products = Product::latest()->paginate(10);
+        $products = Product::latest();
+        $product_categories = DB::table('product_categories')->get();
+        $product_subcategories = DB::table('product_subcategories')->get();
+
+        return view('products.list')
+            ->with([
+                'product_categories' => $product_categories,
+                'product_subcategories' => $product_subcategories,
+                'products' => $products,
+            ]);
     }
 
     /**
@@ -101,6 +122,7 @@ class ProductController extends Controller
      */
     public function registerConf(Request $request)
     {
+
         $request->validate([
             'product_name' => 'required|max:100',
             'product_category_id' => 'integer|not_in:0|between:1,5',
@@ -131,6 +153,9 @@ class ProductController extends Controller
 
     }
 
+    /**
+     * register_confページで使用
+     */
     public function registerProduct(Request $request)
     {
 
@@ -147,6 +172,71 @@ class ProductController extends Controller
         ]);
 
 
-        return redirect()->route('topPage');
+        return redirect()->route('productListPage');
+    }
+
+    /**
+     * products.list.blade.phpで使用
+     * 方法としてコントローラ側で
+     *
+     */
+    public function search(Request $request)
+    {
+        $product_categories = DB::table('product_categories')->get();
+        $product_subcategories = DB::table('product_subcategories')->get();
+
+        $product_subcategory_id = $request->product_subcategory_id;
+        $product_category_id = $request->product_category_id;
+        $free_word = $request->free_word;
+
+        $query = Product::query();
+
+        Log::info($product_subcategory_id);
+        Log::info($product_category_id);
+
+
+        // サブカテゴリがあれば（このときカテゴリは選択されている必要があるのでチェック項目には含めない）
+        // if (is_null($product_subcategory_id))
+        if ($request->filled("product_subcategory_id"))
+        {
+            Log::info($product_subcategory_id);
+
+            Log::debug($product_subcategory_id . 'a');
+
+            $query->where("product_subcategory_id", $product_subcategory_id);
+
+        } elseif ($request->filled("product_category_id"))
+        // } elseif (is_null($product_category_id))
+        // サブカレゴリを含めずにカテゴリのみを検索条件に含めていれば
+        {
+            Log::debug('kira');
+            $query->where("product_category_id", $product_category_id);
+        }
+
+        // フリーワードのinputが存在し、かつ空でなければ
+        if ($request->filled("free_word"))
+        {
+            $search_word = '%'.$free_word.'%';
+            Log::debug($search_word);
+
+            $query->where(function ($query) use ($search_word) {
+                $query->where('name', 'LIKE', $search_word);
+                $query->orWhere('product_content', 'LIKE', $search_word);
+            });
+        }
+
+        // $products = $query->orderBy('id', 'DESC')->paginate(10);
+        $products = $query->orderBy('id')->paginate(10);
+
+
+        return view('products.list')
+            ->with([
+                // 'return_product_category_id' => $product_category_id,
+                // 'return_product_subcategory_id' => $product_subcategory_id,
+                // 'return_free_ord' => $free_word,
+                'products' => $products,
+                'product_categories' => $product_categories,
+                'product_subcategories' => $product_subcategories,
+            ]);
     }
 }
