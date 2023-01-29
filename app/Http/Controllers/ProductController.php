@@ -33,20 +33,78 @@ class ProductController extends Controller
     /**
      * 商品一覧ページ
      */
-    public function showList()
+    public function showList(Request $request)
     {
-
         $products = Product::latest()->paginate(10);
         $product_categories = DB::table('product_categories')->get();
         $product_subcategories = DB::table('product_subcategories')->get();
+
+        $product_subcategory_id = $request->product_subcategory_id;
+        $product_category_id = $request->product_category_id;
+        $free_word = $request->free_word;
+
+        $query = Product::query();
+
+        $return_state = false;
+
+        // サブカテゴリがあれば（このときカテゴリは選択されている必要があるのでチェック項目には含めない）
+        if ($request->filled("product_subcategory_id"))
+        {
+            $query->where("product_subcategory_id", $product_subcategory_id);
+
+            $return_state = true;
+
+        } elseif ($request->filled("product_category_id"))
+        // サブカレゴリを含めずにカテゴリのみを検索条件に含めていれば
+        {
+            $query->where("product_category_id", $product_category_id);
+            $return_state = true;
+
+        }
+
+        // フリーワードのinputが存在し、かつ空でなければ
+        if ($request->filled("free_word"))
+        {
+            $search_word = '%'.$free_word.'%';
+            $query->where(function ($query) use ($search_word) {
+                $query->where('name', 'LIKE', $search_word);
+                $query->orWhere('product_content', 'LIKE', $search_word);
+            });
+            $return_state = true;
+
+        }
+
+        $products = $query->orderBy('id')->paginate(10);
+
+        Log::debug($products);
+
+        // if ($product)
 
         return view('products.list')
             ->with([
                 'product_categories' => $product_categories,
                 'product_subcategories' => $product_subcategories,
                 'products' => $products,
+                'return_state' => $return_state,
+                'return_product_category_id' => $product_category_id,
+                'return_product_subcategory_id' => $product_subcategory_id,
             ]);
     }
+
+    // public function showList()
+    // {
+
+    //     $products = Product::latest()->paginate(10);
+    //     $product_categories = DB::table('product_categories')->get();
+    //     $product_subcategories = DB::table('product_subcategories')->get();
+
+    //     return view('products.list')
+    //         ->with([
+    //             'product_categories' => $product_categories,
+    //             'product_subcategories' => $product_subcategories,
+    //             'products' => $products,
+    //         ]);
+    // }
 
     /**
      *ajaxでsubcategoryを取得してjson形式で返す
@@ -190,25 +248,14 @@ class ProductController extends Controller
 
         $query = Product::query();
 
-        Log::info($product_subcategory_id);
-        Log::info($product_category_id);
-
-
         // サブカテゴリがあれば（このときカテゴリは選択されている必要があるのでチェック項目には含めない）
-        // if (is_null($product_subcategory_id))
         if ($request->filled("product_subcategory_id"))
         {
-            Log::info($product_subcategory_id);
-
-            Log::debug($product_subcategory_id . 'a');
-
             $query->where("product_subcategory_id", $product_subcategory_id);
 
         } elseif ($request->filled("product_category_id"))
-        // } elseif (is_null($product_category_id))
         // サブカレゴリを含めずにカテゴリのみを検索条件に含めていれば
         {
-            Log::debug('kira');
             $query->where("product_category_id", $product_category_id);
         }
 
@@ -216,23 +263,19 @@ class ProductController extends Controller
         if ($request->filled("free_word"))
         {
             $search_word = '%'.$free_word.'%';
-            Log::debug($search_word);
-
             $query->where(function ($query) use ($search_word) {
                 $query->where('name', 'LIKE', $search_word);
                 $query->orWhere('product_content', 'LIKE', $search_word);
             });
         }
 
-        // $products = $query->orderBy('id', 'DESC')->paginate(10);
         $products = $query->orderBy('id')->paginate(10);
-
 
         return view('products.list')
             ->with([
                 // 'return_product_category_id' => $product_category_id,
                 // 'return_product_subcategory_id' => $product_subcategory_id,
-                // 'return_free_ord' => $free_word,
+                // 'return_free_word' => $free_word,
                 'products' => $products,
                 'product_categories' => $product_categories,
                 'product_subcategories' => $product_subcategories,

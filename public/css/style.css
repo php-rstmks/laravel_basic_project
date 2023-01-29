@@ -14,3 +14,7 @@
 .page-click-button {
     color: gray;
 }
+
+.active {
+    background-color: green;
+}

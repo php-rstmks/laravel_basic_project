@@ -4,7 +4,8 @@
 <div>商品一覧</div>
 
 {{-- <form action="{{route('productSearch')}}" method="POST"> --}}
-<form action="{{route('productSearch')}}" method="GET">
+{{-- <form action="{{route('productSearch')}}" method="GET"> --}}
+<form action="{{route('productListPage')}}" method="GET">
     {{-- @csrf --}}
     <span>カテゴリ</span>
 
@@ -70,11 +71,13 @@
 </div>
 
 {{-- ページネーション --}}
-@if (!empty($products))
+@if (!$return_state)
+    <div class="pagination">
+        {{ $products->links('paginate.default') }}
+    </div>
 
-<div class="pagination">
-    {{ $products->links('paginate.default') }}
-</div>
+@else
+    {{ $products->appends(request()->query())->links('paginate.default') }}
 @endif
 
 <button><a href="{{route('topPage')}}">トップに戻る</a></button>

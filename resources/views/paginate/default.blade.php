@@ -26,7 +26,7 @@
         {{-- 現在ページが1ページのとき --}}
         @if ($paginator->currentPage() == 1)
 
-            {{-- 1ページ目 --}}
+            {{-- 1ページ目(現在ページ) --}}
             <li class="page-item active">
                 <a class="page-link page-click-button" href="{{ $paginator->url($paginator->currentPage()) }}">
                     {{ $paginator->currentPage() }}
@@ -35,14 +35,14 @@
 
             {{-- ２ページ目 --}}
 
-            <li class="page-item active">
+            <li class="page-item">
                 <a class="page-link page-click-button" href="{{ $paginator->url($paginator->currentPage() + 1)}}">
                     {{$paginator->currentPage() + 1}}
                 </a>
             </li>
 
             {{-- 3ページ目 --}}
-            <li class="page-item active">
+            <li class="page-item">
 
                 <a class="page-link page-click-button" href="{{ $paginator->url($paginator->currentPage() + 2)}}">
                     {{$paginator->currentPage() + 2}}
