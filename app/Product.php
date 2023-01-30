@@ -28,5 +28,7 @@ class Product extends Model
         return $this->hasOne(Product_category::class);
     }
 
+    // public function 
+
 
 }

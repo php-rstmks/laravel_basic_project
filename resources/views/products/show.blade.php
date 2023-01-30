@@ -38,7 +38,11 @@
     <div>
         <span>商品説明</span>
         <span>{{$product->product_content}}</span>
-        </div>
+    </div>
+
+    @auth
+        <button><a href="{{route('registerReviewPage', $product)}}">この商品についてのレビューを登録</a></button>
+    @endauth
 
     <div>
         <button class="btn btn-back-blue" type="button" onclick="history.back()">商品一覧に戻る</button>

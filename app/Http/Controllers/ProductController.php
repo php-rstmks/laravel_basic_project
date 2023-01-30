@@ -7,6 +7,7 @@ use Log;
 use App\Product;
 use App\Product_category;
 use App\Product_subcategory;
+use App\Review;
 
 use DB;
 use Auth;
@@ -93,7 +94,10 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return view('products.show', compact('product'));
+
+        $avg_review = Review::where('product_id', '$product->id')->avg('evaluation');
+
+        return view('products.show', compact('product', 'avg_review'));
     }
 
 

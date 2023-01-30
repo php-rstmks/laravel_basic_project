@@ -20,6 +20,7 @@ Route::get('/top', function() {
 Route::get('/products-list', 'ProductController@list')
     ->name('productListPage');
 
+    //詳細ページ
 Route::get('/products-show/{product}', 'ProductController@show')
     ->name('productShowPage');
 
@@ -92,4 +93,15 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('set-subcategory/{categoryId}', 'ProductController@setSubCategory')
         ->name('setSubCategory');
 
+    // れびゅー登録ページ
+    Route::get('register-review-page/{product}', 'ReviewController@showRegisterPage')
+        ->name('registerReviewPage');
+
+    // レビュー登録確認ページ
+    Route::post('register-review-conf-page/{product}', 'ReviewController@showRegisterConfPage')
+        ->name('registerReviewConfPage');
+
+    // レビュー登録＆完了ページへ
+    Route::post('register-review-comp-page/{product}', 'ReviewController@create')
+    ->name('registerReviewCompPage');
 });
