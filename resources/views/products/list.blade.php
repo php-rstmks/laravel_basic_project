@@ -53,7 +53,7 @@
 
                 @if (!is_null($product->image_1))
                 {{-- 商品画像 --}}
-                <img width=100 src="/storage/{{$product->image_1}}" alt="">
+                    <img width=100 src="/storage/{{$product->image_1}}" alt="">
                 @endif
 
                 <div>
@@ -62,9 +62,10 @@
                         {{App\Product_subcategory::find($product->product_subcategory_id)->name}}
                     </div>
 
-                    <div>{{$product->name}}</div>
+                    <a href="{{route('productShowPage', $product)}}">{{$product->name}}</a>
                 </div>
             </div>
+            <button><a href="{{route('productShowPage', $product)}}">詳細</a></button>
             <hr>
         @endforeach
     @endif

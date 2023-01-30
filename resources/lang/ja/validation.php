@@ -26,7 +26,7 @@ return [
     'between' => [
         'numeric' => ':attribute は:min文字以上 :max以下でお願いします',
         'file' => 'The :attribute must be between :min and :max kilobytes.',
-        'string' => 'The :attribute must be between :min and :max characters.',
+        'string' => ':attribute は:min文字以上 :max以下でお願いします',
         'array' => 'The :attribute must have between :min and :max items.',
     ],
     'boolean' => 'The :attribute field must be true or false.',

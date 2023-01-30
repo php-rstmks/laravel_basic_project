@@ -86,12 +86,11 @@
             return response.json()
         })
         .then(json => {
-            console.log(json['returnFileName1'])
             imagePreview1.setAttribute("src", '/storage/' + json['returnFileName1'])
             inputHidden1.setAttribute("value", json['returnFileName1'])
         })
     })
-    
+
     imageUploader2.addEventListener("change", (e) => {
 
         const file = e.target.files[0]

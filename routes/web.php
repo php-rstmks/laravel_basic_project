@@ -16,18 +16,12 @@ Route::get('/top', function() {
     return view('top');
 })->name('topPage');
 
-// // 商品一覧ページ
-// Route::get('/products-list', 'ProductController@showList')
-//     ->name('productListPage');
-
 // 商品一覧ページ&検索ページ
-Route::get('/products-list', 'ProductController@showList')
+Route::get('/products-list', 'ProductController@list')
     ->name('productListPage');
 
-// 商品検索機能
-// Route::post('/products-search', 'ProductController@search')
-// Route::get('/products-search', 'ProductController@search')
-//     ->name('productSearch');
+Route::get('/products-show/{product}', 'ProductController@show')
+    ->name('productShowPage');
 
 Route::group(['middleware' => ['guest']], function() {
 

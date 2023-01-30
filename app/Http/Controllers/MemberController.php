@@ -12,22 +12,29 @@ use Illuminate\Support\Facades\Hash;
 
 class MemberController extends Controller
 {
+    /**
+     * 登録の確認画面へ
+     */
     public function registerConf(MemberRequest $request)
     {
+        Log::debug(config('master.gender'));
+
         if ($request->gender == 1)
         {
-            $gender = "男性";
+            $gender = config('master.gender.1');
         } else {
-            $gender = "女性";
+            $gender = config('master.gender.2');
         }
 
         return view('members.register_confirm')
             ->with(['registerMember' => $request->all(), 'gender' => $gender]);
     }
 
+    /**
+     * メンバを作成
+     */
     public function registerMember(Request $request)
     {
-        Log::debug(config('master.gender'));
 
         // 二重送信対策
         $request->session()->regenerateToken();

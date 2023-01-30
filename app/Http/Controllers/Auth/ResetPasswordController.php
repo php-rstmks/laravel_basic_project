@@ -61,8 +61,8 @@ class ResetPasswordController extends Controller
     {
         $request->validate(
         [
-            'password' => 'required|between:8,20',
-            'password_conf' => 'same:password',
+            'password' => 'required|string|regex:/^[a-zA-Z0-9]+$/|between:8,20',
+            'password_conf' => 'required|regex:/^[a-zA-Z0-9]+$/|between:8,20|same:password',
         ],
         [
             'required' => 'パスワードは必須です。',

@@ -22,16 +22,12 @@
     <div>
         <span>商品写真</span>
 
-        {{$product['image_2']}}
-
         {{-- @for ($i=1; $i <= 4; $i++)
         @php
             $path = $product['image_1']
         @endphp --}}
 
-            {{-- <div>
-                <img width="170" src="/storage/{{$product['image_{{$i}}']}}" alt="">
-            </div> --}}
+
 
             @if (!is_null($product['image_1']))
                 <div>写真1</div>

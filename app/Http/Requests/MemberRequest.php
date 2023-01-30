@@ -29,7 +29,7 @@ class MemberRequest extends FormRequest
             'nickname' => 'required|string|max:10',
             'gender' => 'required|in:1,2',
             'password' => 'required|string|regex:/^[a-zA-Z0-9]+$/|between:8,20',
-            'password_conf' => 'same:password',
+            'password_conf' => 'required|regex:/^[a-zA-Z0-9]+$/|between:8,20|same:password',
             'email' => 'required|string|max:200|unique:members'
         ];
     }
