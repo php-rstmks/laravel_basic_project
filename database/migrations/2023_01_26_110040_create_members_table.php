@@ -22,8 +22,9 @@ class CreateMembersTable extends Migration
             $table->string('password');
             $table->string('email')->unique();
             $table->integer('auth_code')->nullable();
-            $table->timestamp('deleted_at')->nullable();
+            // $table->timestamp('deleted_at')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

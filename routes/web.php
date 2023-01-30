@@ -109,8 +109,17 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('register-review-comp-page/{product}', 'ReviewController@create')
     ->name('registerReviewCompPage');
 
+    // マイページ
     Route::get('myPage', function () {
         return view('mypage');
-    })
-        ->name('myPage');
+    })->name('myPage');
+
+    // 退会ページ
+    Route::get('withdraw-page', function () {
+        return view('members.withdrawal');
+    })->name('withdrawPage');
+
+    // 退会処理
+    Route::post('withdrawal', 'MemberController@withdrawal')
+        ->name('withdrawal');
 });

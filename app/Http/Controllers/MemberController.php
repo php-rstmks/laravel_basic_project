@@ -8,6 +8,7 @@ use App\Http\Requests\MemberRequest;
 use App\Member;
 use Log;
 use Illuminate\Support\Facades\Hash;
+use Auth;
 
 
 class MemberController extends Controller
@@ -55,6 +56,13 @@ class MemberController extends Controller
     public function login(Request $request)
     {
 
+    }
+
+    public function withdrawal()
+    {
+        Auth::user()->delete();
+
+        return redirect()->route('topPage');
     }
 
 

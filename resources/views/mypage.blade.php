@@ -32,3 +32,5 @@
     <span>メールアドレス</span>
     <span>{{Auth::user()->email}}</span>
 </p>
+
+<button><a href="{{route('withdrawPage')}}">退会</a></button>

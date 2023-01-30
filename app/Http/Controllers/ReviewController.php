@@ -27,8 +27,10 @@ class ReviewController extends Controller
 
     public function create (Request $request, Product $product)
     {
-        Log::info($request->product_id);
-        Log::info('評価' . $request->evaluation);
+        $request->validate([
+            // 'evaluate' => 'required|',
+            'comment' => 'required|max:500',
+        ]);
 
         Review::create([
             'member_id' => Auth::id(),
