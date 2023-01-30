@@ -15,8 +15,8 @@ class Review extends Seeder
         {
 
             DB::table('reviews')->insert([
-                'member_id' => 1,
-                'product_id' => 36,
+                'member_id' => 2,
+                'product_id' => 1,
                 'evaluation' => random_int(1,5),
                 'comment' => 'comment' . $i,
             ]);

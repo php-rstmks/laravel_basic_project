@@ -122,4 +122,16 @@ Route::group(['middleware' => ['auth']], function() {
     // 退会処理
     Route::post('withdrawal', 'MemberController@withdrawal')
         ->name('withdrawal');
+
+    // 会員情報変更ページ
+    Route::get('change-info-page', 'MemberController@changeInfo')
+        ->name('changeMemberInfoPage');
+
+    // パスワード変更ページ
+    Route::get('change-info-page', 'MemberController@changeInfo')
+        ->name('changeMemberInfoPage');
+
+    // 
+    Route::get('change-info-page', 'MemberController@changeInfo')
+        ->name('changeMemberInfoPage');
 });

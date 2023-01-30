@@ -26,25 +26,22 @@
     </div>
 
     @foreach ($product->reviews->paginate(5) as $review)
-    <div style="display: flex">
-        <div>
-            {{App\Member::find($review->member_id)->name_sei}}さん
+        <div style="display: flex">
+            <div>
+                {{App\Member::find($review->member_id)->name_sei}}さん
+            </div>
+            <div>
+                @for ($i=1; $i <= $review->evaluation; $i++)
+                    <span>★</span>
+                @endfor
+                {{$review->evaluation}}
+            </div>
         </div>
-        <div>
-            @for ($i=1; $i <= $review->evaluation; $i++)
-                <span>★</span>
-            @endfor
-            {{$review->evaluation}}
-        </div>
 
-    </div>
-
-    <p>
-        <span>商品コメント</span>
-        <span>{{$review->comment}}</span>
-    </p>
-
-
+        <p>
+            <span>商品コメント</span>
+            <span>{{$review->comment}}</span>
+        </p>
 
         <hr>
     @endforeach
