@@ -108,4 +108,9 @@ Route::group(['middleware' => ['auth']], function() {
     // レビュー登録＆完了ページへ
     Route::post('register-review-comp-page/{product}', 'ReviewController@create')
     ->name('registerReviewCompPage');
+
+    Route::get('myPage', function () {
+        return view('mypage');
+    })
+        ->name('myPage');
 });

@@ -7,6 +7,7 @@
 @auth
     <span>ようこそ{{ Auth::user()->name_sei }}様</span>
     <button><a href="{{route('registerProductPage')}}">新規商品登録</a></button>
+    <button><a href="{{route('myPage')}}">マイページ</a></button>
     <button><a href="{{route('productListPage')}}">商品一覧</a></button>
     <form method="POST" action="{{ route('logout') }}">
         @csrf

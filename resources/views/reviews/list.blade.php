@@ -9,7 +9,7 @@
 <body>
     <h1>商品レビュー一覧</h1>
 
-    <button><a href="{{route('topPage')}}">トップに戻る</a></button>
+    <button style="float: right"><a href="{{route('topPage')}}">トップに戻る</a></button>
 
     <div style="display: flex; margin-top: 30px">
         <div>
@@ -26,12 +26,32 @@
     </div>
 
     @foreach ($product->reviews->paginate(5) as $review)
-        {{$review->comment}}
-        {{$review->member_id}}
-        {{App\Member::find($review->member_id)->name_sei}}
+    <div style="display: flex">
+        <div>
+            {{App\Member::find($review->member_id)->name_sei}}さん
+        </div>
+        <div>
+            @for ($i=1; $i <= $review->evaluation; $i++)
+                <span>★</span>
+            @endfor
+            {{$review->evaluation}}
+        </div>
+
+    </div>
+
+    <p>
+        <span>商品コメント</span>
+        <span>{{$review->comment}}</span>
+    </p>
+
+
+
         <hr>
     @endforeach
 
-    {{$product->reviews->paginate(5)->links()}}
+    {{$product->reviews->paginate(5)->links('paginate.default')}}
+
+
+    <button><a href="{{route('productShowPage', $product)}}">詳細ページへ戻る</a></button>
 </body>
 </html>

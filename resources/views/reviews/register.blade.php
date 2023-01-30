@@ -51,6 +51,6 @@
         <button>商品レビュー登録確認</button>
     </form>
 
-    <button onclick="history.back()">商品一覧に戻る</button>
+    <button onclick="history.back()">商品詳細に戻る</button>
 </body>
 </html>

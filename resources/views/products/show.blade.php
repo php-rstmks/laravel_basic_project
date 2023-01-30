@@ -17,6 +17,8 @@
     <span>更新日時：{{$product->updated_at}}</span>
 
 
+    <div>
+
     @if (!is_null($product->image_1))
     {{-- 商品画像 --}}
         <img width=100 src="/storage/{{$product->image_1}}" alt="">
@@ -34,26 +36,34 @@
     {{-- 商品画像 --}}
         <img width=100 src="/storage/{{$product->image_4}}" alt="">
     @endif
+    </div>
+
 
     <div>
         <span>商品説明</span>
-        <span>{{$product->product_content}}</span>
+        <p>{{$product->product_content}}</p>
     </div>
 
     <p>
         <div>■商品レビュー</div>
-        <p>総合評価</p>
-        {{$product->reviews()->count()}}
+        <span>総合評価</span>
+        @for ($i=1; $i <= $avg_review; $i++)
+            <span>★</span>
+        @endfor
+        {{$avg_review}}
+
     </p>
 
-    <a href="{{route('reviewListPage', $product)}}">レビューを見る</a>
+    <a href="{{route('reviewListPage', $product)}}">＞＞レビューを見る</a>
 
+    <p>
     @auth
         <button><a href="{{route('registerReviewPage', $product)}}">この商品についてのレビューを登録</a></button>
     @endauth
+    </p>
 
     <div>
-        <button class="btn btn-back-blue" type="button" onclick="history.back()">商品一覧に戻る</button>
+        <button onclick="history.back()">商品一覧に戻る</button>
     </div>
 </body>
 </html>

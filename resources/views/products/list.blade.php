@@ -4,8 +4,6 @@
 <button><a href="{{route('registerProductPage')}}">新規商品登録</a></button>
 <div>商品一覧</div>
 
-{{-- <form action="{{route('productSearch')}}" method="POST"> --}}
-{{-- <form action="{{route('productSearch')}}" method="GET"> --}}
 <form action="{{route('productListPage')}}" method="GET">
     {{-- @csrf --}}
     <span>カテゴリ</span>
