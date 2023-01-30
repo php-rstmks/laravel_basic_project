@@ -7,7 +7,10 @@
     <title>Document</title>
 </head>
 <body>
+    <button style="float: right"><a href="{{route('topPage')}}">トップに戻る</a></button>
     <div>
+
+        <h1>商品レビュー登録確認</h1>
 
         @if (!is_null($product->image_1))
         {{-- 商品画像 --}}
@@ -28,8 +31,6 @@
 
     <div>商品コメント</div>
     {{$comment}}
-
-    <p>{{$product['id']}}</p>
 
     <form action="{{ route('registerReviewCompPage', $product)}}" method="POST">
         @csrf

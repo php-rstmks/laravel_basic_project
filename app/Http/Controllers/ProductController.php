@@ -197,12 +197,8 @@ class ProductController extends Controller
         $category = Product_category::find($request->product_category_id);
         $sub_category = Product_subcategory::find($request->product_subcategory_id);
 
-
-        Log::debug($category);
-
         return view('products.confirm')
             ->with(['product' => $request->all(), 'category' => $category, 'sub_category' => $sub_category]);
-            // ->with(['product' => $request->all(), 'category'  => $category]);
 
     }
 

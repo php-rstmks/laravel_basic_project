@@ -29,6 +29,7 @@
     </div>
 
     <hr>
+
     <form action="{{route('registerReviewConfPage', $product)}}" method="POST">
         @csrf
         <div style="display: flex;">
@@ -45,7 +46,7 @@
         <div class="form-group" style="display: flex;">
             <div>商品コメント</div>
             <div>
-                <textarea name="comment">{{old('comment')}}</textarea>
+                <input type="text" name="comment" value="{{old('comment')}}">
             </div>
         </div>
         <button>商品レビュー登録確認</button>

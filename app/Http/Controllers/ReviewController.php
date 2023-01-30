@@ -10,16 +10,22 @@ use Log;
 
 class ReviewController extends Controller
 {
+    // 商品レビュー登録ページ
     public function showRegisterPage(Product $product)
     {
         return view('reviews.register', compact('product'));
     }
 
     /**
-     * 商品レビューページ
+     * 商品レビュー登録確認ページ
      */
     public function showRegisterConfPage(Request $request, Product $product)
     {
+        $request->validate([
+            'comment' => 'required|max:500',
+        ]);
+
+
         $evaluation = $request->evaluation;
         $comment = $request->comment;
         return view('reviews.register_conf', compact('product', 'evaluation', 'comment'));
@@ -27,11 +33,6 @@ class ReviewController extends Controller
 
     public function create (Request $request, Product $product)
     {
-        $request->validate([
-            // 'evaluate' => 'required|',
-            'comment' => 'required|max:500',
-        ]);
-
         Review::create([
             'member_id' => Auth::id(),
             'product_id'=> $request->product_id,
