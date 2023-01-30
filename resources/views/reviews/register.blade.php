@@ -49,6 +49,14 @@
                 <input type="text" name="comment" value="{{old('comment')}}">
             </div>
         </div>
+
+        @if ($errors->any())
+
+            @foreach($errors->all() as $error)
+                <div style="color: red">{{ $error }}</div>
+            @endforeach
+        @endif
+        
         <button>商品レビュー登録確認</button>
     </form>
 
