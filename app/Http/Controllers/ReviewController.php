@@ -40,4 +40,9 @@ class ReviewController extends Controller
         return view('reviews.register_comp', compact('product'));
     }
 
+    public function list(Product $product)
+    {
+        return view('reviews.list', compact('product'));
+    }
+
 }

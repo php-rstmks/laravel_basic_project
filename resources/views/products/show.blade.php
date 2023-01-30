@@ -40,6 +40,14 @@
         <span>{{$product->product_content}}</span>
     </div>
 
+    <p>
+        <div>■商品レビュー</div>
+        <p>総合評価</p>
+        {{$product->reviews()->count()}}
+    </p>
+
+    <a href="{{route('reviewListPage', $product)}}">レビューを見る</a>
+
     @auth
         <button><a href="{{route('registerReviewPage', $product)}}">この商品についてのレビューを登録</a></button>
     @endauth

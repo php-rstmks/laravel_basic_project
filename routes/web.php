@@ -24,6 +24,10 @@ Route::get('/products-list', 'ProductController@list')
 Route::get('/products-show/{product}', 'ProductController@show')
     ->name('productShowPage');
 
+// レビュー一覧ページ
+Route::get('/review-list/{product}', 'ReviewController@list')
+    ->name('reviewListPage');
+
 Route::group(['middleware' => ['guest']], function() {
 
     Route::get('/', function () {

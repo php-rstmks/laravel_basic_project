@@ -78,5 +78,7 @@
         <input type="hidden" name="image_4" value="{{ $product['image_4'] }}">
         <button>登録する</button>
     </form>
+    <button onclick="history.back()">前に戻る</button>
+
 </body>
 </html>
