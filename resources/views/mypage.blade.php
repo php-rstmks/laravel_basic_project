@@ -24,18 +24,31 @@
         <span>女性</span>
     @endif
 </p>
+
 <button><a href="{{route('changeMemberInfoPage')}}">会員情報変更</a></button>
+
 <p>
     <span>パスワード</span>
     <span>セキュリティのため非表示</span>
 </p>
+
 <button><a href="{{route('changeMemberPasswordPage')}}">パスワード変更</a></button>
+
 <p>
     <span>メールアドレス</span>
     <span>{{Auth::user()->email}}</span>
 </p>
-<button><a href="{{route('changeMemberMailPage')}}">メールアドレス変更</a></button>
 
-<button><a href="">商品レビュー管理</a></button>
+<p>
 
-<button><a href="{{route('withdrawPage')}}">退会</a></button>
+    <button><a href="{{route('changeMemberMailPage')}}">メールアドレス変更</a></button>
+</p>
+
+<p>
+
+    <button><a href="">商品レビュー管理</a></button>
+</p>
+
+<p>
+    <button><a href="{{route('withdrawPage')}}">退会</a></button>
+</p>

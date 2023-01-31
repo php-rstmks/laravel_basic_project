@@ -52,6 +52,7 @@ Route::group(['middleware' => ['guest']], function() {
     Route::post('/login', 'Auth\LoginController@login')
         ->name('login');
 
+    // パスワード忘れて変更用のメール送信
     Route::get('/send-email-page', function() {
         return view('email_send');
     })->name('sendEmailPage');
@@ -124,14 +125,38 @@ Route::group(['middleware' => ['auth']], function() {
         ->name('withdrawal');
 
     // 会員情報変更ページ
-    Route::get('change-info-page', 'MemberController@changeInfo')
-        ->name('changeMemberInfoPage');
+    Route::get('change-info-page', function () {
+        return view('members.info_change');
+    })->name('changeMemberInfoPage');
 
-    // パスワード変更ページ
-    Route::get('change-info-page', 'MemberController@changeInfo')
-        ->name('changeMemberInfoPage');
+    // 会員情報変更確認ページ
+    // Route::post('change-info-conf-page', function () {
+    Route::post('change-info-conf-page', 'MemberController@changeInfoConfPage')
+        // return view('members.info_conf_change');
+    ->name('changeMemberInfoConfPage');
 
-    // 
-    Route::get('change-info-page', 'MemberController@changeInfo')
-        ->name('changeMemberInfoPage');
+    // 会員情報変更処理
+    Route::post('change-member-info', 'MemberController@changeInfo')
+        ->name('changeMemberInfo');
+
+    Route::get('change-password-page', function() {
+        return view('members.change_password');
+    })->name('changeMemberPasswordPage');
+
+    // パスワード変更
+    Route::post('change-password', 'MemberController@changePassword')
+        ->name('changeMemberPassword');
+
+    // メアド変更ページ
+    // Route::get('change-mail-page', 'MemberController@changeMail')
+    Route::get('change-mail-page', function () {
+        return view('members.change_mail');
+    })->name('changeMemberMailPage');
+
+    // メアド変更コード入力ページ
+    Route::post('change-mail-code', 'MemberController@changeMailCode')
+        ->name('changeEmailCodePage');
+
+    Route::post('change-mail', 'MemberController@changeEmail')
+        ->name('changeEmail');
 });

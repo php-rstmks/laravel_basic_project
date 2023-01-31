@@ -9,25 +9,43 @@
 <body>
     <h1>会員情報登録</h1>
 
-    <p>
-        <span>氏名</span>
-        <div>姓</div>
-        <input type="text" name="name_sei" id="">
-        <div>名</div>
-        <input type="text" name="name_mei" id="">
+    <form action="{{route('changeMemberInfoConfPage')}}" method="POST">
+        @csrf
 
-    </p>
+        <p>
+            <span>氏名</span>
+            <div>姓</div>
+            <input type="text" name="name_sei" id="" value="{{old('name_sei')}}">
+            <div>名</div>
+            <input type="text" name="name_mei" value="{{old('name_mei')}}">
 
-    <p>
-        <span>ニックネーム</span>
-        <input type="text" name="nickname" id="">
-    </p>
+        </p>
 
-    <p>
-        <span>性別</span>
+        @if ($errors->any())
 
-        <input type="radio" name="gender" value="1">
-        <input type="radio" name="gender" value="2">
-    </p>
+            @foreach($errors->all() as $error)
+                <div style="color: red">{{ $error }}</div>
+            @endforeach
+        @endif
+
+        <p>
+            <span>ニックネーム</span>
+            <input type="text" name="nickname" value="{{old('nickname')}}">
+        </p>
+
+        <p>
+            <span>性別</span>
+
+            <input type="radio" name="gender" value="1" {{ old('gender') == "1" ? "checked":"" }}>
+            <label for="">男性</label>
+            <input type="radio" name="gender" value="2" {{ old('gender') == "2" ? "checked":"" }}>
+            <label for="">女性</label>
+        </p>
+        <button>確認画面へ</button>
+
+    </form>
+
+
+    <button><a href="{{route('myPage')}}">マイページに戻る</a></button>
 </body>
 </html>
