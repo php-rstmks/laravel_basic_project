@@ -76,6 +76,27 @@ Route::group(['middleware' => ['guest:member']], function() {
 
 });
 
+Route::group(['middleware' => ['guest:administer']], function() {
+    // ログインページ
+    Route::get('admin-login-page', function () {
+
+        return view('admin.login');
+    })->name('adminLoginPage');
+
+    //管理ユーザ作成画面
+    Route::get('admin-register-page', function () {
+        return view('admin.regist');
+    });
+
+    // 管理ユーザ作成
+    Route::post('admin-register', 'AdministerController@regist')
+        ->name('adminCreate');
+
+    // ログイン処理
+    Route::post('admin-login', 'AdministerController@login')
+        ->name('admin_login');
+});
+
 Route::group(['middleware' => ['auth:member']], function() {
     Route::post('logout', 'Auth\LoginController@logout')
         ->name('logout');
@@ -185,4 +206,7 @@ Route::group(['middleware' => ['auth:member']], function() {
 
     Route::get('review-delete/{review}', 'ReviewController@delete')
         ->name('deleteReview');
+
 });
+
+

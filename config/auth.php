@@ -41,6 +41,11 @@ return [
             'driver' => 'session',
             'provider' => 'members',
         ],
+        'administer' => [
+            'driver' => 'session',
+            'provider' => 'administers',
+        ],
+
 
         'api' => [
             'driver' => 'token',
@@ -100,12 +105,18 @@ return [
     */
 
     'passwords' => [
-        'users' => [
-            'provider' => 'users',
+        'members' => [
+            'provider' => 'members',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,
         ],
+        'administers' => [
+            'provider' => 'admins',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ]
     ],
 
     /*
