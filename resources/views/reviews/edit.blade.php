@@ -10,10 +10,7 @@
     <button style="float: right"><a href="{{route('topPage')}}">トップに戻る</a></button>
     <h1>商品レビュー編集</h1>
     <div>
-        <div style="border: 1px black solid">
-            <span>{{App\Product_category::find($review->product->product_category_id)->name}}></span>
-            <span>{{App\Product_subcategory::find($review->product->product_subcategory_id)->name}}</span>
-        </div>
+
         <div>{{$review->product->name}}</div>
         <div>総合評価</div>
         @for ($i = 1; $i <= $avg_review; $i++)

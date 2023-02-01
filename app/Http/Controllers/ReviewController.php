@@ -88,4 +88,23 @@ class ReviewController extends Controller
         return redirect()->route('controlReviewPage');
     }
 
+    public function deletePage(Review $review)
+    {
+        Log::debug($review);
+
+        $avg_review = ceil(Review::where('product_id', $review->product->id)->avg('evaluation'));
+
+        return view('reviews.delete')
+            ->with(['review' => $review, 'avg_review' => $avg_review]);
+
+
+    }
+
+    public function delete(Review $review)
+    {
+        $review->delete();
+
+        return redirect()->route('controlReviewPage');
+    }
+
 }

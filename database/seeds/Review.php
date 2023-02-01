@@ -11,11 +11,11 @@ class Review extends Seeder
      */
     public function run()
     {
-        for($i = 1; $i < 8; $i ++)
+        for($i = 1; $i < 16; $i ++)
         {
 
             DB::table('reviews')->insert([
-                'member_id' => 2,
+                'member_id' => 1,
                 'product_id' => 1,
                 'evaluation' => random_int(1,5),
                 'comment' => 'comment' . $i,

@@ -10,32 +10,40 @@
     <button style="float: right"><a href="{{route('topPage')}}">トップに戻る</a></button>
     <h1>商品レビュー管理</h1>
 
-    @foreach(Auth::user()->reviews as $review)
-    <hr>
-    <div style="display: flex">
+    @foreach(Auth::user()->reviews->paginate(6) as $review)
+    {{-- @foreach(App\Review::find(Auth::id())->get() as $review) --}}
+        <hr>
+        <div style="display: flex">
 
-        <div>
-            <img width=100 src="/storage/{{$review->product->image_1}}" alt="">
-        </div>
-
-        <div>
-            <div style="border: 1px black solid">
-                <span>{{App\Product_category::find($review->product->product_category_id)->name}}></span>
-                <span>{{App\Product_subcategory::find($review->product->product_subcategory_id)->name}}</span>
+            <div>
+                <img width=100 src="/storage/{{$review->product->image_1}}" alt="">
             </div>
-            <div>{{$review->product->name}}</div>
-            @for ($i = 1; $i <= $review->evaluation; $i++)
-                <span>★</span>
-            @endfor
-            {{$review->evaluation}}
-            <p>{{$review->comment}}</p>
+
+            <div>
+                <div style="border: 1px black solid">
+                    <span>{{App\Product_category::find($review->product->product_category_id)->name}}></span>
+                    <span>{{App\Product_subcategory::find($review->product->product_subcategory_id)->name}}</span>
+                </div>
+                <div>{{$review->product->name}}</div>
+                @for ($i = 1; $i <= $review->evaluation; $i++)
+                    <span>★</span>
+                @endfor
+                {{$review->evaluation}}
+                @if(mb_strlen($review->comment) >= 16)
+                    {{ mb_substr($review->comment,0,16) }}...
+                @else
+                    {{ $review->comment }}
+                @endif
+            </div>
+
+            @php
+                unset($review->product);
+            @endphp
         </div>
-
-    </div>
-
-
         <button><a href="{{route('reviewEditPage', $review)}}">レビュー編集</a></button>
         <button><a href="{{route('reviewDeletePage', $review)}}">レビュー削除</a></button>
     @endforeach
+    {{Auth::user()->reviews->paginate(6)->links('paginate.default')}}
+
 </body>
 </html>

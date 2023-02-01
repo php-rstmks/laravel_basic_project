@@ -180,6 +180,9 @@ Route::group(['middleware' => ['auth:member']], function() {
         ->name('editReview');
 
     //　ユーザによるレビュー削除ページ
-    Route::get('review-delete-page/{review}', 'ReviewController@delete')
+    Route::get('review-delete-page/{review}', 'ReviewController@deletePage')
         ->name('reviewDeletePage');
+
+    Route::get('review-delete/{review}', 'ReviewController@delete')
+        ->name('deleteReview');
 });

@@ -39,6 +39,8 @@
         <input type="hidden" name="comment" value="{{$comment}}"">
         <button>更新する</button>
     </form>
+    <button onclick="history.back()">前に戻る</button>
+
 
 </body>
 </html>
