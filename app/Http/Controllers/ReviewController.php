@@ -56,7 +56,36 @@ class ReviewController extends Controller
 
     public function editPage(Review $review)
     {
+        $avg_review = ceil(Review::where('product_id', $review->product->id)->avg('evaluation'));
+
         return view('reviews.edit')
+            ->with(['review' => $review, 'avg_review' => $avg_review]);
+    }
+
+    public function editConfPage(Request $request, Review $review)
+    {
+
+        $request->validate([
+            'evaluation' => 'required',
+            'comment' => 'required|max:500',
+        ]);
+
+        Log::debug($request->all());
+
+        $avg_review = ceil(Review::where('product_id', $review->product->id)->avg('evaluation'));
+        return view('reviews.edit_conf')
+            ->with(['comment' => $request->comment, 'evaluation' => $request->evaluation, 'review' => $review, 'avg_review' => $avg_review]);
+    }
+
+    public function edit(Request $request, Review $review)
+    {
+        $review->evaluation = $request->evaluation;
+        $review->comment = $request->comment;
+
+        $review->save();
+
+
+        return redirect()->route('controlReviewPage');
     }
 
 }

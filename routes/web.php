@@ -172,6 +172,13 @@ Route::group(['middleware' => ['auth:member']], function() {
     Route::get('review-edit-page/{review}', 'ReviewController@editPage')
         ->name('reviewEditPage');
 
+    //レビュー編集確認ページ
+    Route::post('review-edit-conf-page/{review}', 'ReviewController@editConfPage')
+        ->name('reviewEditConfPage');
+
+    Route::post('review-edit/{review}', 'ReviewController@edit')
+        ->name('editReview');
+
     //　ユーザによるレビュー削除ページ
     Route::get('review-delete-page/{review}', 'ReviewController@delete')
         ->name('reviewDeletePage');

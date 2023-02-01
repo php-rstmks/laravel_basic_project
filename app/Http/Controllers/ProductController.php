@@ -97,8 +97,6 @@ class ProductController extends Controller
 
         $avg_review = ceil(Review::where('product_id', $product->id)->avg('evaluation'));
 
-        Log::debug($avg_review);
-
         return view('products.show', compact('product', 'avg_review'));
     }
 
