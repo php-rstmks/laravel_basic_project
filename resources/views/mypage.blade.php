@@ -46,7 +46,7 @@
 
 <p>
 
-    <button><a href="">商品レビュー管理</a></button>
+    <button><a href="{{route('controlReviewPage')}}">商品レビュー管理</a></button>
 </p>
 
 <p>

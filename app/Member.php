@@ -17,4 +17,9 @@ class Member extends Authenticatable
     protected $fillable = [
         'name_sei', 'name_mei', 'nickname', 'gender', 'email', 'password',
     ];
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }

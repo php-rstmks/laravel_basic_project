@@ -48,4 +48,15 @@ class ReviewController extends Controller
         return view('reviews.list', compact('product'));
     }
 
+    public function showControl()
+    {
+        return view('reviews.control');
+    }
+
+
+    public function editPage(Review $review)
+    {
+        return view('reviews.edit')
+    }
+
 }

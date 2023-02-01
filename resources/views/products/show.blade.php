@@ -63,7 +63,7 @@
     </p>
 
     <div>
-        <button onclick="history.back()">商品一覧に戻る</button>
+        <button><a href="{{route('productListPage')}}">商品一覧に戻る</a></button>
     </div>
 </body>
 </html>

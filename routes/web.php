@@ -28,7 +28,7 @@ Route::get('/products-show/{product}', 'ProductController@show')
 Route::get('/review-list/{product}', 'ReviewController@list')
     ->name('reviewListPage');
 
-Route::group(['middleware' => ['guest']], function() {
+Route::group(['middleware' => ['guest:member']], function() {
 
     Route::get('/', function () {
         return view('members.register');
@@ -57,9 +57,11 @@ Route::group(['middleware' => ['guest']], function() {
         return view('email_send');
     })->name('sendEmailPage');
 
+
     Route::post('/send-email', 'Auth\ResetPasswordController@sendEmail')
         ->name('sendEmail');
 
+    // 完了ページ
     Route::get('/send-email-comp-page', function() {
         return view('email_send_complete');
     })->name('sendEmailCompPage');
@@ -68,12 +70,13 @@ Route::group(['middleware' => ['guest']], function() {
         return view('password_reset');
     })->name('passwordResetPage');
 
+    // パスワードリセット処理
     Route::post('/password-reset', 'Auth\ResetPasswordController@resetPassword')
         ->name('passwordReset');
 
 });
 
-Route::group(['middleware' => ['auth']], function() {
+Route::group(['middleware' => ['auth:member']], function() {
     Route::post('logout', 'Auth\LoginController@logout')
         ->name('logout');
 
@@ -154,9 +157,22 @@ Route::group(['middleware' => ['auth']], function() {
     })->name('changeMemberMailPage');
 
     // メアド変更コード入力ページ
-    Route::post('change-mail-code', 'MemberController@changeMailCode')
+    Route::post('change-mail-code-page', 'MemberController@changeMailCode')
         ->name('changeEmailCodePage');
 
+    // メアド変更処理
     Route::post('change-mail', 'MemberController@changeEmail')
         ->name('changeEmail');
+
+    // ログインユーザのレビュー管理ページ
+    Route::get('control-review-page', 'ReviewController@showControl')
+        ->name('controlReviewPage');
+
+    //　ユーザによるレビュー編集ページ
+    Route::get('review-edit-page/{review}', 'ReviewController@editPage')
+        ->name('reviewEditPage');
+
+    //　ユーザによるレビュー削除ページ
+    Route::get('review-delete-page/{review}', 'ReviewController@delete')
+        ->name('reviewDeletePage');
 });
