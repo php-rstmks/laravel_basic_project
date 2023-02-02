@@ -7,8 +7,8 @@
     <title>Document</title>
 </head>
 <body>
+    <button style="float: right"><a href="{{route('topPage')}}">トップへ戻る</a></button>
     <div>商品レビュー登録</div>
-    <button><a href="{{route('topPage')}}">トップへ戻る</a></button>
 
     <div>
 
@@ -18,10 +18,23 @@
         @endif
 
 
-        {{-- <div>{{$product->name}}</div> --}}
-        <div>{{$product['name']}}</div>
+        <div>{{$product->name}}</div>
 
-        <p>総合評価</p>
+        <span>総合評価</span>
+
+        @php
+            $avg_review = ceil(App\Review::where('product_id', $product->id)->avg('evaluation'));
+        @endphp
+
+        <span>
+            @for($i = 1; $i <= $avg_review; $i++)
+                <span>★</span>
+            @endfor
+
+            @if ($avg_review >= 1 && $avg_review <= 5)
+                <span>{{$avg_review}}</span>
+            @endif
+        </span>
 
         {{-- {{App\Review::find($product->product_category_id)->name}}> --}}
 
@@ -56,7 +69,7 @@
                 <div style="color: red">{{ $error }}</div>
             @endforeach
         @endif
-        
+
         <button>商品レビュー登録確認</button>
     </form>
 

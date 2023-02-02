@@ -56,12 +56,28 @@
                 @endif
 
                 <div>
+                    {{-- カテゴリ＞サブカテゴリ --}}
                     <div>
                         {{App\Product_category::find($product->product_category_id)->name}}>
                         {{App\Product_subcategory::find($product->product_subcategory_id)->name}}
                     </div>
 
                     <a href="{{route('productShowPage', $product)}}">{{$product->name}}</a>
+
+                    @php
+                        $avg_review = ceil(App\Review::where('product_id', $product->id)->avg('evaluation'));
+                    @endphp
+
+                    <div>
+                        @for($i = 1; $i <= $avg_review; $i++)
+                            <span>★</span>
+                        @endfor
+
+                        @if ($avg_review >= 1 && $avg_review <= 5)
+                            <span>{{$avg_review}}</span>
+                        @endif
+                    </div>
+
                 </div>
             </div>
             <button><a href="{{route('productShowPage', $product)}}">詳細</a></button>

@@ -24,6 +24,22 @@
         {{-- {{App\Review::find($product->product_category_id)->name}}> --}}
     </div>
 
+    <span>総合評価</span>
+
+    @php
+        $avg_review = ceil(App\Review::where('product_id', $product->id)->avg('evaluation'));
+    @endphp
+
+    <span>
+        @for($i = 1; $i <= $avg_review; $i++)
+            <span>★</span>
+        @endfor
+
+        @if ($avg_review >= 1 && $avg_review <= 5)
+            <span>{{$avg_review}}</span>
+        @endif
+    </span>
+
     <hr>
 
     <div>商品評価</div>

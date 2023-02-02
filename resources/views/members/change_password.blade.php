@@ -12,9 +12,9 @@
 <form action="{{route('changeMemberPassword')}}" method="POST">
     @csrf
     <label for="">パスワード</label>
-    <input type="text" name="password" id="">
+    <input type="password" name="password" id="">
     <label for="">パスワード確認</label>
-    <input type="text" name="password_conf" id="">
+    <input type="password" name="password_conf" id="">
     <button>パスワードを変更</button>
 </form>
 

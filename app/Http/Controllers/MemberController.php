@@ -99,6 +99,7 @@ class MemberController extends Controller
         return redirect()->route('myPage');
     }
 
+    //
     public function changePassword(Request $request)
     {
         $request->validate([
@@ -109,6 +110,8 @@ class MemberController extends Controller
         $member = Member::find(Auth::id());
 
         $member->password = Hash::make($request->password);
+
+        $member->save();
 
         return redirect()->route('myPage');
     }

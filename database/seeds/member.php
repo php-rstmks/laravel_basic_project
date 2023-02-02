@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Hash;
 
 class Member extends Seeder
 {
@@ -11,14 +12,14 @@ class Member extends Seeder
      */
     public function run()
     {
-        for($i = 1; $i <= 50; $i++)
+        for($i = 1; $i <= 1; $i++)
         {
             DB::table('members')->insert([
                 'name_sei' => 'henoheno',
                 'name_mei' => $i,
                 'nickname' => 'nickname',
                 'gender' => random_int(0,1),
-                'password' => 11111111,
+                'password' => Hash::make(11111111),
                 'email' => 'test@' . $i . 'test',
             ]);
         }

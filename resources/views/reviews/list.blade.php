@@ -27,7 +27,7 @@
 
     @foreach ($product->reviews->paginate(5) as $review)
         <div style="display: flex">
-            <div>
+            <div style="margin-right: 40px">
                 {{App\Member::find($review->member_id)->name_sei}}さん
             </div>
             <div>
@@ -39,7 +39,7 @@
         </div>
 
         <p>
-            <span>商品コメント</span>
+            <span style="margin-right: 30px">商品コメント</span>
             <span>{{$review->comment}}</span>
         </p>
 
