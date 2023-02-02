@@ -209,4 +209,15 @@ Route::group(['middleware' => ['auth:member']], function() {
 
 });
 
+Route::group(['middleware' => ['auth:administer']], function() {
+    Route::get('admin-home', function () {
+        return view('admin.home');
+    });
+
+    Route::post('admin-logout', 'AdministerController@logout')
+        ->name('admin.logout');
+
+    // Route::get('admin-member-list', ')
+});
+
 

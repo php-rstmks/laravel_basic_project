@@ -51,27 +51,14 @@ class AdministerController extends Controller
         return 'login_id';
     }
 
-    // public function login(Request $request)
-    // {
-    //     $credentials = $request->only('login_id', 'password');
+    public function logout(Request $request)
+    {
+        $this->guard()->logout();
 
-    //     $email = $request->login_id;
+        $request->session()->invalidate();
 
-    //     Log::info($credentials);
+        $request->session()->regenerateToken();
 
-    //     if (Auth::guard('administer')->attempt($credentials))
-    //     // if (Auth::guard('administer')->attempt(['login_id' => $email, 'password' => $request->password]))
-    //     {
-    //         $request->session()->regenerate();
-
-    //     } else {
-    //         // 認証に失敗したら
-    //         return back()->withErrors([
-    //             'login_err' => 'メールアドレスかパスワードが間違っています。',
-    //         ]);
-    //     }
-
-    //     return redirect()->route('');
-
-    // }
+        return $this->loggedOut($request) ?: redirect('/admin-login-page');
+    }
 }
