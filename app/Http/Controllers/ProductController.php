@@ -46,6 +46,7 @@ class ProductController extends Controller
 
         $query = Product::query();
 
+        // 検索しているか、していないかを表す
         $return_state = false;
 
         // サブカテゴリがあれば（このときカテゴリは選択されている必要があるのでチェック項目には含めない）
@@ -77,6 +78,7 @@ class ProductController extends Controller
 
         $products = $query->orderBy('id', "DESC")->paginate(10);
 
+        Log::debug($products);
 
         return view('products.list')
             ->with([
@@ -169,7 +171,7 @@ class ProductController extends Controller
     }
 
     /**
-     * 登録画面から確認画面へ
+     * 商品登録画面から商品登録確認画面へ
      *
      */
     public function registerConf(Request $request)

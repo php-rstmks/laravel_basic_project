@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Hash;
+// use Hash;
+use Illuminate\Support\Carbon;
 
 class Member extends Seeder
 {
@@ -12,15 +13,17 @@ class Member extends Seeder
      */
     public function run()
     {
-        for($i = 1; $i <= 1; $i++)
+        for($i = 16; $i <= 45; $i++)
         {
             DB::table('members')->insert([
                 'name_sei' => 'henoheno',
                 'name_mei' => $i,
                 'nickname' => 'nickname',
-                'gender' => random_int(0,1),
+                'gender' => random_int(1,2),
                 'password' => Hash::make(11111111),
                 'email' => 'test@' . $i . 'test',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ]);
         }
     }

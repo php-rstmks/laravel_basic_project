@@ -22,6 +22,7 @@ class ReviewController extends Controller
     public function showRegisterConfPage(Request $request, Product $product)
     {
         $request->validate([
+            'evaluation' => 'between:1,5|numeric',
             'comment' => 'required|max:500',
         ]);
 

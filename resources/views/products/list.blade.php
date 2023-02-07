@@ -4,7 +4,7 @@
 <button><a href="{{route('registerProductPage')}}">新規商品登録</a></button>
 <div>商品一覧</div>
 
-<form action="{{route('productListPage')}}" method="GET">
+<form action="{{route('product.list')}}" method="GET">
     {{-- @csrf --}}
     <span>カテゴリ</span>
 
@@ -22,7 +22,6 @@
 
     <div>
         <select name="product_subcategory_id" id="js-ajax-target-field">
-            {{-- <option value="0">サブカテゴリ</option> --}}
             <option value="">サブカテゴリ</option>
             @if(!empty($return_product_subcaegory_id))
                 @foreach($product_subcategories as $product_subcategory)
@@ -62,7 +61,7 @@
                         {{App\Product_subcategory::find($product->product_subcategory_id)->name}}
                     </div>
 
-                    <a href="{{route('productShowPage', $product)}}">{{$product->name}}</a>
+                    <a href="{{route('product.show', $product)}}">{{$product->name}}</a>
 
                     @php
                         $avg_review = ceil(App\Review::where('product_id', $product->id)->avg('evaluation'));
@@ -80,20 +79,25 @@
 
                 </div>
             </div>
-            <button><a href="{{route('productShowPage', $product)}}">詳細</a></button>
+            <button><a href="{{route('product.show', $product)}}">詳細</a></button>
             <hr>
         @endforeach
     @endif
 </div>
 
 {{-- ページネーション --}}
+
+{{-- 検索条件でない、初期表示のとき --}}
 @if (!$return_state)
     <div class="pagination">
         {{ $products->links('paginate.default') }}
     </div>
 
+{{-- 検索条件での表示のとき --}}
 @else
-    {{ $products->appends(request()->query())->links('paginate.default') }}
+    <div class="pagination rr">
+        {{ $products->appends(request()->query())->links('paginate.default') }}
+    </div>
 @endif
 
 <button><a href="{{route('topPage')}}">トップに戻る</a></button>

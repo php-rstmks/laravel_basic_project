@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Administer;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Auth;
-use Log;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Administer;
 use Hash;
+use Auth;
 
 
-class AdministerController extends Controller
+class LoginController extends Controller
 {
     use AuthenticatesUsers;
 
@@ -22,7 +22,7 @@ class AdministerController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('adminLoginPage');
+        return redirect()->route('admin.loginpage');
     }
 
     public function __construct()
@@ -43,7 +43,7 @@ class AdministerController extends Controller
         ]);
     }
 
-    protected $redirectTo = '/admin-home';
+    protected $redirectTo = '/admin/home';
 
 
     public function username()
@@ -59,6 +59,6 @@ class AdministerController extends Controller
 
         $request->session()->regenerateToken();
 
-        return $this->loggedOut($request) ?: redirect('/admin-login-page');
+        return $this->loggedOut($request) ?: redirect('/admin/login');
     }
 }

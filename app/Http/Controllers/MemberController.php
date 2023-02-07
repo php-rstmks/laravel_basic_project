@@ -15,6 +15,7 @@ use App\Mail\ChangeEmail;
 
 class MemberController extends Controller
 {
+
     /**
      * 登録の確認画面へ
      */

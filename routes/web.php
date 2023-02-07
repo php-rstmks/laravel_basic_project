@@ -1,28 +1,24 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 // トップページ
 Route::get('/top', function() {
     return view('top');
 })->name('topPage');
 
-// 商品一覧ページ&検索ページ
-Route::get('/products-list', 'ProductController@list')
-    ->name('productListPage');
+Route::prefix('products')->group(function () {
 
-    //詳細ページ
-Route::get('/products-show/{product}', 'ProductController@show')
-    ->name('productShowPage');
+    // ログインメンバとゲストが入れる商品一覧ページ&検索ページ
+    Route::get('/list/', 'ProductController@list')
+    ->name('product.list');
+
+    // 商品詳細ページ
+    Route::get('/show/{product}', 'ProductController@show')
+    ->name('product.show');
+
+});
+
+Route::get('/list/members', 'MemberController@page')
+->name('member.list');
 
 // レビュー一覧ページ
 Route::get('/review-list/{product}', 'ReviewController@list')
@@ -35,13 +31,14 @@ Route::group(['middleware' => ['guest:member']], function() {
     })->name('registerPage');
 
     // メンバ登録確認ページへ移動
-    Route::post('/register-member-confirm', 'MemberController@registerConf')
+    Route::post('/register/member/confirm', 'MemberController@registerConf')
         ->name('registerConf');
 
-    Route::post('/register-complete', 'MemberController@registerMember')
+    Route::post('/register/member/complete', 'MemberController@registerMember')
         ->name('registerComp');
 
-    Route::get('/register-complete-page', function() {
+    // 完了ページ
+    Route::get('/register/member/complete', function() {
         return view('members.register_comp');
     })->name('registerCompPage');
 
@@ -76,51 +73,71 @@ Route::group(['middleware' => ['guest:member']], function() {
 
 });
 
-Route::group(['middleware' => ['guest:administer']], function() {
+
+
+
+
+
+
+
+
+Route::group([
+    'prefix' => 'admin',
+    'middleware' => 'guest:administer',
+    'namespace' => 'Administer',
+    // 'name' => 'admin.'
+    ], function() {
+
     // ログインページ
-    Route::get('admin-login-page', function () {
+    Route::get('/login', function () {
 
         return view('admin.login');
-    })->name('adminLoginPage');
+    })->name('admin.loginpage');
+
+    // ログイン処理
+    Route::post('/login', 'LoginController@login')
+        ->name('login');
 
     //管理ユーザ作成画面
-    Route::get('admin-register-page', function () {
+    Route::get('register', function () {
         return view('admin.regist');
     });
 
     // 管理ユーザ作成
-    Route::post('admin-register', 'AdministerController@regist')
+    Route::post('register', 'LoginController@regist')
         ->name('adminCreate');
-
-    // ログイン処理
-    Route::post('admin-login', 'AdministerController@login')
-        ->name('admin_login');
 });
 
 Route::group(['middleware' => ['auth:member']], function() {
+
+
     Route::post('logout', 'Auth\LoginController@logout')
         ->name('logout');
 
     // 商品の登録ページ
 
-    Route::get('register-product-page', 'ProductController@showProductPage')
+    Route::prefix('products')->group(function () {
+
+        Route::get('/register', 'ProductController@showProductPage')
         ->name('registerProductPage');
 
-    // 商品登録確認ページへの移動
-    Route::post('register-product-confirm-page', 'ProductController@registerConf')
-        ->name('registerProductConfPage');
+        // 商品登録確認ページへの移動
+        Route::post('register/confirm', 'ProductController@registerConf')
+            ->name('registerProductConfPage');
 
-    // 商品の登録
-    Route::post('register-product', 'ProductController@registerProduct')
-        ->name('registerProduct');
+        // 商品の登録処理
+        Route::post('register/complete', 'ProductController@registerProduct')
+            ->name('registerProduct');
 
-    // 画像のアップロード
-    Route::post('register-product-image', 'ProductController@registerImage')
+        // 画像のアップロード
+        Route::post('upload/image', 'ProductController@registerImage')
         ->name('registerImage');
 
-    // 小カテゴリを出現させる。
-    Route::get('set-subcategory/{categoryId}', 'ProductController@setSubCategory')
-        ->name('setSubCategory');
+        // 小カテゴリを出現させる。
+        Route::get('set-subcategory/{categoryId}', 'ProductController@setSubCategory')
+            ->name('setSubCategory');
+
+    });
 
     // れびゅー登録ページ
     Route::get('register-review-page/{product}', 'ReviewController@showRegisterPage')
@@ -154,9 +171,7 @@ Route::group(['middleware' => ['auth:member']], function() {
     })->name('changeMemberInfoPage');
 
     // 会員情報変更確認ページ
-    // Route::post('change-info-conf-page', function () {
     Route::post('change-info-conf-page', 'MemberController@changeInfoConfPage')
-        // return view('members.info_conf_change');
     ->name('changeMemberInfoConfPage');
 
     // 会員情報変更処理
@@ -209,15 +224,26 @@ Route::group(['middleware' => ['auth:member']], function() {
 
 });
 
-Route::group(['middleware' => ['auth:administer']], function() {
-    Route::get('admin-home', function () {
-        return view('admin.home');
-    });
+// 管理者ログイン状態
+Route::group([
+    'prefix' => 'admin',
+    'namespace' => 'Administer',
+    'middleware' => 'auth:administer',
+    // 'name' => 'admin.'
+    ], function() {
 
-    Route::post('admin-logout', 'AdministerController@logout')
+    Route::get('home', function () {
+        return view('admin.home');
+    })->name('admin.home');
+
+    Route::post('logout', 'LoginController@logout')
         ->name('admin.logout');
 
-    // Route::get('admin-member-list', ')
+    Route::get('members/list', 'MemberController@showList')
+        ->name('admin.members.list');
+
+    Route::get('products/list', 'ProductController@showList')
+        ->name('admin.products.list');
 });
 
 
