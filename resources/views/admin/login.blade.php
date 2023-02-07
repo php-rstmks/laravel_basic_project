@@ -2,7 +2,7 @@
 <div>
     <h2>管理画面</h2>
     <div>
-        <form method="POST" action="{{ route('login') }}">
+        <form method="POST" action="{{ route('admin.login') }}">
             @csrf
             <div class="form-group">
                 <span>ログインID</span>

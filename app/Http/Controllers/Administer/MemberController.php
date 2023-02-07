@@ -14,21 +14,14 @@ class MemberController extends Controller
         $members = Member::latest()->paginate(10);
         $asc_flg = true;
 
+        // $id = $request->id;
+        $man = $request->man;
+        $woman = $request->woman;
         $free_word = $request->free_word;
 
         $query = Member::query();
 
         $return_state = false;
-
-        if ($request->filled("sort_asc"))
-        {
-            $asc_flg = false;
-        }
-
-        if ($request->filled("sort_desc"))
-        {
-            //なにもしない
-        }
 
         // idがあれば（このときカテゴリは選択されている必要があるのでチェック項目には含めない）
         if ($request->filled("id"))
@@ -36,7 +29,6 @@ class MemberController extends Controller
             $query->where("id", $request->id);
 
             $return_state = true;
-
         }
 
         if ($request->filled('man') && $request->filled('woman')) {
@@ -66,10 +58,25 @@ class MemberController extends Controller
                 $query->orWhere('email', 'LIKE', $search_word);
             });
             $return_state = true;
-
         }
 
-        $members = $query->orderBy('id', "DESC")->paginate(10);
+        if ($request->filled("sort_asc"))
+        {
+            $members = $query->orderBy('id', "ASC")->paginate(10);
+            $asc_flg = true;
+        }
+
+        elseif($request->filled("sort_desc"))
+        {
+            $members = $query->orderBy('id', "DESC")->paginate(10);
+            $asc_flg = false;
+
+        }
+        else {
+            $members = $query->orderBy('id', "ASC")->paginate(10);
+            $asc_flg = true;
+        }
+
 
         Log::debug($members);
         return view('admin.members.list')
@@ -77,6 +84,10 @@ class MemberController extends Controller
                 'members' => $members,
                 'return_state' => $return_state,
                 'asc_flg'=> $asc_flg,
+                // 'id' => $id,
+                'man' => $man,
+                'woman' => $woman,
+                'free_word' => $free_word,
                 // 'return_product_category_id' => $product_category_id,
                 // 'return_product_subcategory_id' => $product_subcategory_id,
             ]);

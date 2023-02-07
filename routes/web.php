@@ -74,13 +74,6 @@ Route::group(['middleware' => ['guest:member']], function() {
 });
 
 
-
-
-
-
-
-
-
 Route::group([
     'prefix' => 'admin',
     'middleware' => 'guest:administer',
@@ -96,7 +89,7 @@ Route::group([
 
     // ログイン処理
     Route::post('/login', 'LoginController@login')
-        ->name('login');
+        ->name('admin.login');
 
     //管理ユーザ作成画面
     Route::get('register', function () {

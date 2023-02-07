@@ -20,7 +20,6 @@ Session::forget('login_email');
 
     <form action="{{ route('login') }}" method="POST">
         @csrf
-        {{-- ↓表示されない。なぜ --}}
         @if (session('login_err'))
             {{ session('login_err') }}
         @endif
@@ -38,7 +37,7 @@ Session::forget('login_email');
         <div>
             <span>メールアドレス（ID）</span>
             {{-- <input type="email" name="email" id="" value="{{ old('email') }}"> --}}
-            <input type="email" name="email" id="" value="<?= $email; ?>">
+            <input type="email" name="email" value="<?= $email; ?>">
         </div>
 
         <div>

@@ -39,6 +39,17 @@
                     <form action="{{route('admin.members.list')}}" method="GET">
                         <button>ID▼</button>
                         <input type="hidden" name="sort_desc" value="0">
+
+                        {{-- 検索条件で表示されたデータに対して、昇順、降順をするためのプログラム --}}
+                        @if (isset($man))
+                            <input type="hidden" name="man" value={{$man}}>
+                        @endif
+                        @if (isset($woman))
+                            <input type="hidden" name="woman" value={{$woman}}>
+                        @endif
+                        @if (isset($free_word))
+                            <input type="hidden" name="free_word" value={{$free_word}}>
+                        @endif
                     </form>
                 @else
                 {{-- 降順のとき --}}
