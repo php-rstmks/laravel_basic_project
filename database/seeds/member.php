@@ -25,6 +25,14 @@ class Member extends Seeder
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ]);
+
+
         }
+        
+        DB::table('administers')->insert([
+            'name' => 'admin1',
+            'login_id' => 'admin1',
+            'password' => 'Hash::make(11111111)',
+        ]);
     }
 }

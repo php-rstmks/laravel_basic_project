@@ -10,7 +10,7 @@
     <button style="float: right"><a href="{{route('topPage')}}">トップに戻る</a></button>
     <h1>商品レビュー管理</h1>
 
-    @foreach(Auth::user()->reviews->paginate(6) as $review)
+    @foreach(Auth::user()->reviews->paginate(5) as $review)
     {{-- @foreach(App\Review::find(Auth::id())->get() as $review) --}}
         <hr>
         <div style="display: flex">
