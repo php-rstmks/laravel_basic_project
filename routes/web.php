@@ -254,13 +254,14 @@ Route::group([
     // Route::get('products/register, ')
 
     // 会員編集画面
-    Route::get('members/edit', 'MemberController@editpage')
+    Route::get('members/edit/{member}', 'MemberController@editpage')
         ->name('admin.members.editpage');
 
-    Route::get('members/edit/conf', 'MemberController@edit_confpage')
+    // 会員編集確認画面
+    Route::post('members/edit/conf', 'MemberController@edit_confpage')
         ->name('admin.members.edit_conf');
 
-    Route::get('members/edit/comp', 'MemberController@edit')
+    Route::post('members/edit/comp', 'MemberController@edit')
         ->name('admin.members.edit');
 
 });

@@ -1,3 +1,12 @@
+<button style="float: right"><a href="{{route('admin.members.list')}}">一覧に戻る</a></button>
+
+<h1>
+    @if ($register)
+        会員登録
+    @elseif ($edit)
+        会員編集
+    @endif
+</h1>
 <form method="POST" action="{{ $route }}">
     @csrf
     <table>
@@ -5,7 +14,6 @@
             <th>ID</th>
             <td>
             {{ $register ? '登録後に自動採番' : $member->id }}
-            {{-- @if (!$register) --}}
             @if ($edit)
                 <input type="hidden" name="id" value="{{ $member->id }}">
             @endif

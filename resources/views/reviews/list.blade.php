@@ -49,6 +49,6 @@
     {{$product->reviews->paginate(5)->links('paginate.default')}}
 
 
-    <button><a href="{{route('productShowPage', $product)}}">詳細ページへ戻る</a></button>
+    <button><a href="{{route('product.show', $product)}}">詳細ページへ戻る</a></button>
 </body>
 </html>

@@ -32,7 +32,7 @@ class ReviewController extends Controller
         return view('reviews.register_conf', compact('product', 'evaluation', 'comment'));
     }
 
-    public function create (Request $request, Product $product)
+    public function create(Request $request, Product $product)
     {
         Review::create([
             'member_id' => Auth::id(),

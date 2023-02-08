@@ -9,7 +9,7 @@
 <form action="{{route('changeEmail')}}" method="POST">
     @csrf
     <input type="text" name="code_from_email" id="">
-    <input type="hidden" name="code_original" value="{{$code}}">
+    {{-- <input type="hidden" name="code_original" value="{{$code}}"> --}}
     <input type="hidden" name="email" value="{{$email}}">
     <button>認証コードを送信してメールアドレスの変更を完了する</button>
 </form>

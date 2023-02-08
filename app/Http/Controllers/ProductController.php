@@ -110,9 +110,10 @@ class ProductController extends Controller
      */
     public function setSubCategory(Request $request)
     {
+        Log::debug('jlk');
         $product_subcategories = DB::table('product_subcategories')
-        ->where('product_category_id', $request->categoryId)
-        ->get();
+            ->where('product_category_id', $request->categoryId)
+            ->get();
 
         return response()->json([
             'product_subcategories' => $product_subcategories,

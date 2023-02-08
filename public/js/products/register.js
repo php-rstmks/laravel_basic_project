@@ -5,8 +5,8 @@
 
     const subCategorySelectBox = document.querySelector('#js-ajax-target-field')
 
+    // サブカテゴリセットする。
     categorySelectBox.addEventListener("change", (e) => {
-
         const categoryId = e.target.value
 
         fetch('/set-subcategory/' + categoryId, {

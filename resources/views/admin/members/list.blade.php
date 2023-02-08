@@ -98,7 +98,7 @@
                 <td>{{$member->email}}</td>
                 <td>{{$member->gender}}</td>
                 <td>{{$member->created_at}}</td>
-                <td><a href="{{route('')}}{{}}">編集<a/></td>
+                <td><a href="{{ route('admin.members.editpage', $member) }}">編集</a></td>
             </tr>
         @endforeach
     </table>

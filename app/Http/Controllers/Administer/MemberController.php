@@ -130,11 +130,18 @@ class MemberController extends Controller
     }
 
 
-    public function editpage()
+    public function editpage(Member $member)
     {
         $register = null;
+
         $edit = "a";
-        return view('admin.members.edit', compact('register', 'edit'));
+        Log::debug($member);
+        return view('admin.members.edit')
+            ->with([
+                'register' => $register,
+                'edit' => $edit,
+                'member' => $member,
+            ]);
     }
 
     public function edit_confpage(Request $request, Member $member)
@@ -142,7 +149,7 @@ class MemberController extends Controller
         $register = null;
         $edit = "a";
         $editInfo = $request->all();
-        return view('admin.members.register_conf', compact('register', 'edit', 'editInfo'));
+        return view('admin.members.register_conf', compact('register', 'edit', 'editInfo', $member));
 
     }
 

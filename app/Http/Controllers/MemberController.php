@@ -135,11 +135,20 @@ class MemberController extends Controller
         ->send(new ChangeEmail($code));
 
         return view('members.change_mail_conf')
-            ->with(['code' => $code, 'email' => $to_mail_address]);
+            // ->with(['code' => $code, 'email' => $to_mail_address]);
+            ->with(['email' => $to_mail_address]);
+    }
+
+    public function showEmailConfPage()
+    {
+        return view('members.change_mail_conf')
+            ->with([''])
     }
 
     public function changeEmail(Request $request)
     {
+        $member = Member::find(Auth::id());
+
         //
         if (empty($request->code_from_email))
         {
@@ -148,7 +157,7 @@ class MemberController extends Controller
         }
 
         // メールで送信したコードと一致している場合
-        if ($request->code_original == $request->code_from_email)
+        if ($member->auth_code == $request->code_from_email)
         {
             $member = Member::find(Auth::id());
             $member->email = $request->email;
