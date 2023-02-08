@@ -22,10 +22,17 @@
 
             <div>{{$product->name}}</div>
             <div>総合評価</div>
+            @for ($i=1; $i <= $avg_review; $i++)
+            <span>★</span>
+            @endfor
+            {{$avg_review}}
+
         </div>
     </div>
 
     @foreach ($product->reviews->paginate(5) as $review)
+    <hr>
+
         <div style="display: flex">
             <div style="margin-right: 40px">
                 {{App\Member::find($review->member_id)->name_sei}}さん
@@ -43,7 +50,6 @@
             <span>{{$review->comment}}</span>
         </p>
 
-        <hr>
     @endforeach
 
     {{$product->reviews->paginate(5)->links('paginate.default')}}

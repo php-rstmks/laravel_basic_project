@@ -43,7 +43,9 @@
         <button><a href="{{route('reviewEditPage', $review)}}">レビュー編集</a></button>
         <button><a href="{{route('reviewDeletePage', $review)}}">レビュー削除</a></button>
     @endforeach
-    {{Auth::user()->reviews->paginate(6)->links('paginate.default')}}
+    {{Auth::user()->reviews->paginate(5)->links('paginate.default')}}
+
+    <button><a href="{{route('myPage')}}">マイページに戻る</a></button>
 
 </body>
 </html>

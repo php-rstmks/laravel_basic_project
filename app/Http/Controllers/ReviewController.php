@@ -46,7 +46,9 @@ class ReviewController extends Controller
 
     public function list(Product $product)
     {
-        return view('reviews.list', compact('product'));
+        $avg_review = ceil(Review::where('product_id', $product->id)->avg('evaluation'));
+
+        return view('reviews.list', compact('product', 'avg_review'));
     }
 
     public function showControl()
@@ -61,14 +63,18 @@ class ReviewController extends Controller
 
         return view('reviews.edit')
             ->with(['review' => $review, 'avg_review' => $avg_review]);
+
     }
 
     public function editConfPage(Request $request, Review $review)
     {
 
         $request->validate([
-            'evaluation' => 'required',
+            'evaluation' => 'required|integer|between:1,5',
             'comment' => 'required|max:500',
+        ], [
+            'evaluation.integer' => '評価を正しく選択してください',
+            'evaluation.between' => '評価を正しく選択してください',
         ]);
 
         Log::debug($request->all());
