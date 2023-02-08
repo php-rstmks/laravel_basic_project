@@ -89,6 +89,7 @@
                     </form>
                 @endif
             </th>
+            <th>編集</th>
         </tr>
         @foreach($members as $member)
             <tr>
@@ -97,6 +98,7 @@
                 <td>{{$member->email}}</td>
                 <td>{{$member->gender}}</td>
                 <td>{{$member->created_at}}</td>
+                <td><a href="{{route('')}}{{}}">編集<a/></td>
             </tr>
         @endforeach
     </table>

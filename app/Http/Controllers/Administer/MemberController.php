@@ -130,5 +130,27 @@ class MemberController extends Controller
     }
 
 
+    public function editpage()
+    {
+        $register = null;
+        $edit = "a";
+        return view('admin.members.edit', compact('register', 'edit'));
+    }
+
+    public function edit_confpage(Request $request, Member $member)
+    {
+        $register = null;
+        $edit = "a";
+        $editInfo = $request->all();
+        return view('admin.members.register_conf', compact('register', 'edit', 'editInfo'));
+
+    }
+
+    public function edit(Request $request)
+    {
+
+    }
+
+
 
 }

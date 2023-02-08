@@ -63,7 +63,7 @@
     </p>
 
     <div>
-        <button><a href="{{route('productListPage')}}">商品一覧に戻る</a></button>
+        <button><a href="{{route('product.list')}}">商品一覧に戻る</a></button>
     </div>
 </body>
 </html>

@@ -13,3 +13,7 @@
     <input type="hidden" name="email" value="{{$email}}">
     <button>認証コードを送信してメールアドレスの変更を完了する</button>
 </form>
+
+@if (session('err_msg'))
+    {{ session('err_msg') }}
+@endif

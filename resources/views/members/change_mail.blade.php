@@ -24,10 +24,9 @@ Session::forget('send_email');
     </form>
 
     @if ($errors->any())
-
-    @foreach($errors->all() as $error)
-        <div style="color: red">{{ $error }}</div>
-    @endforeach
+        @foreach($errors->all() as $error)
+            <div style="color: red">{{ $error }}</div>
+        @endforeach
     @endif
 
     <button><a href="{{route('myPage')}}">マイページに戻る</a></button>
