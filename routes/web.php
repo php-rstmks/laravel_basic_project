@@ -122,15 +122,15 @@ Route::group(['middleware' => ['auth:member']], function() {
         Route::post('register/complete', 'ProductController@registerProduct')
             ->name('registerProduct');
 
-        // 画像のアップロード
-        Route::post('upload/image', 'ProductController@registerImage')
-        ->name('registerImage');
-
-        // 小カテゴリを出現させる。
-        Route::get('set-subcategory/{categoryId}', 'ProductController@setSubCategory')
-            ->name('setSubCategory');
-
     });
+
+    // 画像のアップロード
+    Route::post('upload/image', 'ProductController@registerImage')
+    ->name('registerImage');
+
+    // 小カテゴリを出現させる。
+    Route::get('set-subcategory/{categoryId}', 'ProductController@setSubCategory')
+        ->name('setSubCategory');
 
     // れびゅー登録ページ
     Route::get('register-review-page/{product}', 'ReviewController@showRegisterPage')

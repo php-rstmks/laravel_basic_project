@@ -30,9 +30,8 @@
                 optionTag.setAttribute("value", subCategory.id)
                 optionTag.innerHTML = subCategory.name
 
-                console.log(optionTag)
-
                 subCategorySelectBox.append(optionTag)
+
             });
         })
 

@@ -25,6 +25,10 @@ class MemberController extends Controller
 
         $query = Member::query();
 
+        // return_stateをtrueにすることで、以下のコードに切り替えて
+        // 検索条件にページネーションを適応させることができる。
+        //{{ $members->appends(request()->query())->links('paginate.default') }}
+
         $return_state = false;
 
         // idがあれば（このときカテゴリは選択されている必要があるのでチェック項目には含めない）
@@ -57,10 +61,10 @@ class MemberController extends Controller
         {
             $search_word = '%' . $free_word . '%';
             Log::debug($search_word);
-            $query->where(function ($query) use ($search_word) {
-                $query->where('name_sei', 'LIKE', $search_word);
-                $query->where('name_mei', 'LIKE', $search_word);
-                $query->orWhere('email', 'LIKE', $search_word);
+            $query->where(function ($whereQuery) use ($search_word) {
+                $whereQuery->where('name_sei', 'LIKE', $search_word);
+                $whereQuery->orWhere('name_mei', 'LIKE', $search_word);
+                $whereQuery->orWhere('email', 'LIKE', $search_word);
             });
             $return_state = true;
         }

@@ -32,7 +32,7 @@ class ProductController extends Controller
     }
 
     /**
-     * 商品一覧ページ
+     * 商品一覧、検索ページ
      */
     public function list(Request $request)
     {
@@ -223,7 +223,7 @@ class ProductController extends Controller
         ]);
 
 
-        return redirect()->route('productListPage');
+        return redirect()->route('product.list');
     }
 
 }
