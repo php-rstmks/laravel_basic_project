@@ -141,8 +141,8 @@ class MemberController extends Controller
 
     public function showEmailConfPage()
     {
-        return view('members.change_mail_conf')
-            ->with([''])
+        // return view('members.change_mail_conf')
+        //     ->with([''])
     }
 
     public function changeEmail(Request $request)
@@ -153,6 +153,8 @@ class MemberController extends Controller
         if (empty($request->code_from_email))
         {
             $request->session()->put('err_msg', '認証コードを入力してください');
+
+
             return redirect()->route('changeMemberMailPage');
         }
 

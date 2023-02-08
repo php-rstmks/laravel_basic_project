@@ -14,6 +14,11 @@
     <button>認証コードを送信してメールアドレスの変更を完了する</button>
 </form>
 
+{{-- 認証コードの部分でバリデーションに引っかかったとき --}}
+@if (Session::has('err_msg'))
+    <div style="color: red">{{Session::pull('err_msg', 'default')}}</div>
+@endif
+
 @if (session('err_msg'))
     {{ session('err_msg') }}
 @endif

@@ -29,10 +29,6 @@ Session::forget('send_email');
         @endforeach
     @endif
 
-    @if (Session::has('err_msg'))
-        <div style="color: red">{{Session::pull('err_msg', 'default')}}</div>
-    @endif
-
     <button><a href="{{route('myPage')}}">マイページに戻る</a></button>
 
 </body>
