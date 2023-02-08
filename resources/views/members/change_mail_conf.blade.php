@@ -19,6 +19,3 @@
     <div style="color: red">{{Session::pull('err_msg', 'default')}}</div>
 @endif
 
-@if (session('err_msg'))
-    {{ session('err_msg') }}
-@endif

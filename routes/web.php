@@ -188,6 +188,11 @@ Route::group(['middleware' => ['auth:member']], function() {
     Route::post('change-mail-code-page', 'MemberController@changeMailCode')
         ->name('changeEmailCodePage');
 
+    // メアド変更コード入力ページへ、
+    Route::get('change-mail-code-repage', 'MemberController@showEmailCodePage')
+        ->name('show.email.codepage');
+
+
     // メアド変更処理
     Route::post('change-mail', 'MemberController@changeEmail')
         ->name('changeEmail');

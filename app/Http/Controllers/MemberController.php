@@ -139,23 +139,28 @@ class MemberController extends Controller
             ->with(['email' => $to_mail_address]);
     }
 
-    public function showEmailConfPage()
+    public function showEmailCodePage()
     {
-        // return view('members.change_mail_conf')
-        //     ->with([''])
+        $email = session('email' , 'default');
+        session()->forget('email');
+
+        return view('members.change_mail_conf')
+            ->with(['email' => $email]);
     }
 
     public function changeEmail(Request $request)
     {
         $member = Member::find(Auth::id());
 
+        $email = $request->email;
+
         //
         if (empty($request->code_from_email))
         {
             $request->session()->put('err_msg', '認証コードを入力してください');
+            $request->session()->put('email', $email);
 
-
-            return redirect()->route('changeMemberMailPage');
+            return redirect()->route('show.email.codepage')->with(compact('email'));
         }
 
         // メールで送信したコードと一致している場合
@@ -167,7 +172,10 @@ class MemberController extends Controller
         } else {
             $request->session()->put('err_msg', '認証コードが一致しません');
 
-            return redirect()->route('changeMemberMailPage');
+            $request->session()->put('email', $email);
+
+            return redirect()->route('show.email.codepage')->with(compact('email'));
+
         }
 
         return redirect()->route('myPage');
