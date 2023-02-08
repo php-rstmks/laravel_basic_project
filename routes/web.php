@@ -243,7 +243,7 @@ Route::group([
     Route::get('products/list', 'ProductController@showList')
         ->name('admin.products.list');
 
-    // 登録画面
+    // 会員登録画面
     Route::get('members/register', 'MemberController@registerpage')
         ->name('admin.members.registerpage');
 
@@ -263,10 +263,10 @@ Route::group([
         ->name('admin.members.editpage');
 
     // 会員編集確認画面
-    Route::post('members/edit/conf', 'MemberController@edit_confpage')
+    Route::post('members/edit/conf/{member}', 'MemberController@edit_confpage')
         ->name('admin.members.edit_conf');
 
-    Route::post('members/edit/comp', 'MemberController@edit')
+    Route::post('members/edit/comp/{member}', 'MemberController@edit')
         ->name('admin.members.edit');
 
 });

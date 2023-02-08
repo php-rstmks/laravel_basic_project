@@ -9,23 +9,23 @@
     <tr class="name">
         <th>氏名</th>
         <td>
-            {{ $newmember['name_sei'] }} {{ $newmember['name_mei'] }}
+            {{ $Info['name_sei'] }} {{ $Info['name_mei'] }}
         </td>
     </tr>
 
     <tr class="nickname">
         <th>ニックネーム</th>
         <td>
-            {{ $newmember['nickname'] }}
+            {{ $Info['nickname'] }}
         </td>
     </tr>
 
     <tr class="gender">
         <th>性別</th>
         <td>
-            @if ($newmember['gender'] == 1)
+            @if ($Info['gender'] == 1)
                 <div>男性</div>
-            @elseif ($newmember['gender'] == 2)
+            @elseif ($Info['gender'] == 2)
                 <div>女性</div>
             @endif
 
@@ -42,20 +42,20 @@
     <tr class="email">
         <th>メールアドレス</th>
         <td>
-            {{ $newmember['email'] }}
+            {{ $Info['email'] }}
         </td>
     </tr>
 </table>
 
 <form method="POST" action="{{ $route }}">
     @csrf
-    <input type="hidden" name="name_sei" value="{{ $newmember['name_sei'] }}">
-    <input type="hidden" name="name_mei" value="{{ $newmember['name_mei'] }}">
-    <input type="hidden" name="nickname" value="{{ $newmember['nickname'] }}">
+    <input type="hidden" name="name_sei" value="{{ $Info['name_sei'] }}">
+    <input type="hidden" name="name_mei" value="{{ $Info['name_mei'] }}">
+    <input type="hidden" name="nickname" value="{{ $Info['nickname'] }}">
 
-    <input type="hidden" name="gender" value="{{ $newmember['gender'] }}">
-    <input type="hidden" name="password" value="{{ $newmember['password'] }}">
-    <input type="hidden" name="email" value="{{ $newmember['email'] }}">
+    <input type="hidden" name="gender" value="{{ $Info['gender'] }}">
+    <input type="hidden" name="password" value="{{ $Info['password'] }}">
+    <input type="hidden" name="email" value="{{ $Info['email'] }}">
     <button type="submit" class="btn">{{ $register ? '登録完了' : '編集完了' }}</button>
 </form>
 

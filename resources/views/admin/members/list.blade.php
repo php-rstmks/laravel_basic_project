@@ -38,9 +38,8 @@
                 @if ($asc_flg)
                 {{-- 昇順のとき以下を表示 --}}
                     <form action="{{route('admin.members.list')}}" method="GET">
-                        <button>ID▼</button>
-                        <input type="hidden" name="sort_desc" value="0">
-
+                        <button>ID▼de</button>
+                        <input type="hidden" name="sort_desc" value="1">
                         {{-- 検索条件で表示されたデータに対して、昇順、降順をするためのプログラム --}}
                         @if (isset($man))
                             <input type="hidden" name="man" value={{$man}}>
@@ -55,8 +54,18 @@
                 @else
                 {{-- 降順のとき --}}
                     <form action="{{route('admin.members.list')}}" method="GET">
-                        <button>ID▼</button>
-                        <input type="hidden" name="sort_asc" value="0">
+                        <button>ID▼as</button>
+                        <input type="hidden" name="sort_asc" value="1">
+                        {{-- 検索条件で表示されたデータに対して、昇順、降順をするためのプログラム --}}
+                        @if (isset($man))
+                            <input type="hidden" name="man" value={{$man}}>
+                        @endif
+                        @if (isset($woman))
+                            <input type="hidden" name="woman" value={{$woman}}>
+                        @endif
+                        @if (isset($free_word))
+                            <input type="hidden" name="free_word" value={{$free_word}}>
+                        @endif
                     </form>
                 @endif
             </th>
@@ -67,8 +76,15 @@
                 @if ($asc_flg)
                 {{-- 昇順のとき以下を表示 --}}
                     <form action="{{route('admin.members.list')}}" method="GET">
-                        <button>登録日時▼</button>
+                        <button>登録日時▼de</button>
                         <input type="hidden" name="sort_desc" value="0">
+
+                    </form>
+                @else
+                {{-- 降順のとき --}}
+                    <form action="{{route('admin.members.list')}}" method="GET">
+                        <button>登録日時▼as</button>
+                        <input type="hidden" name="sort_asc" value="0">
 
                         {{-- 検索条件で表示されたデータに対して、昇順、降順をするためのプログラム --}}
                         @if (isset($man))
@@ -80,12 +96,6 @@
                         @if (isset($free_word))
                             <input type="hidden" name="free_word" value={{$free_word}}>
                         @endif
-                    </form>
-                @else
-                {{-- 降順のとき --}}
-                    <form action="{{route('admin.members.list')}}" method="GET">
-                        <button>登録日時▼</button>
-                        <input type="hidden" name="sort_asc" value="0">
                     </form>
                 @endif
             </th>
@@ -103,15 +113,16 @@
         @endforeach
     </table>
 
-{{-- 商品表示 --}}
+{{-- 会員表示 --}}
+{{-- デフォルトでの表示 --}}
 @if (!$return_state)
-    <div class="pagination">
+    <div class="pagination default">
         {{ $members->links('paginate.default') }}
     </div>
 
-{{-- 検索条件での表示のとき --}}
+{{-- 昇順トグル、検索条件での表示のとき --}}
 @else
-    <div class="pagination rr">
+    <div class="pagination">
         {{ $members->appends(request()->query())->links('paginate.default') }}
     </div>
 @endif
