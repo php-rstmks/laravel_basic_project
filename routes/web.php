@@ -42,7 +42,7 @@ Route::group(['middleware' => ['guest:member']], function() {
         return view('members.register_comp');
     })->name('registerCompPage');
 
-    Route::get('/login-page', function() {
+    Route::get('/loginpage', function() {
         return view('Auth.login');
     })->name('loginPage');
 
@@ -232,11 +232,28 @@ Route::group([
     Route::post('logout', 'LoginController@logout')
         ->name('admin.logout');
 
+    // 一覧ページ
     Route::get('members/list', 'MemberController@showList')
         ->name('admin.members.list');
 
     Route::get('products/list', 'ProductController@showList')
         ->name('admin.products.list');
+
+    // 登録画面
+    Route::get('members/register', 'MemberController@registerpage')
+        ->name('admin.members.registerpage');
+
+    // 登録確認画面
+    Route::post('members/register/conf', 'MemberController@register_confpage')
+    ->name('admin.members.register_conf');
+
+    // 登録処理
+    Route::post('members/register/comp', 'MemberController@register')
+        ->name('admin.members.register');
+
+
+    // Route::get('products/register, ')
+
 });
 
 

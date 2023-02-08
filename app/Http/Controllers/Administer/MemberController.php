@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Member;
 use Log;
+use Illuminate\Support\Facades\Hash;
+
 
 class MemberController extends Controller
 {
@@ -92,4 +94,41 @@ class MemberController extends Controller
                 // 'return_product_subcategory_id' => $product_subcategory_id,
             ]);
     }
+
+    public function registerpage()
+    {
+        $register = 'a';
+        $edit = null;
+        return view('admin.members.register', compact('register', 'edit'));
+    }
+
+    public function register_confpage(Request $request)
+    {
+        $register = 'a';
+        $edit = null;
+        $newmember = $request->all();
+        return view('admin.members.register_conf', compact('register', 'edit', 'newmember'));
+
+    }
+
+    public function register(Request $request)
+    {
+        // 二重送信対策
+        $request->session()->regenerateToken();
+
+        Member::create([
+            'name_sei' => $request->name_sei,
+            'name_mei' => $request->name_mei,
+            'nickname' => $request->nickname,
+            'gender' => $request->gender,
+            'password' => Hash::make($request->password),
+            'email' => $request->email,
+        ]);
+
+        return redirect()
+            ->route('admin.members.list');
+    }
+
+
+
 }

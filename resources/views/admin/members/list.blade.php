@@ -1,5 +1,6 @@
 <button style="float: right"><a href="{{route('admin.home')}}">トップに戻る</a></button>
 <h2>会員一覧</h2>
+<button><a href="{{route('admin.members.registerpage')}}">会員登録</a></button>
 <form action="{{route('admin.members.list')}}" method="GET">
     {{-- @csrf --}}
     <span></span>
@@ -62,7 +63,32 @@
             <th>氏名</th>
             <th>メールアドレス</th>
             <th>性別</th>
-            <th>登録日時</th>
+            <th>
+                @if ($asc_flg)
+                {{-- 昇順のとき以下を表示 --}}
+                    <form action="{{route('admin.members.list')}}" method="GET">
+                        <button>登録日時▼</button>
+                        <input type="hidden" name="sort_desc" value="0">
+
+                        {{-- 検索条件で表示されたデータに対して、昇順、降順をするためのプログラム --}}
+                        @if (isset($man))
+                            <input type="hidden" name="man" value={{$man}}>
+                        @endif
+                        @if (isset($woman))
+                            <input type="hidden" name="woman" value={{$woman}}>
+                        @endif
+                        @if (isset($free_word))
+                            <input type="hidden" name="free_word" value={{$free_word}}>
+                        @endif
+                    </form>
+                @else
+                {{-- 降順のとき --}}
+                    <form action="{{route('admin.members.list')}}" method="GET">
+                        <button>登録日時▼</button>
+                        <input type="hidden" name="sort_asc" value="0">
+                    </form>
+                @endif
+            </th>
         </tr>
         @foreach($members as $member)
             <tr>
