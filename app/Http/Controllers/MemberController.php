@@ -129,7 +129,6 @@ class MemberController extends Controller
         $member->auth_code = $code;
         $member->save();
 
-
         $to_mail_address = $request->email;
 
         Mail::to($to_mail_address)
@@ -141,13 +140,13 @@ class MemberController extends Controller
 
     public function changeEmail(Request $request)
     {
-        if (empty($request->code_original))
+        //
+        if (empty($request->code_from_email))
         {
-            return back()->withErrors([
-                'err_msg' => '認証コードを入力してください。',
-            ]);
+            $request->session()->put('err_msg', '認証コードを入力してください');
+            return redirect()->route('changeMemberMailPage');
         }
-        
+
         // メールで送信したコードと一致している場合
         if ($request->code_original == $request->code_from_email)
         {
@@ -155,9 +154,9 @@ class MemberController extends Controller
             $member->email = $request->email;
             $member->save();
         } else {
-            return back()->withErrors([
-                'err_msg' => '認証コードと一致していません。',
-            ]);
+            $request->session()->put('err_msg', '認証コードが一致しません');
+
+            return redirect()->route('changeMemberMailPage');
         }
 
         return redirect()->route('myPage');

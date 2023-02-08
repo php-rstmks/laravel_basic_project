@@ -180,7 +180,6 @@ Route::group(['middleware' => ['auth:member']], function() {
         ->name('changeMemberPassword');
 
     // メアド変更ページ
-    // Route::get('change-mail-page', 'MemberController@changeMail')
     Route::get('change-mail-page', function () {
         return view('members.change_mail');
     })->name('changeMemberMailPage');
