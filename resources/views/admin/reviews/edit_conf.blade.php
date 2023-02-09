@@ -1,1 +1,1 @@
-@include('components.member_conf', ['route' => route('admin.members.edit', $member)])
+@include('components.review_conf', ['route' => route('admin.reviews.edit', $review)])

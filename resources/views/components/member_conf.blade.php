@@ -1,53 +1,51 @@
-<table class="form">
-    <tr class="id">
-        <th>ID</th>
-        <td>
+    <div class="id">
+        <span>ID</span>
+        <span>
             {{ $register ? '登録後に自動採番' : $member->id }}
-        </td>
-    </tr>
+        </span>
+    </div>
 
-    <tr class="name">
-        <th>氏名</th>
-        <td>
+    <div class="name">
+        <span>氏名</span>
+        <span>
             {{ $Info['name_sei'] }} {{ $Info['name_mei'] }}
-        </td>
-    </tr>
+        </span>
+    </div>
 
-    <tr class="nickname">
-        <th>ニックネーム</th>
-        <td>
+    <div class="nickname">
+        <span>ニックネーム</span>
+        <span>
             {{ $Info['nickname'] }}
-        </td>
-    </tr>
+        </span>
+    </div>
 
-    <tr class="gender">
-        <th>性別</th>
-        <td>
+    <div class="gender">
+        <span>性別</span>
+        <span>
             @if ($Info['gender'] == 1)
                 <div>男性</div>
             @elseif ($Info['gender'] == 2)
                 <div>女性</div>
             @endif
 
-        </td>
-    </tr>
+        </span>
+    </div>
 
-    <tr class="password">
-        <th>パスワード</th>
-        <td>
+    <div class="password">
+        <span>パスワード</span>
+        <span>
         セキュリティのため非表示
-        </td>
-    </tr>
+        </span>
+    </div>
 
-    <tr class="email">
-        <th>メールアドレス</th>
-        <td>
+    <div class="email">
+        <span>メールアドレス</span>
+        <span>
             {{ $Info['email'] }}
-        </td>
-    </tr>
-</table>
+        </span>
+    </div>
 
-<form method="POST" action="{{ $route }}">
+<form mespanod="POST" action="{{ $route }}">
     @csrf
     <input type="hidden" name="name_sei" value="{{ $Info['name_sei'] }}">
     <input type="hidden" name="name_mei" value="{{ $Info['name_mei'] }}">

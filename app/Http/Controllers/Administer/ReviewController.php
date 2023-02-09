@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Administer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Review;
+use Log;
+use App\Http\Requests\ReviewEditRequest;
 
 class ReviewController extends Controller
 {
@@ -72,9 +74,97 @@ class ReviewController extends Controller
             ]);
     }
 
+    public function registerpage()
+    {
+        $register = 'a';
+        $edit = null;
+        return view('admin.reviews.register', compact('register', 'edit'));
+    }
+
+    public function register_confpage(ReviewRequest $request)
+    {
+        $avg_review = ceil(Review::where('product_id', $review->product->id)->avg('evaluation'));
+
+        $register = 'a';
+        $edit = null;
+        $Info = $request->all();
+
+        return view('admin.reviews.register_conf', compact('register', 'edit', 'Info', 'avg_review'));
+
+    }
+
+    public function register(Request $request)
+    {
+        // 二重送信対策
+        $request->session()->regenerateToken();
+
+        Review::create([
+            'name_sei' => $request->name_sei,
+            'name_mei' => $request->name_mei,
+            'nickname' => $request->nickname,
+            'gender' => $request->gender,
+            'password' => Hash::make($request->password),
+            'email' => $request->email,
+        ]);
+
+        return redirect()
+            ->route('admin.reviews.list');
+    }
+
+
+    public function editpage(Review $review)
+    {
+        $register = null;
+
+        $edit = "a";
+        return view('admin.reviews.edit')
+            ->with([
+                'register' => $register,
+                'edit' => $edit,
+                'review' => $review,
+            ]);
+    }
+
+    public function edit_confpage(ReviewEditRequest $request, Review $review)
+    {
+        $avg_review = ceil(Review::where('product_id', $review->product->id)->avg('evaluation'));
+
+
+        $register = null;
+        $edit = "a";
+        $Info = $request->all();
+        return view('admin.reviews.edit_conf')
+            ->with([
+                'register' => $register,
+                'edit' => $edit,
+                'Info' => $Info,
+                'review' => $review,
+                'avg_review' => $avg_review
+            ]);
+    }
+
+    public function edit(Request $request, Review $review)
+    {
+        $review->evaluation = $request->evaluation;
+        $review->comment = $request->comment;
+
+        $review->save();
+
+        return redirect()
+            ->route('admin.reviews.list');
+
+    }
+
     public function detailpage(Review $review)
     {
         return view('admin.reviews.detail')
             ->with(['review' => $review]);
+    }
+
+    public function delete(Review $review)
+    {
+        $review->delete();
+
+        return redirect()->route('admin.reviews.list');
     }
 }
