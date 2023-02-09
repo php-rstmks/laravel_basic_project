@@ -124,7 +124,7 @@ class ProductSubcategories extends Seeder
 
         for ($i = 1; $i < 25; $i++)
         {
-            DB::table('product_categories')->insert([
+            DB::table('product_subcategories')->insert([
                 'product_category_id' => random_int(6, 36),
                 'name' => 'サブかてゴリ' . $i,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
