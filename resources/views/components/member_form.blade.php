@@ -10,6 +10,12 @@
 <form method="POST" action="{{ $route }}">
     @csrf
     <table>
+        @if ($errors->any())
+
+            @foreach($errors->all() as $error)
+                <div style="color: red">{{ $error }}</div>
+            @endforeach
+        @endif
         <tr>
             <th>ID</th>
             <td>
@@ -60,7 +66,7 @@
 
         <tr class="password-confirmation">
             <th>パスワード確認</th>
-            <td><input type="password" name="password_confirmation"></td>
+            <td><input type="password" name="password_conf"></td>
         </tr>
 
         <tr>

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Member;
 use Log;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\MemberRequest;
+use App\Http\Requests\MemberEditRequest;
 
 
 class MemberController extends Controller
@@ -109,13 +111,19 @@ class MemberController extends Controller
         return view('admin.members.register', compact('register', 'edit'));
     }
 
-    public function register_confpage(Request $request)
+    public function register_confpage(MemberRequest $request)
     {
         $register = 'a';
         $edit = null;
         $Info = $request->all();
         return view('admin.members.register_conf', compact('register', 'edit', 'Info'));
 
+    }
+
+    public function detailpage(Member $member)
+    {
+        return view('admin.members.detail')
+            ->with(['member' => $member]);
     }
 
     public function register(Request $request)
@@ -139,6 +147,8 @@ class MemberController extends Controller
 
     public function editpage(Member $member)
     {
+        Log::debug('hen' . $member);
+
         $register = null;
 
         $edit = "a";
@@ -150,19 +160,24 @@ class MemberController extends Controller
             ]);
     }
 
-    public function edit_confpage(Request $request, Member $member)
+    public function edit_confpage(MemberEditRequest $request, Member $member)
     {
+        Log::debug('sen' . $member);
+
         $register = null;
         $edit = "a";
         $Info = $request->all();
-        return view('admin.members.register_conf', compact('register', 'edit', 'Info', 'member'));
-
+        return view('admin.members.edit_conf')
+            ->with([
+                'register' => $register,
+                'edit' => $edit,
+                'Info' => $Info,
+                'member' => $member,
+            ]);
     }
 
     public function edit(Request $request, Member $member)
     {
-        Log::debug('i' . $member);
-        Log::debug($request->all());
         $member->name_sei = $request->name_sei;
         $member->name_mei = $request->name_mei;
         $member->nickname = $request->nickname;
@@ -170,16 +185,18 @@ class MemberController extends Controller
         $member->password = Hash::make($request->password);
         $member->email = $request->email;
 
-        Log::debug('hennkougo' . $member);
-
         $member->save();
-
-        Log::debug('hennkougo2' . $member);
-
 
         return redirect()
             ->route('admin.members.list');
 
+    }
+
+    public function delete(Member $member)
+    {
+        $member->delete();
+
+        return redirect()->route('admin.members.list');
     }
 
 

@@ -266,9 +266,17 @@ Route::group([
     Route::post('members/edit/conf/{member}', 'MemberController@edit_confpage')
         ->name('admin.members.edit_conf');
 
+    // 編集処理
     Route::post('members/edit/comp/{member}', 'MemberController@edit')
         ->name('admin.members.edit');
 
+    // 詳細ページ
+    Route::get('members/detail/{member}', 'MemberController@detailpage')
+        ->name('admin.members.detailpage');
+
+    // 削除処理
+    Route::get('members/delete/{member}', 'MemberController@delete')
+    ->name('admin.members.delete');
 });
 
 
