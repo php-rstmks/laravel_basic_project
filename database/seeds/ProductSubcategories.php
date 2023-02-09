@@ -120,5 +120,15 @@ class ProductSubcategories extends Seeder
             'product_category_id' => 5,
             'name' => 'ライフスタイル'
         ]);
+
+        for ($i = 1; $i < 25; $i++)
+        {
+            DB::table('product_categories')->insert([
+                'product_category_id' => random(6, 36),
+                'name' => 'サブかてゴリ' . $i,
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ]);
+        }
     }
 }
