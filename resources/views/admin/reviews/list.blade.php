@@ -1,5 +1,5 @@
 <button style="float: right"><a href="{{route('admin.home')}}">トップに戻る</a></button>
-<h2>商品一覧</h2>
+<h2>商品レビュー一覧</h2>
 <button><a href="{{route('admin.reviews.registerpage')}}">商品登録</a></button>
 <form action="{{route('admin.reviews.list')}}" method="GET">
     {{-- @csrf --}}
@@ -44,7 +44,9 @@
                     </form>
                 @endif
             </th>
-            <th>商品名</th>
+            <th>商品ID</th>
+            <th>評価</th>
+            <th>商品コメント</th>
             <th>
                 @if ($asc_flg)
                 {{-- 昇順のとき以下を表示 --}}
@@ -77,8 +79,9 @@
         @foreach($reviews as $review)
             <tr>
                 <td>{{$review->id}}</td>
+                <td>{{$review->product_id}}</td>
+                <td>{{$review->evaluation}}</td>
                 <td>{{$review->comment}}</td>
-                <td>{{$review->created_at}}</td>
                 <td><a href="{{ route('admin.reviews.editpage', $review) }}">編集</a></td>
                 <td><a href="{{ route('admin.reviews.detailpage', $review) }}">詳細</a></td>
             </tr>

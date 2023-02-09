@@ -91,4 +91,10 @@ class CategoryController extends Controller
                 'free_word' => $free_word,
             ]);
     }
+
+    public function detailpage(Product_category $category)
+    {
+        return view('admin.categories.detail')
+            ->with(['category' => $category]);
+    }
 }

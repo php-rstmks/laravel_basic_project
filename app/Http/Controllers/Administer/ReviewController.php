@@ -71,4 +71,10 @@ class ReviewController extends Controller
                 'free_word' => $free_word,
             ]);
     }
+
+    public function detailpage(Review $review)
+    {
+        return view('admin.reviews.detail')
+            ->with(['review' => $review]);
+    }
 }

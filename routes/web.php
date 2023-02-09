@@ -317,23 +317,24 @@ Route::group([
     Route::get('categories/detail/{category}', 'CategoryController@detailpage')
         ->name('admin.categories.detailpage');
 
-    Route::get('products/detail/{product}', 'CategoryController@detailpage')
+    Route::get('products/detail/{product}', 'ProductController@detailpage')
         ->name('admin.products.detailpage');
 
-    Route::get('reviews/detail/{review}', 'ProductController@detailpage')
+    Route::get('reviews/detail/{review}', 'ReviewController@detailpage')
         ->name('admin.reviews.detailpage');
 
     // 削除処理（会員、商品カテゴリ、商品、レビュー）
-    Route::get('members/delete/{member}', 'ReviewController@delete')
+    Route::get('members/delete/{member}', 'MemberController@delete')
         ->name('admin.members.delete');
 
-    Route::get('members/delete/{member}', 'ReviewController@delete')
-        ->name('admin.members.delete');
+    Route::get('categories/delete/{category}', 'CategoryController@delete')
+        ->name('admin.categories.delete');
 
-    Route::get('members/delete/{member}', 'ReviewController@delete')
-        ->name('admin.members.delete');
-    Route::get('members/delete/{member}', 'ReviewController@delete')
-        ->name('admin.members.delete');
+    Route::get('products/delete/{product}', 'ProductController@delete')
+        ->name('admin.products.delete');
+
+    Route::get('reviews/delete/{review}', 'ReviewController@delete')
+        ->name('admin.reviews.delete');
 });
 
 
