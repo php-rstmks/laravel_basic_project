@@ -17,6 +17,8 @@
 
 <h2>管理画面メインメニュー</h2>
 <button><a href="{{route('admin.members.list')}}">会員一覧</a></button>
+<button><a href="{{route('admin.categories.list')}}">カテゴリ一覧</a></button>
 <button><a href="{{route('admin.products.list')}}">商品一覧</a></button>
+<button><a href="{{route('admin.reviews.list')}}">レビュー一覧</a></button>
 </body>
 </html>

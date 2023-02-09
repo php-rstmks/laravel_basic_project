@@ -236,47 +236,104 @@ Route::group([
     Route::post('logout', 'LoginController@logout')
         ->name('admin.logout');
 
-    // 一覧ページ
+    // 一覧ページ（会員、商品カテゴリ、商品、レビュー）
     Route::get('members/list', 'MemberController@showList')
         ->name('admin.members.list');
 
     Route::get('products/list', 'ProductController@showList')
         ->name('admin.products.list');
 
-    // 会員登録画面
+    Route::get('categories/list', 'CategoryController@showList')
+        ->name('admin.categories.list');
+
+    Route::get('reviews/list', 'ReviewController@showList')
+        ->name('admin.reviews.list');
+
+    // 登録画面（会員、商品カテゴリ、商品、レビュー）
     Route::get('members/register', 'MemberController@registerpage')
         ->name('admin.members.registerpage');
 
-    // 登録確認画面
+    Route::get('categories/register', 'CategoryController@registerpage')
+        ->name('admin.categories.registerpage');
+
+    Route::get('products/register', 'ProductController@registerpage')
+        ->name('admin.products.registerpage');
+
+    Route::get('reviews/register', 'ReviewController@registerpage')
+        ->name('admin.reviews.registerpage');
+
+    // 登録確認画面（会員、商品カテゴリ、商品、レビュー）
     Route::post('members/register/conf', 'MemberController@register_confpage')
     ->name('admin.members.register_conf');
 
-    // 登録処理
+    // 登録処理（会員、商品カテゴリ、商品、レビュー）
     Route::post('members/register/comp', 'MemberController@register')
         ->name('admin.members.register');
 
 
-    // Route::get('products/register, ')
-
-    // 会員編集画面
+    // 編集画面（会員、商品カテゴリ、商品、レビュー）
     Route::get('members/edit/{member}', 'MemberController@editpage')
         ->name('admin.members.editpage');
 
-    // 会員編集確認画面
+    Route::get('categories/edit/{category}', 'CategoryController@editpage')
+        ->name('admin.categories.editpage');
+
+    Route::get('products/edit/{product}', 'ProductController@editpage')
+        ->name('admin.products.editpage');
+
+    Route::get('reviews/edit/{review}', 'ReviewController@editpage')
+        ->name('admin.reviews.editpage');
+
+    // 編集確認画面（会員、商品カテゴリ、商品、レビュー）
     Route::post('members/edit/conf/{member}', 'MemberController@edit_confpage')
         ->name('admin.members.edit_conf');
 
-    // 編集処理
+    Route::post('categories/edit/conf/{category}', 'CategoryController@edit_confpage')
+        ->name('admin.categories.edit_conf');
+
+    Route::post('products/edit/conf/{product}', 'ProductController@edit_confpage')
+        ->name('admin.products.edit_conf');
+
+    Route::post('reviews/edit/conf/{review}', 'ReviewController@edit_confpage')
+        ->name('admin.reviews.edit_conf');
+
+    // 編集処理（会員、商品カテゴリ、商品、レビュー）
     Route::post('members/edit/comp/{member}', 'MemberController@edit')
         ->name('admin.members.edit');
 
-    // 詳細ページ
+    Route::post('categories/edit/comp/{category}', 'CategoryController@edit')
+        ->name('admin.categories.edit');
+
+    Route::post('products/edit/comp/{product}', 'ProductController@edit')
+        ->name('admin.products.edit');
+
+    Route::post('reviews/edit/comp/{review}', 'ReviewController@edit')
+        ->name('admin.reviews.edit');
+
+    // 詳細ページ（会員、商品カテゴリ、商品、レビュー）
     Route::get('members/detail/{member}', 'MemberController@detailpage')
         ->name('admin.members.detailpage');
 
-    // 削除処理
-    Route::get('members/delete/{member}', 'MemberController@delete')
-    ->name('admin.members.delete');
+    Route::get('categories/detail/{category}', 'CategoryController@detailpage')
+        ->name('admin.categories.detailpage');
+
+    Route::get('products/detail/{product}', 'CategoryController@detailpage')
+        ->name('admin.products.detailpage');
+
+    Route::get('reviews/detail/{review}', 'ProductController@detailpage')
+        ->name('admin.reviews.detailpage');
+
+    // 削除処理（会員、商品カテゴリ、商品、レビュー）
+    Route::get('members/delete/{member}', 'ReviewController@delete')
+        ->name('admin.members.delete');
+
+    Route::get('members/delete/{member}', 'ReviewController@delete')
+        ->name('admin.members.delete');
+
+    Route::get('members/delete/{member}', 'ReviewController@delete')
+        ->name('admin.members.delete');
+    Route::get('members/delete/{member}', 'ReviewController@delete')
+        ->name('admin.members.delete');
 });
 
 

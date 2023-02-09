@@ -104,9 +104,15 @@
         @foreach($members as $member)
             <tr>
                 <td>{{$member->id}}</td>
-                <td>{{$member->name_sei}}{{$member->name_mei}}</td>
+                <td><a href="{{ route('admin.members.detailpage', $member) }}">{{$member->name_sei}}{{$member->name_mei}}</a></td>
                 <td>{{$member->email}}</td>
-                <td>{{$member->gender}}</td>
+                <td>
+                    @if ($member->gender == 1)
+                    <div>男性</div>
+                @elseif ($member->gender == 2)
+                    <div>女性</div>
+                @endif
+                </td>
                 <td>{{$member->created_at}}</td>
                 <td><a href="{{ route('admin.members.editpage', $member) }}">編集</a></td>
                 <td><a href="{{ route('admin.members.detailpage', $member) }}">詳細</a></td>
