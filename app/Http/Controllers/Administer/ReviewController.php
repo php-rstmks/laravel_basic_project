@@ -110,7 +110,7 @@ class ReviewController extends Controller
             'member_id' => 1,
             'product_id' => $request->product_id,
             'evaluation' => $request->evaluation,
-            'comment' => $request->$request->comment,
+            'comment' => $request->comment,
         ]);
 
         return redirect()

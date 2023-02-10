@@ -82,6 +82,7 @@
                 <td>{{$review->product_id}}</td>
                 <td>{{$review->evaluation}}</td>
                 <td>{{$review->comment}}</td>
+                <td>{{$review->created_at}}</td>
                 <td><a href="{{ route('admin.reviews.editpage', $review) }}">編集</a></td>
                 <td><a href="{{ route('admin.reviews.detailpage', $review) }}">詳細</a></td>
             </tr>
