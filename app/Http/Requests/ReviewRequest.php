@@ -3,8 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class ReviewEditRequest extends FormRequest
+
+class ReviewRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +26,16 @@ class ReviewEditRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'evaluation' => ['required', Rule::in([1, 2, 3, 4, 5])],
+            'comment' => ['required', 'max:500'],
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'evaluation' => '商品評価',
+            'comment' => '商品コメント',
         ];
     }
 }

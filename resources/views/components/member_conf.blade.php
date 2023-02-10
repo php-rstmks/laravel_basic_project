@@ -45,7 +45,7 @@
         </span>
     </div>
 
-<form mespanod="POST" action="{{ $route }}">
+<form method="POST" action="{{ $route }}">
     @csrf
     <input type="hidden" name="name_sei" value="{{ $Info['name_sei'] }}">
     <input type="hidden" name="name_mei" value="{{ $Info['name_mei'] }}">

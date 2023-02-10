@@ -1,6 +1,6 @@
 <button style="float: right"><a href="{{route('admin.home')}}">トップに戻る</a></button>
 <h2>商品レビュー一覧</h2>
-<button><a href="{{route('admin.reviews.registerpage')}}">商品登録</a></button>
+<button><a href="{{route('admin.reviews.registerpage')}}">商品レビュー登録</a></button>
 <form action="{{route('admin.reviews.list')}}" method="GET">
     {{-- @csrf --}}
     <span></span>

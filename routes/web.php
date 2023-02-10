@@ -266,9 +266,27 @@ Route::group([
     Route::post('members/register/conf', 'MemberController@register_confpage')
     ->name('admin.members.register_conf');
 
+    Route::post('categories/register/conf', 'CategoryController@register_confpage')
+    ->name('admin.categories.register_conf');
+
+    Route::post('products/register/conf', 'ProductController@register_confpage')
+    ->name('admin.products.register_conf');
+
+    Route::post('reviews/register/conf', 'ReviewController@register_confpage')
+    ->name('admin.reviews.register_conf');
+
     // 登録処理（会員、商品カテゴリ、商品、レビュー）
     Route::post('members/register/comp', 'MemberController@register')
         ->name('admin.members.register');
+
+    Route::post('categories/register/comp', 'CategoryController@register')
+        ->name('admin.categories.register');
+
+    Route::post('products/register/comp', 'ProductController@register')
+        ->name('admin.products.register');
+
+    Route::post('reviews/register/comp', 'ReviewController@register')
+        ->name('admin.reviews.register');
 
 
     // 編集画面（会員、商品カテゴリ、商品、レビュー）

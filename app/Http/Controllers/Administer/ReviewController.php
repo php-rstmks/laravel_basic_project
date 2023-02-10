@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Administer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Review;
+use App\Product;
 use Log;
-use App\Http\Requests\ReviewEditRequest;
+use App\Http\Requests\ReviewRequest;
+use Illuminate\Support\Facades\Hash;
+
 
 class ReviewController extends Controller
 {
@@ -83,13 +86,18 @@ class ReviewController extends Controller
 
     public function register_confpage(ReviewRequest $request)
     {
-        $avg_review = ceil(Review::where('product_id', $review->product->id)->avg('evaluation'));
+        $avg_review = ceil(Review::where('product_id', $request->product_id)->avg('evaluation'));
 
         $register = 'a';
         $edit = null;
         $Info = $request->all();
 
-        return view('admin.reviews.register_conf', compact('register', 'edit', 'Info', 'avg_review'));
+        $product = Product::find($request->product_id);
+
+        Log::debug($request->product_id);
+        Log::debug($product);
+
+        return view('admin.reviews.register_conf', compact('register', 'edit', 'Info', 'avg_review', 'product'));
 
     }
 
@@ -99,12 +107,10 @@ class ReviewController extends Controller
         $request->session()->regenerateToken();
 
         Review::create([
-            'name_sei' => $request->name_sei,
-            'name_mei' => $request->name_mei,
-            'nickname' => $request->nickname,
-            'gender' => $request->gender,
-            'password' => Hash::make($request->password),
-            'email' => $request->email,
+            'member_id' => 1,
+            'product_id' => $request->product_id,
+            'evaluation' => $request->evaluation,
+            'comment' => $request->$request->comment,
         ]);
 
         return redirect()
@@ -125,7 +131,7 @@ class ReviewController extends Controller
             ]);
     }
 
-    public function edit_confpage(ReviewEditRequest $request, Review $review)
+    public function edit_confpage(ReviewRequest $request, Review $review)
     {
         $avg_review = ceil(Review::where('product_id', $review->product->id)->avg('evaluation'));
 
@@ -133,6 +139,7 @@ class ReviewController extends Controller
         $register = null;
         $edit = "a";
         $Info = $request->all();
+        Log::debug($Info);
         return view('admin.reviews.edit_conf')
             ->with([
                 'register' => $register,
