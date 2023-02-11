@@ -202,7 +202,7 @@ class CategoryController extends Controller
     {
         $category->name = $request->name;
 
-        $review->save();
+        $category->save();
 
         return redirect()
             ->route('admin.categories.list');
