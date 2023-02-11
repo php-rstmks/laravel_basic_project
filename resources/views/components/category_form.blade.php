@@ -34,7 +34,7 @@
         <span>商品大カテゴリ</span>
         <span>
 
-            <input type="text" name="category_name">
+            <input type="text" name="category_name" value="{{ $register ? old('category_name') : old('category_name', $category->name)}}">
         </span>
     </div>
 
@@ -42,38 +42,11 @@
 
         <div>商品小カテゴリ</div>
         <div>
-
-            <div>
-                <input type="text" name="subcategory_name">
-            </div>
-            <div>
-                <input type="text" name="subcategory_name">
-            </div>
-            <div>
-                <input type="text" name="subcategory_name">
-            </div>
-            <div>
-                <input type="text" name="subcategory_name">
-            </div>
-            <div>
-                <input type="text" name="subcategory_name">
-            </div>
-            <div>
-                <input type="text" name="subcategory_name">
-            </div>
-            <div>
-                <input type="text" name="subcategory_name">
-            </div>
-            <div>
-                <input type="text" name="subcategory_name">
-            </div>
-            <div>
-                <input type="text" name="subcategory_name">
-            </div>
-            <div>
-                <input type="text" name="subcategory_name">
-            </div>
-
+            @for($i = 1; $i <= 10; $i++)
+                <div>
+                    <input type="text" name="subcategory_name[]">
+                </div>
+            @endfor
         </div>
     </div>
 

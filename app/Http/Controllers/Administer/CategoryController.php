@@ -21,10 +21,6 @@ class CategoryController extends Controller
 
         $query = Product_category::query();
 
-        // return_stateをtrueにすることで、以下のコードに切り替えて
-        // 検索条件にページネーションを適応させることができる。
-        //{{ $categories->appends(request()->query())->links('paginate.default') }}
-
         $return_state = false;
 
         // idがあれば（このときカテゴリは選択されている必要があるのでチェック項目には含めない）
@@ -106,6 +102,33 @@ class CategoryController extends Controller
         $edit = null;
         $Info = $request->all();
 
+        $subcategory_names = $request->subcategory_name;
+
+        /**
+         * @var int
+        */
+        $cnt = 0;
+
+        // サブカテゴリが空であるか、配列の値を一つづつチェック
+        foreach ($subcategory_names as $subcategory_name)
+        {
+            if (!empty($subcategory_name))
+            {
+                $cnt += 1;
+            }
+
+        }
+
+        if ($cnt === 0)
+        {
+            return back()
+                // ->withInput($request->all())
+                ->withInput()
+                ->withErrors([
+                'err_msgs' => 'サブカテゴリを一つ追加する必要があります。',
+            ]);
+        }
+
         return view('admin.categories.register_conf', compact('register', 'edit', 'Info'));
 
     }
@@ -115,13 +138,23 @@ class CategoryController extends Controller
         // 二重送信対策
         $request->session()->regenerateToken();
 
-        Product_category::create([
-            'member_id' => 1,
-            'product_id' => $request->product_id,
-            'evaluation' => $request->evaluation,
-            'comment' => $request->comment,
-        ]);
+        $product_category = new Product_category();
 
+        $product_category->name = $request->category_name;
+
+        $product_category->save();
+
+        $latest_product_category_id = $product_category->id;
+
+        $subcategory_array = array_filter($request->subcategory_name);
+
+        foreach($subcategory_array as $subcategory_name)
+        {
+            Product_subcategory::create([
+                'product_category_id' => $latest_product_category_id,
+                'name' => $subcategory_name,
+            ]);
+        }
         return redirect()
             ->route('admin.categories.list');
     }
@@ -142,9 +175,6 @@ class CategoryController extends Controller
 
     public function edit_confpage(ReviewRequest $request, Review $review)
     {
-        $avg_review = ceil(Review::where('product_id', $review->product->id)->avg('evaluation'));
-
-
         $register = null;
         $edit = "a";
         $Info = $request->all();

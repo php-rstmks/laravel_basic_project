@@ -41,23 +41,5 @@ class CategoryRequest extends FormRequest
         ];
     }
 
-    public function messages()
-    {
-        return [
-            'subcategory_name.*.required' => '※:attributeは1つ以上入力してください。'
-        ];
-    }
 
-    // public function withValidator(Validator $validator)
-    // {
-    //     $validator->sometimes('subcategory_name.*', 'required', function ($input) {
-    //         $count = 0;
-    //         foreach ($input->subcategory_name as $name) {
-    //             if (is_null($name)) {
-    //                 $count += 1;
-    //             }
-    //         }
-    //         return $count == 10;
-    //     });
-    // }
 }
