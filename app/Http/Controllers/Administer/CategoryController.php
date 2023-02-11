@@ -167,6 +167,8 @@ class CategoryController extends Controller
 
         $subcategories = Product_subcategory::where("product_category_id", $category->id)->get();
 
+        // サブカテゴリのinput:hiddenにおいて、存在しないindexを指定すると、
+        // 空文字の値でコレクションを埋める。
         for ($i = 1; $i <= 10; $i++)
         {
             if ($subcategories->count() < 10)
@@ -189,6 +191,33 @@ class CategoryController extends Controller
         $register = null;
         $edit = "a";
         $Info = $request->all();
+
+        $subcategory_names = $request->subcategory_name;
+
+        /**
+         * @var int
+        */
+        $cnt = 0;
+
+        // サブカテゴリが空であるか、配列の値を一つづつチェック
+        foreach ($subcategory_names as $subcategory_name)
+        {
+            if (!empty($subcategory_name))
+            {
+                $cnt += 1;
+            }
+
+        }
+
+        if ($cnt === 0)
+        {
+            return back()
+                ->withInput()
+                ->withErrors([
+                'err_msgs' => 'サブカテゴリを一つ追加する必要があります。',
+            ]);
+        }
+
         return view('admin.categories.edit_conf')
             ->with([
                 'register' => $register,
@@ -200,9 +229,24 @@ class CategoryController extends Controller
 
     public function edit(Request $request, Product_category $category)
     {
-        $category->name = $request->name;
+        $subcategory_array = array_filter($request->subcategory_name);
+
+        // 仕様により、一度すべてのサブカテゴリを物理削除
+        Product_subcategory::where("product_category_id", $category->id)->delete();
+
+        // カテゴリ名の編集
+        $category->name = $request->category_name;
 
         $category->save();
+
+        // 仕様の通り、新たにサブカテゴリを作成
+        foreach($subcategory_array as $subcategory_name)
+        {
+            Product_subcategory::create([
+                'product_category_id' => $category->id,
+                'name' => $subcategory_name,
+            ]);
+        }
 
         return redirect()
             ->route('admin.categories.list');
