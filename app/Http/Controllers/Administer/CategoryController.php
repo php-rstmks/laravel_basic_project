@@ -122,7 +122,6 @@ class CategoryController extends Controller
         if ($cnt === 0)
         {
             return back()
-                // ->withInput($request->all())
                 ->withInput()
                 ->withErrors([
                 'err_msgs' => 'サブカテゴリを一つ追加する必要があります。',
@@ -160,39 +159,48 @@ class CategoryController extends Controller
     }
 
 
-    public function editpage(Product_category $product_category)
+    public function editpage(Product_category $category)
     {
         $register = null;
 
         $edit = "a";
+
+        $subcategories = Product_subcategory::where("product_category_id", $category->id)->get();
+
+        for ($i = 1; $i <= 10; $i++)
+        {
+            if ($subcategories->count() < 10)
+            {
+                $subcategories->push("");
+            }
+        }
+
         return view('admin.categories.edit')
             ->with([
                 'register' => $register,
                 'edit' => $edit,
-                'product_category' => $product_category,
+                'category' => $category,
+                'subcategories' => $subcategories,
             ]);
     }
 
-    public function edit_confpage(ReviewRequest $request, Review $review)
+    public function edit_confpage(CategoryRequest $request, Product_category $category)
     {
         $register = null;
         $edit = "a";
         $Info = $request->all();
-        Log::debug($Info);
         return view('admin.categories.edit_conf')
             ->with([
                 'register' => $register,
                 'edit' => $edit,
                 'Info' => $Info,
-                'review' => $review,
-                'avg_review' => $avg_review
+                'category' => $category,
             ]);
     }
 
-    public function edit(Request $request, Review $review)
+    public function edit(Request $request, Product_category $category)
     {
-        $review->evaluation = $request->evaluation;
-        $review->comment = $request->comment;
+        $category->name = $request->name;
 
         $review->save();
 

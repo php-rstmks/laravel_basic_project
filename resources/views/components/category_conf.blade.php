@@ -1,4 +1,4 @@
-<button onclick="history.back()">前に戻る</button>
+<button style="float: right"><a href="{{route('admin.categories.list')}}">一覧に戻る</a></button>
 
 <h1>
     @if ($register)
@@ -27,7 +27,7 @@
     <div>
         <span>商品小カテゴリ</span>
         @foreach ($Info['subcategory_name'] as $subcategory_name)
-        <p>{{ $subcategory_name }}</p>
+            <p>{{ $subcategory_name }}</p>
         @endforeach
     </div>
 
@@ -35,6 +35,7 @@
     @csrf
     <input type="hidden" name="category_name" value="{{ $Info['category_name'] }}">
 
+    {{-- サブカテゴリ送信部分 --}}
     @foreach ($Info['subcategory_name'] as $subcategory_name)
         <input type="hidden" name="subcategory_name[]" value="{{$subcategory_name}}">
     @endforeach
