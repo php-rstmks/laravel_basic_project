@@ -8,6 +8,8 @@ use App\Product;
 use App\Product_category;
 use App\Product_subcategory;
 use App\Review;
+use Validator;
+
 
 use DB;
 use Auth;
@@ -126,13 +128,24 @@ class ProductController extends Controller
      */
     public function registerImage(Request $request)
     {
+        // $request->validate([
+        //     'image_1' => 'image|mimes:jpeg,png,jpg,gif|max:10240',
+        //     'image_2' => 'image|mimes:jpeg,png,jpg,gif|max:10240',
+        //     'image_3' => 'image|mimes:jpeg,png,jpg,gif|max:10240',
+        //     'image_4' => 'image|mimes:jpeg,png,jpg,gif|max:10240',
+        // ]);
 
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'image_1' => 'image|mimes:jpeg,png,jpg,gif|max:10240',
             'image_2' => 'image|mimes:jpeg,png,jpg,gif|max:10240',
             'image_3' => 'image|mimes:jpeg,png,jpg,gif|max:10240',
             'image_4' => 'image|mimes:jpeg,png,jpg,gif|max:10240',
         ]);
+
+        if ($validator->fails())
+        {
+            return response()->json(['returnErr'=>'damedesu']);
+        }
 
         if ($request->has('image_1'))
         {

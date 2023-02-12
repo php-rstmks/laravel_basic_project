@@ -1,1 +1,1 @@
-@include('components.member_form', ['route' => route('admin.members.register_conf')])
+@include('components.product_form', ['route' => route('admin.products.register_conf')])

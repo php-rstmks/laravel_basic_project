@@ -76,4 +76,65 @@ class ProductController extends Controller
                 'free_word' => $free_word,
             ]);
     }
+
+    public function registerpage()
+    {
+        $register = 'a';
+        $edit = null;
+        return view('admin.products.register', compact('register', 'edit'));
+    }
+
+    public function register_confpage(Request $request)
+    {
+        $request->validate([
+            'product_name' => 'required|max:100',
+            'product_category_id' => 'integer|not_in:0|between:1,5',
+            'product_subcategory_id' => 'integer|not_in:0|between:1,25',
+            'product_content' => 'required|max:500',
+        ], [
+            'product_name.required' => '商品名は必須です',
+            'product_name.max' => '商品名は100文字以内で入力してください',
+            'product_category_id.not_in' => 'カテゴリーを選択してください',
+            'product_category_id.integer' => 'カテゴリーを正しく選択してください',
+            'product_category_id.between' => 'カテゴリーを正しく選択してください',
+            'product_subcategory_id.not_in' => 'サブカテゴリーを選択してください',
+            'product_subcategory_id.integer' => 'サブカテゴリーを正しく選択してください',
+            'product_subcategory_id.between' => 'サブカテゴリーを正しく選択してください',
+            'product_content.required' => '商品説明は必須です',
+            'product_content.max' => '商品説明は500文字以内で入力してください',
+        ]);
+
+        $register = 'a';
+        $edit = null;
+        $Info = $request->all();
+
+        return view('admin.products.register_conf', compact('register', 'edit', 'Info'));
+
+    }
+
+    public function register(Request $request)
+    {
+        // 二重送信対策
+        $request->session()->regenerateToken();
+
+        $product_category = new Product_category();
+
+        $product_category->name = $request->category_name;
+
+        $product_category->save();
+
+        $latest_product_category_id = $product_category->id;
+
+        $subcategory_array = array_filter($request->subcategory_name);
+
+        foreach($subcategory_array as $subcategory_name)
+        {
+            Product_subcategory::create([
+                'product_category_id' => $latest_product_category_id,
+                'name' => $subcategory_name,
+            ]);
+        }
+        return redirect()
+            ->route('admin.products.list');
+    }
 }

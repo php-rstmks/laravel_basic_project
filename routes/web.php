@@ -124,9 +124,9 @@ Route::group(['middleware' => ['auth:member']], function() {
 
     });
 
-    // 画像のアップロード
+    // 商品登録ページにおける画像のアップロード
     Route::post('upload/image', 'ProductController@registerImage')
-    ->name('registerImage');
+        ->name('registerImage');
 
     // 小カテゴリを出現させる。
     Route::get('set-subcategory/{categoryId}', 'ProductController@setSubCategory')
