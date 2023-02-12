@@ -57,7 +57,8 @@
                 <div>
                     {{-- カテゴリ＞サブカテゴリ --}}
                     <div>
-                        {{App\Product_category::find($product->product_category_id)->name}}>
+                        {{App\Product_category::find($product->product_category_id)->name}}
+                        ＞
                         {{App\Product_subcategory::find($product->product_subcategory_id)->name}}
                     </div>
 

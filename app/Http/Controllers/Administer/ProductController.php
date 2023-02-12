@@ -9,6 +9,8 @@ use DB;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\ProductRequest;
 use App\Http\Requests\MemberEditRequest;
+use Log;
+
 
 class ProductController extends Controller
 {
@@ -81,7 +83,9 @@ class ProductController extends Controller
     {
         $register = 'a';
         $edit = null;
-        return view('admin.products.register', compact('register', 'edit'));
+        $product_categories = DB::table('product_categories')->get();
+        $product_subcategories = DB::table('product_subcategories')->get();
+        return view('admin.products.register', compact('register', 'edit', 'product_categories', 'product_subcategories'));
     }
 
     public function register_confpage(Request $request)
@@ -108,6 +112,8 @@ class ProductController extends Controller
         $edit = null;
         $Info = $request->all();
 
+        Log::info($Info);
+
         return view('admin.products.register_conf', compact('register', 'edit', 'Info'));
 
     }
@@ -117,23 +123,21 @@ class ProductController extends Controller
         // 二重送信対策
         $request->session()->regenerateToken();
 
-        $product_category = new Product_category();
+        Log::info($request->all());
 
-        $product_category->name = $request->category_name;
+        $product = new Product();
+        $product->member_id = 1;
+        $product->name = $request->product_name;
+        $product->product_category_id = $request->product_category_id;
+        $product->product_subcategory_id = $request->product_subcategory_id;
+        $product->image_1 = $request->image_1;
+        $product->image_2 = $request->image_2;
+        $product->image_3 = $request->image_3;
+        $product->image_4 = $request->image_4;
+        $product->product_content = $request->product_content;
 
-        $product_category->save();
+        $product->save();
 
-        $latest_product_category_id = $product_category->id;
-
-        $subcategory_array = array_filter($request->subcategory_name);
-
-        foreach($subcategory_array as $subcategory_name)
-        {
-            Product_subcategory::create([
-                'product_category_id' => $latest_product_category_id,
-                'name' => $subcategory_name,
-            ]);
-        }
         return redirect()
             ->route('admin.products.list');
     }
