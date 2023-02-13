@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Review;
+use App\Product_category;
+use App\Product_subcategory;
 use DB;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\ProductRequest;
@@ -84,8 +86,9 @@ class ProductController extends Controller
     {
         $register = 'a';
         $edit = null;
-        $product_categories = DB::table('product_categories')->get();
-        $product_subcategories = DB::table('product_subcategories')->get();
+        $product_categories = Product_category::all();
+        $product_subcategories = Product_subcategory::all();
+
         return view('admin.products.register', compact('register', 'edit', 'product_categories', 'product_subcategories'));
     }
 
@@ -219,7 +222,6 @@ class ProductController extends Controller
         $avg_review = ceil(Review::where('product_id', $product->id)->avg('evaluation'));
 
         $reviews = Review::where('product_id', $product->id)->paginate(3);
-
 
         return view('admin.products.detail')
             ->with([

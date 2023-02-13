@@ -80,9 +80,6 @@
                                 @endif
                             @endforeach
 
-
-
-
                         @endif
                     </select>
                 </div>
