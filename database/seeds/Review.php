@@ -17,8 +17,8 @@ class Review extends Seeder
         {
 
             DB::table('reviews')->insert([
-                'member_id' => 31,
-                'product_id' => 1,
+                'member_id' => 1,
+                'product_id' => 6,
                 'evaluation' => random_int(1,5),
                 'comment' => 'comment' . $i,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),

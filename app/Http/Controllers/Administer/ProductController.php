@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Administer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Product;
+use App\Review;
 use DB;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\ProductRequest;
@@ -215,8 +216,17 @@ class ProductController extends Controller
 
     public function detailpage(Product $product)
     {
+        $avg_review = ceil(Review::where('product_id', $product->id)->avg('evaluation'));
+
+        $reviews = Review::where('product_id', $product->id)->paginate(3);
+
+
         return view('admin.products.detail')
-            ->with(['product' => $product]);
+            ->with([
+                'product' => $product,
+                'avg_review' => $avg_review,
+                'reviews' => $reviews,
+            ]);
     }
 
     public function delete(Product $product)
