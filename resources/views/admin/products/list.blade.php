@@ -51,7 +51,6 @@
                     <form action="{{route('admin.products.list')}}" method="GET">
                         <button>登録日時▼de</button>
                         <input type="hidden" name="sort_desc" value="0">
-
                     </form>
                 @else
                 {{-- 降順のとき --}}
@@ -77,7 +76,7 @@
         @foreach($products as $product)
             <tr>
                 <td>{{$product->id}}</td>
-                <td>{{$product->name}}</td>
+                <td><a href="{{ route('admin.products.detailpage', $product) }}">{{$product->name}}</a></td>
                 <td>{{$product->created_at}}</td>
                 <td><a href="{{ route('admin.products.editpage', $product) }}">編集</a></td>
                 <td><a href="{{ route('admin.products.detailpage', $product) }}">詳細</a></td>

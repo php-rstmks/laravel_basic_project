@@ -24,7 +24,6 @@
         <span>商品カテゴリ</span>
         <span>{{ App\Product_category::find($Info['product_category_id'])->name}}＞</span>
         <span>{{ App\Product_subcategory::find($Info['product_subcategory_id'])->name}}
-            {{-- {{ $sub_category['name']}}</span> --}}
     </div>
 
     <div>

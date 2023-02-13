@@ -91,6 +91,7 @@
             {{-- 小カテゴリ --}}
             <div id="subcategory-box">
                 <select name="product_subcategory_id" id="js-ajax-target-field">
+                    {{-- 登録ページ --}}
                     @if ($register)
                         @if(!empty(old('product_subcategory_id')))
                             @foreach($product_subcategories as $product_subcategory)
@@ -99,6 +100,8 @@
                                 @endif
                             @endforeach
                         @endif
+
+                    {{-- 編集ページ --}}
                     @elseif ($edit)
                         @foreach($product_subcategories as $product_subcategory)
                             @if (empty(old('product_subcategory_id')))
@@ -129,27 +132,55 @@
                 {{-- エラー表示用 --}}
                 <div class="image-err-msg1" style="color: red"></div>
 
-                {{-- デフォルトの状態 --}}
-                @if (empty(old('image_1')))
+                @if ($register)
+
+                    {{-- デフォルトの状態 --}}
+                    @if (empty(old('image_1')))
+                        <div>
+                            @if (empty($image_1))
+                                <img class="image-preview1 tom" widt="100" height="130" style="object-fit: cover; display: none" src="">
+                            @endif
+                        </div>
+                        <label class="btn btn-back" for="image_1">アップロード
+                            <input class="image-uploader1" id="image_1" style="display: none;" type="file">
+                            <input class="image-path-hidden1" type="hidden" name="image_1" value="{{ $image_1 ?? '' }}">
+                        </label>
+                    @elseif (!empty(old('image_1')))
+                    {{-- バリデーションに引っかかって戻ってきたとき --}}
+                        <div>
+                            <img class="image-preview1" widt="100" height="130" style="object-fit: cover;" src="/storage/{{old('image_1')}}">
+                        </div>
+                        <label class="btn btn-back" for="image_1">アップロード
+                            <input class="image-uploader1" id="image_1" style="display: none;" type="file">
+                            <input class="image-path-hidden1" type="hidden" name="image_1" value="{{old('image_1')}}">
+                        </label>
+                    @endif
+
+                @elseif ($edit)
+                    {{-- デフォルトの状態 --}}
+                    @if (empty(old('image_1')))
                     <div>
-                        {{--  --}}
-                        @if (empty($image_1))
-                            <img class="image-preview1" widt="100" height="130" style="object-fit: cover; display: none" src="">
+                        @if(!is_null($product->image_1))
+                            <img class="image-preview1 uno" widt="100" height="130" alt="" onerror="this.onerror=null; this.src='';" style="object-fit: cover;" src="/storage/{{$product->image_1}}">
+                        @else
+                            <img class="image-preview1 umo" widt="100" height="130" style="object-fit: cover; display: none" src="">
                         @endif
                     </div>
                     <label class="btn btn-back" for="image_1">アップロード
                         <input class="image-uploader1" id="image_1" style="display: none;" type="file">
-                        <input class="image-path-hidden1" type="hidden" name="image_1" value="{{ $image_1 ?? '' }}">
+                        <input class="image-path-hidden1" type="hidden" name="image_1" value="{{ $product->image_1 }}">
                     </label>
-                @elseif (!empty(old('image_1')))
-                {{-- バリデーションに引っかかって戻ってきたとき --}}
-                    <div>
-                        <img class="image-preview1" widt="100" height="130" style="object-fit: cover;" src="/storage/{{old('image_1')}}">
-                    </div>
-                    <label class="btn btn-back" for="image_1">アップロード
-                        <input class="image-uploader1" id="image_1" style="display: none;" type="file">
-                        <input class="image-path-hidden1" type="hidden" name="image_1" value="{{old('image_1')}}">
-                    </label>
+
+                    @elseif (!empty(old('image_1')))
+                    {{-- バリデーションに引っかかって戻ってきたとき --}}
+                        <div>
+                            <img class="image-preview1" widt="100" height="130" style="object-fit: cover;" src="/storage/{{old('image_1')}}">
+                        </div>
+                        <label class="btn btn-back" for="image_1">アップロード
+                            <input class="image-uploader1" id="image_1" style="display: none;" type="file">
+                            <input class="image-path-hidden1" type="hidden" name="image_1" value="{{old('image_1')}}">
+                        </label>
+                    @endif
                 @endif
 
                 <p>写真２</p>
@@ -157,43 +188,96 @@
                 {{-- エラー表示用 --}}
                 <div class="image-err-msg2" style="color: red"></div>
 
-                @if (empty(old('image_2')))
-                    <div>
-                        @if(empty($image_2))
-                            <img class="image-preview2 upload-image" widt="100" height="130" style="object-fit: cover; display: none" src="">
-                        @endif
-                    </div>
-                    <label class="btn btn-back" for="image_2">アップロード
-                        <input class="image-uploader2" id="image_2" style="display: none;" type="file">
-                        <input class="image-path-hidden2" type="hidden" name="image_2" value="{{ $image_2 ?? '' }}">
-                    </label>
-                @elseif (!empty(old('image_2')))
-                {{-- バリデーションに引っかかって戻ってきたとき --}}
-                    <div>
-                        <img class="image-preview2" widt="100" height="130" style="object-fit: cover;" src="/storage/{{old('image_2')}}">
-                    </div>
-                    <label class="btn btn-back" for="image_2">アップロード
-                        <input class="image-uploader2" id="image_2" style="display: none;" type="file">
-                        <input class="image-path-hidden2" type="hidden" name="image_2" value="{{old('image_2')}}">
-                    </label>
+                @if ($register)
+
+                    @if (empty(old('image_2')))
+                        <div>
+                            @if(empty($image_2))
+                                <img class="image-preview2 upload-image" widt="100" height="130" style="object-fit: cover; display: none" src="">
+                            @endif
+                        </div>
+                        <label class="btn btn-back" for="image_2">アップロード
+                            <input class="image-uploader2" id="image_2" style="display: none;" type="file">
+                            <input class="image-path-hidden2" type="hidden" name="image_2" value="{{ $image_2 ?? '' }}">
+                        </label>
+                    @elseif (!empty(old('image_2')))
+                    {{-- バリデーションに引っかかって戻ってきたとき --}}
+                        <div>
+                            <img class="image-preview2" widt="100" height="130" style="object-fit: cover;" src="/storage/{{old('image_2')}}">
+                        </div>
+                        <label class="btn btn-back" for="image_2">アップロード
+                            <input class="image-uploader2" id="image_2" style="display: none;" type="file">
+                            <input class="image-path-hidden2" type="hidden" name="image_2" value="{{old('image_2')}}">
+                        </label>
+                    @endif
+
+                @elseif ($edit)
+                    @if (empty(old('image_2')))
+                    @if(!is_null($product->image_2))
+                        <img class="image-preview2 uno" widt="100" height="130" alt="" style="object-fit: cover;" src="/storage/{{$product->image_2}}">
+                    @else
+                        <img class="image-preview2 umo" widt="100" height="130" style="object-fit: cover; display: none" src="">
+                    @endif
+                        <label class="btn btn-back" for="image_2">アップロード
+                            <input class="image-uploader2" id="image_2" style="display: none;" type="file">
+                            <input class="image-path-hidden2" type="hidden" name="image_2" value="{{ $product->image_2 }}">
+                        </label>
+
+                    @elseif (!empty(old('image_2')))
+                    {{-- バリデーションに引っかかって戻ってきたとき --}}
+                        <div>
+                            <img class="image-preview2" widt="100" height="130" style="object-fit: cover;" src="/storage/{{old('image_2')}}">
+                        </div>
+                        <label class="btn btn-back" for="image_2">アップロード
+                            <input class="image-uploader1" id="image_2" style="display: none;" type="file">
+                            <input class="image-path-hidden2" type="hidden" name="image_2" value="{{old('image_2')}}">
+                        </label>
+                    @endif
                 @endif
+
+
 
                 <p>写真３</p>
 
                 {{-- エラー表示用 --}}
                 <div class="image-err-msg3" style="color: red"></div>
 
-                {{-- デフォルトの状態 --}}
-                @if (empty(old('image_3')))
-                    <div>
-                        @if(empty($image_3))
-                            <img class="image-preview3" widt="100" height="130" style="object-fit: cover; display: none" src="">
-                        @endif
-                    </div>
-                    <label class="btn btn-back" for="image_3">アップロード
-                        <input class="image-uploader3" id="image_3" style="display: none;" type="file">
-                        <input class="image-path-hidden3" type="hidden" name="image_3" value="{{ $image_3 ?? '' }}">
-                    </label>
+                @if ($register)
+
+                    {{-- デフォルトの状態 --}}
+                    @if (empty(old('image_3')))
+                        <div>
+                            @if(empty($image_3))
+                                <img class="image-preview3" widt="100" height="130" style="object-fit: cover; display: none" src="">
+                            @endif
+                        </div>
+                        <label class="btn btn-back" for="image_3">アップロード
+                            <input class="image-uploader3" id="image_3" style="display: none;" type="file">
+                            <input class="image-path-hidden3" type="hidden" name="image_3" value="{{ $image_3 ?? '' }}">
+                        </label>
+                    @elseif (!empty(old('image_3')))
+                        {{-- バリデーションに引っかかって戻ってきたとき --}}
+                            <div>
+                                <img class="image-preview3" widt="100" height="130" style="object-fit: cover;" src="/storage/{{old('image_3')}}">
+                            </div>
+                            <label class="btn btn-back" for="image_3">アップロード
+                                <input class="image-uploader3" id="image_3" style="display: none;" type="file">
+                                <input class="image-path-hidden3" type="hidden" name="image_3" value="{{old('image_3')}}">
+                            </label>
+                    @endif
+
+                @elseif ($edit)
+                    @if (empty(old('image_3')))
+                    @if(!is_null($product->image_3))
+                        <img class="image-preview3 uno" widt="100" height="130" alt="" style="object-fit: cover;" src="/storage/{{$product->image_3}}">
+                    @else
+                        <img class="image-preview3 umo" widt="100" height="130" style="object-fit: cover; display: none" src="">
+                    @endif
+                        <label class="btn btn-back" for="image_3">アップロード
+                            <input class="image-uploader3" id="image_3" style="display: none;" type="file">
+                            <input class="image-path-hidden3" type="hidden" name="image_3" value="{{ $product->image_3 }}">
+                        </label>
+
                     @elseif (!empty(old('image_3')))
                     {{-- バリデーションに引っかかって戻ってきたとき --}}
                         <div>
@@ -204,43 +288,73 @@
                             <input class="image-path-hidden3" type="hidden" name="image_3" value="{{old('image_3')}}">
                         </label>
                     @endif
+                @endif
 
                 <p>写真４</p>
 
                 {{-- エラー表示用 --}}
                 <div class="image-err-msg4" style="color: red"></div>
 
-                @if (empty(old('image_4')))
-                    <div>
-                        @if(empty($image_4))
-                            <img class="image-preview4" widt="100" height="130" style="object-fit: cover; display: none" src="">
-                        @endif
-                    </div>
-                    <label class="btn btn-back" for="image_4">アップロード
-                        <input class="image-uploader4" id="image_4" style="display: none;" type="file">
-                        <input class="image-path-hidden4" type="hidden" name="image_4" value="{{ $image_4 ?? '' }}">
-                    </label>
-                @elseif (!empty(old('image_4')))
-                {{-- バリデーションに引っかかって戻ってきたとき --}}
-                    <div>
-                        <img class="image-preview4" widt="100" height="130" style="object-fit: cover;" src="/storage/{{old('image_4')}}">
-                    </div>
-                    <label class="btn btn-back" for="image_4">アップロード
-                        <input class="image-uploader4" id="image_4" style="display: none;" type="file">
-                        <input class="image-path-hidden4" type="hidden" name="image_4" value="{{old('image_4')}}">
-                    </label>
+                @if ($register)
+
+                    @if (empty(old('image_4')))
+                        <div>
+                            @if(empty($image_4))
+                                <img class="image-preview4" widt="100" height="130" style="object-fit: cover; display: none" src="">
+                            @endif
+                        </div>
+                        <label class="btn btn-back" for="image_4">アップロード
+                            <input class="image-uploader4" id="image_4" style="display: none;" type="file">
+                            <input class="image-path-hidden4" type="hidden" name="image_4" value="{{ $image_4 ?? '' }}">
+                        </label>
+                    @elseif (!empty(old('image_4')))
+                    {{-- バリデーションに引っかかって戻ってきたとき --}}
+                        <div>
+                            <img class="image-preview4" widt="100" height="130" style="object-fit: cover;" src="/storage/{{old('image_4')}}">
+                        </div>
+                        <label class="btn btn-back" for="image_4">アップロード
+                            <input class="image-uploader4" id="image_4" style="display: none;" type="file">
+                            <input class="image-path-hidden4" type="hidden" name="image_4" value="{{old('image_4')}}">
+                        </label>
+                    @endif
+
+                @elseif ($edit)
+                    @if (empty(old('image_4')))
+                    @if(!is_null($product->image_4))
+                        <img class="image-preview4 uno" widt="100" height="130" style="object-fit: cover;" src="/storage/{{$product->image_4}}">
+                    @else
+                        <img class="image-preview4 umo" widt="100" height="130" style="object-fit: cover; display: none" src="">
+                    @endif
+                        <label class="btn btn-back" for="image_4">アップロード
+                            <input class="image-uploader4" id="image_4" style="display: none;" type="file">
+                            <input class="image-path-hidden4" type="hidden" name="image_4" value="{{ $product->image_4 }}">
+                        </label>
+
+                    @elseif (!empty(old('image_4')))
+                    {{-- バリデーションに引っかかって戻ってきたとき --}}
+                        <div>
+                            <img class="image-preview4" widt="100" height="130" style="object-fit: cover;" src="/storage/{{old('image_4')}}">
+                        </div>
+                        <label class="btn btn-back" for="image_4">アップロード
+                            <input class="image-uploader1" id="image_4" style="display: none;" type="file">
+                            <input class="image-path-hidden4" type="hidden" name="image_4" value="{{old('image_4')}}">
+                        </label>
+                    @endif
                 @endif
 
             </div>
 
             <div>
                 <span>商品説明</span>
-                <textarea name="product_content">{{old('product_content')}}</textarea>
+                <textarea name="product_content" >
+                    {{ $register ? old('product_content') : old('product_content', $product->product_content) }}
+                </textarea>
+            </td>
             </div>
 
 
     <button type="submit" class="btn">確認画面へ</button>
 
-    <script src="{{url('js/products/register.js')}}"></script>
+    <script src="{{url('js/products/admin.js')}}"></script>
 
 </form>

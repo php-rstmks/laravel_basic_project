@@ -32,7 +32,7 @@
     <div>
         <div>
             @if (!is_null($review->product->image_1))
-                <img width=100 src="/storage/{{$product->image_1}}" alt="">
+                <img width=100 src="/storage/{{$review->product->image_1}}" alt="">
             @endif
         </div>
         <div>
@@ -72,7 +72,12 @@
 
 <form method="POST" action="{{ $route }}">
     @csrf
-    <input type="hidden" name="product_id" value="{{ $review->product->id }}">
+
+    @if ($register)
+        <input type="hidden" name="product_id" value="{{ $Info['product_id'] }}">
+    @elseif ($edit)
+        <input type="hidden" name="product_id" value="{{ $review->product->id }}">
+    @endif
     <input type="hidden" name="evaluation" value="{{ $Info['evaluation'] }}">
     <input type="hidden" name="comment" value="{{ $Info['comment'] }}">
 

@@ -92,10 +92,9 @@ class ReviewController extends Controller
         $edit = null;
         $Info = $request->all();
 
-        $product = Product::find($request->product_id);
+        Log::debug($Info);
 
-        Log::debug($request->product_id);
-        Log::debug($product);
+        $product = Product::find($request->product_id);
 
         return view('admin.reviews.register_conf', compact('register', 'edit', 'Info', 'avg_review', 'product'));
 
@@ -163,8 +162,13 @@ class ReviewController extends Controller
 
     public function detailpage(Review $review)
     {
+        $avg_review = ceil(Review::where('product_id', $review->product->id)->avg('evaluation'));
+
         return view('admin.reviews.detail')
-            ->with(['review' => $review]);
+            ->with([
+                'review' => $review,
+                'avg_review' => $avg_review,
+            ]);
     }
 
     public function delete(Review $review)

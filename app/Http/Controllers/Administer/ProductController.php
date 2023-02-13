@@ -196,28 +196,33 @@ class ProductController extends Controller
             ]);
     }
 
-    public function edit(Request $request, Review $review)
+    public function edit(Request $request, Product $product)
     {
-        $review->evaluation = $request->evaluation;
-        $review->comment = $request->comment;
+        $product->product_category_id = $request->product_category_id;
+        $product->product_subcategory_id = $request->product_subcategory_id;
+        $product->name = $request->product_name;
+        $product->image_1 = $request->image_1;
+        $product->image_2 = $request->image_2;
+        $product->image_3 = $request->image_3;
+        $product->image_4 = $request->image_4;
 
-        $review->save();
+        $product->save();
 
         return redirect()
-            ->route('admin.reviews.list');
+            ->route('admin.products.list');
 
     }
 
-    public function detailpage(Review $review)
+    public function detailpage(Product $product)
     {
-        return view('admin.reviews.detail')
-            ->with(['review' => $review]);
+        return view('admin.products.detail')
+            ->with(['product' => $product]);
     }
 
-    public function delete(Review $review)
+    public function delete(Product $product)
     {
-        $review->delete();
+        $product->delete();
 
-        return redirect()->route('admin.reviews.list');
+        return redirect()->route('admin.products.list');
     }
 }

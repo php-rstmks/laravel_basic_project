@@ -1,25 +1,28 @@
-<button style="float: right"><a href="{{route('admin.members.list')}}">一覧に戻る</a></button>
-<h2>会員詳細</h2>
+<button style="float: right"><a href="{{route('admin.products.list')}}">一覧に戻る</a></button>
+<h2>商品詳細</h2>
     <div>
-    <span>ID</span>
-    <span>{{ $member->id }}</span>
+    <span>商品ID</span>
+    <span>{{ $product->id }}</span>
     </div>
 
     <div>
-    <span>氏名</span>
-    <span>{{ $member->name_sei . ' ' . $member->name_mei }}</span>
+    <span>名前</span>
+    <span>{{ $product->name }}</span>
     </div>
 
+    <span>商品カテゴリ</span>
+                   {{-- カテゴリ＞サブカテゴリ --}}
     <div>
-    <span>ニックネーム</span>
-    <span>{{ $member->nickname }}</span>
+        {{App\Product_category::find($product->product_category_id)->name}}
+        ＞
+        {{App\Product_subcategory::find($product->product_subcategory_id)->name}}
     </div>
 
     <div>
     <span>性別</span>
-    @if ($member->gender == 1)
+    @if ($product->gender == 1)
         <span>男性</span>
-    @elseif ($member->gender == 2)
+    @elseif ($product->gender == 2)
         <span>女性</span>
     @endif
     </div>
@@ -31,8 +34,8 @@
 
     <div>
     <span>メールアドレス</span>
-    <span>{{ $member->email }}</span>
+    <span>{{ $product->email }}</span>
     </div>
 
-<button><a href="{{route('admin.members.editpage', $member)}}">編集</a></button>
-<button><a href="{{route('admin.members.delete', $member)}}">削除</a></button>
+<button><a href="{{route('admin.products.editpage', $product)}}">編集</a></button>
+<button><a href="{{route('admin.products.delete', $product)}}">削除</a></button>
