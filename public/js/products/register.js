@@ -9,6 +9,8 @@
     categorySelectBox.addEventListener("change", (e) => {
         const categoryId = e.target.value
 
+        console.log("a")
+
         fetch('/set-subcategory/' + categoryId, {
             method: 'GET',
         })
@@ -22,11 +24,13 @@
                 subCategorySelectBox.removeChild(subCategorySelectBox.firstChild)
             }
 
+            // コントローラから取得したカテゴリに紐づくサブカテゴリを変数に格納
             const subCategoriesLinkedWithCategory = json.product_subcategories
 
-            // option tagを作成
+            // サブカテゴリのoption tagを作成してDOMに配置
             subCategoriesLinkedWithCategory.forEach(subCategory => {
                 const optionTag = document.createElement("option")
+                // サブカテゴリのidをoptionタグにセット
                 optionTag.setAttribute("value", subCategory.id)
                 optionTag.innerHTML = subCategory.name
 

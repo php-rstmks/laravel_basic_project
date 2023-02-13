@@ -25,6 +25,8 @@ class ProductController extends Controller
         $product_categories = DB::table('product_categories')->get();
         $product_subcategories = DB::table('product_subcategories')->get();
 
+        Log::info($product_subcategories);
+
         return view('products.register')
             ->with([
                 'product_categories' => $product_categories,

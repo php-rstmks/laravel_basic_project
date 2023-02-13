@@ -40,6 +40,11 @@
 
 <form action="{{route('registerProductConfPage')}}" method="POST">
 @csrf
+
+
+
+    {{old('product_subcategory_id')}}
+
     <div>
         <span>商品名</span>
         <input type="text" name="product_name" value="{{old('product_name')}}">
@@ -62,15 +67,25 @@
 
     {{-- 小カテゴリ --}}
     <div id="subcategory-box">
+        {{old('produt_subcategory_id')}}
         <select name="product_subcategory_id" id="js-ajax-target-field">
+            {{-- 商品名や、商品コメントのバリデーションに引っかかって戻ってきたとき --}}
             @if(!empty(old('product_subcategory_id')))
                 @foreach($product_subcategories as $product_subcategory)
-                    @if($product_subcategory->product_category_id == old('product_category_id'))
-                        <option value="{{ $product_subcategory->id }}" {{ (old('product_subcategory_id') == $product_subcategory->id) ? 'selected': '' }}>{{ $product_subcategory->name }}</option>
+                    @if ($product_subcategory->product_category_id == old('produc_category_id'))
+                        <option value="{{$product_subcategory->id}}" {{ (old('product_subcategory_id') == $product_subcategory->id) ? 'selected': ''}}>{{$product_subcategory->name}}</option>
+                        <option value="">{{$product_subcategory->product_category_id}}</option>
+                        <option value="">{{old('product_category_id')}}</option>
                     @endif
                 @endforeach
             @endif
+
+            {{-- デフォルトの状態では何も表示しない --}}
+
+
         </select>
+
+
     </div>
 
 
@@ -96,11 +111,11 @@
                 <input class="image-path-hidden1" type="hidden" name="image_1" value="{{ $image_1 ?? '' }}">
             </label>
         @elseif (!empty(old('image_1')))
-        {{-- バリデーションに引っかかって戻ってきたとき --}}
+        {{-- 商品名や、商品コメントのバリデーションに引っかかって戻ってきたとき --}}
             <div>
                 <img class="image-preview1" widt="100" height="130" style="object-fit: cover;" src="/storage/{{old('image_1')}}">
             </div>
-            <label class="btn btn-back" for="image_1">アップロード
+            <label class="btn btn-back validation-return" for="image_1">アップロード
                 <input class="image-uploader1" id="image_1" style="display: none;" type="file">
                 <input class="image-path-hidden1" type="hidden" name="image_1" value="{{old('image_1')}}">
             </label>

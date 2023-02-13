@@ -141,4 +141,83 @@ class ProductController extends Controller
         return redirect()
             ->route('admin.products.list');
     }
+
+    public function editpage(Product $product)
+    {
+        $product_categories = DB::table('product_categories')->get();
+        $product_subcategories = DB::table('product_subcategories')->get();
+
+        Log::info($product_subcategories);
+
+        $register = null;
+
+        $edit = "a";
+        return view('admin.products.edit')
+            ->with([
+                'register' => $register,
+                'edit' => $edit,
+                'product' => $product,
+                'product_categories' => $product_categories,
+                'product_subcategories' => $product_subcategories,
+            ]);
+    }
+
+    public function edit_confpage(Request $request, Product $product)
+    {
+
+        $request->validate([
+            'product_name' => 'required|max:100',
+            'product_category_id' => 'integer|not_in:0|between:1,5',
+            'product_subcategory_id' => 'integer|not_in:0|between:1,25',
+            'product_content' => 'required|max:500',
+        ], [
+            'product_name.required' => '商品名は必須です',
+            'product_name.max' => '商品名は100文字以内で入力してください',
+            'product_category_id.not_in' => 'カテゴリーを選択してください',
+            'product_category_id.integer' => 'カテゴリーを正しく選択してください',
+            'product_category_id.between' => 'カテゴリーを正しく選択してください',
+            'product_subcategory_id.not_in' => 'サブカテゴリーを選択してください',
+            'product_subcategory_id.integer' => 'サブカテゴリーを正しく選択してください',
+            'product_subcategory_id.between' => 'サブカテゴリーを正しく選択してください',
+            'product_content.required' => '商品説明は必須です',
+            'product_content.max' => '商品説明は500文字以内で入力してください',
+        ]);
+
+
+        $register = null;
+        $edit = "a";
+        $Info = $request->all();
+        return view('admin.products.edit_conf')
+            ->with([
+                'register' => $register,
+                'edit' => $edit,
+                'Info' => $Info,
+                'product' => $product,
+            ]);
+    }
+
+    public function edit(Request $request, Review $review)
+    {
+        $review->evaluation = $request->evaluation;
+        $review->comment = $request->comment;
+
+        $review->save();
+
+        return redirect()
+            ->route('admin.reviews.list');
+
+    }
+
+    public function detailpage(Review $review)
+    {
+        return view('admin.reviews.detail')
+            ->with(['review' => $review]);
+    }
+
+    public function delete(Review $review)
+    {
+        $review->delete();
+
+        return redirect()->route('admin.reviews.list');
+    }
 }

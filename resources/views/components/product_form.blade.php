@@ -13,7 +13,7 @@
     </style>
 </head>
 
-<button style="float: right"><a href="{{route('admin.categories.list')}}">一覧に戻る</a></button>
+<button style="float: right"><a href="{{route('admin.products.list')}}">一覧に戻る</a></button>
 
 <h1>
     @if ($register)
@@ -38,9 +38,9 @@
     <div>
         <span>商品ID</span>
         <span>
-        {{ $register ? '登録後に自動採番' : $category->id }}
+        {{ $register ? '登録後に自動採番' : $product->id }}
         @if ($edit)
-            <input type="hidden" name="id" value="{{ $category->id }}">
+            <input type="hidden" name="id" value="{{ $product->id }}">
         @endif
         </span>
     </div>
@@ -49,7 +49,12 @@
         @csrf
             <div>
                 <span>商品名</span>
-                <input type="text" name="product_name" value="{{old('product_name')}}">
+                @if ($register)
+
+                    <input type="text" name="product_name" value="{{old('product_name')}}">
+                @elseif ($edit)
+                    <input type="text" name="product_name" value="{{ $register ? old('product_name') : old('product_name', $product->name) }}">
+                @endif
             </div>
 
             <div>
@@ -58,10 +63,26 @@
                     {{-- 大カテゴリ --}}
                     <select name="product_category_id" id="js-ajax-change-subcategories">
                         <option value="">選択してください</option>
-                        @if(!empty($product_categories))
+                        @if ($register)
+                            @if(!empty($product_categories))
+                                @foreach($product_categories as $product_category)
+                                    <option value="{{ $product_category->id }}" {{ (old('product_category_id') == $product_category->id) ? 'selected': '' }}>{{ $product_category->name }}</option>
+                                @endforeach
+                            @endif
+
+
+                        @elseif ($edit)
                             @foreach($product_categories as $product_category)
-                                <option value="{{ $product_category->id }}" {{ (old('product_category_id') == $product_category->id) ? 'selected': '' }}>{{ $product_category->name }}</option>
+                                @if(empty(old('product_category_id')))
+                                    <option value="{{ $product_category->id }}" {{ $product_category->id == $product->product_category_id ? 'selected': '' }}>{{ $product_category->name }}</option>
+                                @elseif (!empty(old('product_subcategory_id')))
+                                    <option value="{{$product_category->id}}" {{ (old('product_category_id') == $product_category->id) ? 'selected': '' }}>{{ $product_category->name}}</option>
+                                @endif
                             @endforeach
+
+
+
+
                         @endif
                     </select>
                 </div>
@@ -70,12 +91,30 @@
             {{-- 小カテゴリ --}}
             <div id="subcategory-box">
                 <select name="product_subcategory_id" id="js-ajax-target-field">
-                    @if(!empty(old('product_subcategory_id')))
+                    @if ($register)
+                        @if(!empty(old('product_subcategory_id')))
+                            @foreach($product_subcategories as $product_subcategory)
+                                @if($product_subcategory->product_category_id == old('product_category_id'))
+                                    <option value="{{ $product_subcategory->id }}" {{ (old('product_subcategory_id') == $product_subcategory->id) ? 'selected': '' }}>{{ $product_subcategory->name }}</option>
+                                @endif
+                            @endforeach
+                        @endif
+                    @elseif ($edit)
                         @foreach($product_subcategories as $product_subcategory)
-                            @if($product_subcategory->product_category_id == old('product_category_id'))
-                                <option value="{{ $product_subcategory->id }}" {{ (old('product_subcategory_id') == $product_subcategory->id) ? 'selected': '' }}>{{ $product_subcategory->name }}</option>
+                            @if (empty(old('product_subcategory_id')))
+                                <option value="{{ $product_subcategory->id }}" {{ $product_subcategory->id == $product->product_subcategory_id ? 'selected': '' }}>{{ $product_subcategory->name }}</option>
+
+                            {{-- 商品名や、商品コメントのバリデーションに引っかかって戻ってきたとき --}}
+
+                            @elseif (!empty(old('product_subcategory_id')))
+                                @if($product_subcategory->product_category_id == old('product_category_id'))
+                                    <option value="{{ $product_subcategory->id }}" {{ (old('product_subcategory_id') == $product_subcategory->id) ? 'selected': '' }}>{{ $product_subcategory->name }}</option>
+                                @endif
                             @endif
+
+
                         @endforeach
+
                     @endif
                 </select>
             </div>
@@ -202,7 +241,6 @@
 
     <button type="submit" class="btn">確認画面へ</button>
 
-    {{-- <script src="{{url('js/products/admin.js')}}"></script> --}}
     <script src="{{url('js/products/register.js')}}"></script>
 
 </form>
