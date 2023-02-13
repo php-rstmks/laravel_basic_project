@@ -72,7 +72,7 @@
 
 <form method="POST" action="{{ $route }}">
     @csrf
-    <input type="hidden" name="product_id" value="{{ $product->id }}">
+    <input type="hidden" name="product_id" value="{{ $review->product->id }}">
     <input type="hidden" name="evaluation" value="{{ $Info['evaluation'] }}">
     <input type="hidden" name="comment" value="{{ $Info['comment'] }}">
 

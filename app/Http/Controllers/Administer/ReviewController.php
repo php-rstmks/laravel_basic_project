@@ -139,7 +139,6 @@ class ReviewController extends Controller
         $register = null;
         $edit = "a";
         $Info = $request->all();
-        Log::debug($Info);
         return view('admin.reviews.edit_conf')
             ->with([
                 'register' => $register,
