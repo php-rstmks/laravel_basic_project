@@ -13,10 +13,85 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\ProductRequest;
 use App\Http\Requests\MemberEditRequest;
 use Log;
+use Validator;
+
 
 
 class ProductController extends Controller
 {
+    /**
+     *ajaxでsubcategoryを取得してjson形式で返す
+     *
+     */
+    public function setSubCategory(Request $request)
+    {
+        Log::debug('jlk');
+        $product_subcategories = DB::table('product_subcategories')
+            ->where('product_category_id', $request->categoryId)
+            ->get();
+
+        return response()->json([
+            'product_subcategories' => $product_subcategories,
+        ]);
+    }
+
+    /**
+     * ajaxで画像を表示させる。
+     *
+     */
+    public function registerImage(Request $request)
+    {
+        Log::debug("kita");
+
+        $validator = Validator::make($request->all(), [
+            'image_1' => 'image|mimes:jpeg,png,jpg,gif|max:10240',
+            'image_2' => 'image|mimes:jpeg,png,jpg,gif|max:10240',
+            'image_3' => 'image|mimes:jpeg,png,jpg,gif|max:10240',
+            'image_4' => 'image|mimes:jpeg,png,jpg,gif|max:10240',
+        ]);
+
+        if ($validator->fails())
+        {
+            return response()->json(['returnErr'=>'damedesu']);
+        }
+
+        if ($request->has('image_1'))
+        {
+            $file_name = $request->file('image_1')->getClientOriginalName();
+
+            $request->file('image_1')->storeAs('public', $file_name);
+
+            return response()->json(['returnFileName1' => $file_name]);
+        }
+
+        if ($request->has('image_4'))
+        {
+            $file_name = $request->file('image_4')->getClientOriginalName();
+
+            $request->file('image_4')->storeAs('public', $file_name);
+
+            return response()->json(['returnFileName4' => $file_name]);
+        }
+
+        if ($request->has('image_2'))
+        {
+            $file_name = $request->file('image_2')->getClientOriginalName();
+
+            $request->file('image_2')->storeAs('public', $file_name);
+
+            return response()->json(['returnFileName2' => $file_name]);
+        }
+
+        if ($request->has('image_3'))
+        {
+            $file_name = $request->file('image_3')->getClientOriginalName();
+
+            $request->file('image_3')->storeAs('public', $file_name);
+
+            return response()->json(['returnFileName3' => $file_name]);
+        }
+    }
+
     public function showList(Request $request)
     {
         $products = Product::latest()->paginate(10);

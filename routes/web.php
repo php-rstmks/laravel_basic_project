@@ -236,6 +236,14 @@ Route::group([
     Route::post('logout', 'LoginController@logout')
         ->name('admin.logout');
 
+    // 画像アップロード
+    Route::post('upload/image', 'ProductController@registerImage')
+    ->name('registerImage');
+
+    // 小カテゴリを出現させる。
+    Route::get('set-subcategory/{categoryId}', 'ProductController@setSubCategory')
+        ->name('setSubCategory');
+
     // 一覧ページ（会員、商品カテゴリ、商品、レビュー）
     Route::get('members/list', 'MemberController@showList')
         ->name('admin.members.list');

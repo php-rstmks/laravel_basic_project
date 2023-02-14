@@ -130,12 +130,6 @@ class ProductController extends Controller
      */
     public function registerImage(Request $request)
     {
-        // $request->validate([
-        //     'image_1' => 'image|mimes:jpeg,png,jpg,gif|max:10240',
-        //     'image_2' => 'image|mimes:jpeg,png,jpg,gif|max:10240',
-        //     'image_3' => 'image|mimes:jpeg,png,jpg,gif|max:10240',
-        //     'image_4' => 'image|mimes:jpeg,png,jpg,gif|max:10240',
-        // ]);
 
         $validator = Validator::make($request->all(), [
             'image_1' => 'image|mimes:jpeg,png,jpg,gif|max:10240',

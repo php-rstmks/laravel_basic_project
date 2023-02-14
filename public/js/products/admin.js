@@ -9,9 +9,7 @@
     categorySelectBox.addEventListener("change", (e) => {
         const categoryId = e.target.value
 
-        console.log("a")
-
-        fetch('/set-subcategory/' + categoryId, {
+        fetch('/admin/set-subcategory/' + categoryId, {
             method: 'GET',
         })
         .then(response => {
@@ -74,6 +72,7 @@
 
     imageUploader1.addEventListener("change", (e) => {
 
+        console.log(3)
         const file = e.target.files[0]
         const form = new FormData()
 
@@ -82,7 +81,7 @@
         form.append("image_1", file)
 
 
-        fetch('/upload/image', {
+        fetch('/admin/upload/image', {
             method: 'POST',
             headers: {
                 'X-CSRF-Token': token,
@@ -92,9 +91,6 @@
         .then(response => {
             return response.json()
         })
-        // .catch((error) => {
-        //     console.log('alj')
-        // })
         .then(json => {
             console.log(Object.keys(json))
             if (Object.keys(json) == 'returnErr')
@@ -123,7 +119,7 @@
 
         console.log(form.get("image_2"))
 
-        fetch('/upload/image', {
+        fetch('/admin/upload/image', {
             method: 'POST',
             headers: {
                 'X-CSRF-Token': token,
@@ -159,7 +155,7 @@
 
         console.log(form.get("image_3"))
 
-        fetch('/upload/image', {
+        fetch('/admin/upload/image', {
             method: 'POST',
             headers: {
                 'X-CSRF-Token': token,
@@ -194,7 +190,7 @@
         form.append("image_4", file)
 
 
-        fetch('/upload/image', {
+        fetch('/admin/upload/image', {
             method: 'POST',
             headers: {
                 'X-CSRF-Token': token,
