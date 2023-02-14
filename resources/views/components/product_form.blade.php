@@ -102,7 +102,7 @@
                     @elseif ($edit)
                         @foreach($product_subcategories as $product_subcategory)
                             @if (empty(old('product_subcategory_id')))
-                                <option value="{{ $product_subcategory->id }}" {{ $product_subcategory->id == $product->product_subcategory_id ? 'selected': '' }}>{{ $product_subcategory->name }}</option>
+                                <option class="tst" value="{{ $product_subcategory->id }}" {{ $product_subcategory->id == $product->product_subcategory_id ? 'selected': '' }}>{{ $product_subcategory->name }}</option>
 
                             {{-- 商品名や、商品コメントのバリデーションに引っかかって戻ってきたとき --}}
 
