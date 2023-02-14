@@ -148,8 +148,8 @@ class ProductController extends Controller
 
     public function editpage(Product $product)
     {
-        $product_categories = DB::table('product_categories')->get();
-        $product_subcategories = DB::table('product_subcategories')->get();
+        $product_categories = Product_category::all();
+        $product_subcategories = Product_subcategory::all();
 
         Log::info($product_subcategories);
 
