@@ -247,8 +247,8 @@ class ProductController extends Controller
 
         $request->validate([
             'product_name' => 'required|max:100',
-            'product_category_id' => 'integer|not_in:0|between:1,5',
-            'product_subcategory_id' => 'integer|not_in:0|between:1,25',
+            'product_category_id' => 'integer|not_in:0',
+            'product_subcategory_id' => 'integer|not_in:0|',
             'product_content' => 'required|max:500',
         ], [
             'product_name.required' => '商品名は必須です',
