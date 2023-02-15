@@ -169,12 +169,9 @@ class ProductController extends Controller
 
     public function register_confpage(ProductRequest $request)
     {
-
-
         $register = 'a';
         $edit = null;
         $Info = $request->all();
-
 
         return view('admin.products.register_conf', compact('register', 'edit', 'Info'));
 

@@ -6,7 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\Rule;
 
-
 use App\Product_category;
 use Log;
 
@@ -68,15 +67,26 @@ class ProductRequest extends FormRequest
 
     public function withValidator(Validator $validator)
     {
-        $categories = Product_category::whereNull('deleted_at')->pluck('id')->toArray();
+        // trueだと、フォームから送信されたカテゴリIDの値がDBに保存されているIDのどれかに一致していることを表す
+        $validation_pass_flg = false;
+
+        $categories_array = Product_category::whereNull('deleted_at')->pluck('id')->toArray();
+
+        $category_id = $this->input('product_category_id');
+
 
         // 登録されているカテゴリIDに存在しないIDおよび文字列をinputフォームから入力した場合。
-        $validator->sometimes('product_category_id', Rule::in($categories), function ($input) {
+        $validator->sometimes('product_category_id', Rule::in($categories_array), function ($input) {
             return $input->product_category_id == true;
         });
 
+        if (in_array($category_id, $categories_array))
+        {
+            $validation_pass_flg = true;
+        }
+
         // 登録されているサブカテゴリIDに存在しないIDおよび文字列をinputフォームから入力した場合。
-        if (!is_null($this->product_category_id)) {
+        if ($validation_pass_flg && !is_null($this->product_category_id)) {
             $category = Product_category::find($this->product_category_id);
             $subcategories = $category->product_subcategories()->pluck('id')->toArray();
 
@@ -84,7 +94,6 @@ class ProductRequest extends FormRequest
                 return $input->product_category_id == true;
             });
         }
-
 
     }
 }

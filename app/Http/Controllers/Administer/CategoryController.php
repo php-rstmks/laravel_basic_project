@@ -116,9 +116,9 @@ class CategoryController extends Controller
             {
                 $cnt += 1;
             }
-
         }
 
+        // もし空であれば、
         if ($cnt === 0)
         {
             return back()
